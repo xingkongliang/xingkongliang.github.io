@@ -1884,7 +1884,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #bdb91f;
+  background: #87ff3e;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3003,5 +3003,9 @@ body {
 .content {
   border-radius: 20px;
   padding: 30px 60px 30px 60px;
+  background: rgba(255,255,255,0.8) none repeat scroll !important;
+}
+#lv-container {
+  border-radius: 10px;
   background: rgba(255,255,255,0.8) none repeat scroll !important;
 }
