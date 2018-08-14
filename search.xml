@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[How to use hexo?]]></title>
+    <url>%2F2018%2F08%2F14%2FHow-to-use-hexo%2F</url>
+    <content type="text"><![CDATA[Quick Start创建一个1hexo new &quot;My New Post&quot; hello world! 12345import osimport numpy as npfor i in range(10): print('now is ', i) hexo官网 theme-next使用说明 使用hexo，如果换了电脑怎么更新博客？ 其他参考博客：我的个人博客之旅：从jekyll到hexoHEXO+NEXT主题个性化配置 https://segmentfault.com/a/1190000009544924#articleHeader21 http://blog.csdn.net/MasterAnt_D/article/details/56839222#t50 https://thief.one2017/03/03/Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E6%95%99%E7%A8%8B/]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[My New Post]]></title>
+    <url>%2F2018%2F08%2F14%2FMy-New-Post%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2018%2F08%2F14%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+  </entry>
+</search>
