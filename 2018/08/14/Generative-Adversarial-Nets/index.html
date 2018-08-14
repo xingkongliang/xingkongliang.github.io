@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="GAN," />
 
 
 
@@ -81,19 +81,18 @@
 
 
 
-<meta name="description" content="Name: Tianliang Zhang (张天亮) Introduction: A UCAS student. Email: tianliangjay@gmail.com">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="https://xingkongliang.github.io/about/index.html">
+<meta name="description" content="一些GANs资料和简单代码解析。">
+<meta name="keywords" content="GAN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Generative Adversarial Nets">
+<meta property="og:url" content="https://xingkongliang.github.io/2018/08/14/Generative-Adversarial-Nets/index.html">
 <meta property="og:site_name" content="Tianliang">
-<meta property="og:description" content="Name: Tianliang Zhang (张天亮) Introduction: A UCAS student. Email: tianliangjay@gmail.com">
+<meta property="og:description" content="一些GANs资料和简单代码解析。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://xingkongliang.github.io/images/me.jpg">
-<meta property="og:updated_time" content="2018-08-14T13:11:43.606Z">
+<meta property="og:updated_time" content="2018-08-14T14:45:18.283Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="Name: Tianliang Zhang (张天亮) Introduction: A UCAS student. Email: tianliangjay@gmail.com">
-<meta name="twitter:image" content="https://xingkongliang.github.io/images/me.jpg">
+<meta name="twitter:title" content="Generative Adversarial Nets">
+<meta name="twitter:description" content="一些GANs资料和简单代码解析。">
 
 
 
@@ -123,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://xingkongliang.github.io/about/"/>
+  <link rel="canonical" href="https://xingkongliang.github.io/2018/08/14/Generative-Adversarial-Nets/"/>
 
 
 
 
 
-  <title>about | Tianliang</title>
+  <title>Generative Adversarial Nets | Tianliang</title>
   
 
 
@@ -303,37 +302,289 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://xingkongliang.github.io/2018/08/14/Generative-Adversarial-Nets/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tianliang Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tianliang">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p><img src="\images\me.jpg" alt="me"></p>
-<p><strong>Name</strong>: Tianliang Zhang (张天亮)</p>
-<p><strong>Introduction</strong>: A UCAS student.</p>
-<p><strong>Email</strong>: <a href="mailto:tianliangjay@gmail.com" target="_blank" rel="noopener">tianliangjay@gmail.com</a></p>
-
+          <h1 class="post-title" itemprop="name headline">Generative Adversarial Nets</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-14T21:21:12+08:00">
+                2018-08-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Deep-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Deep Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/14/Generative-Adversarial-Nets/" class="leancloud_visitors" data-flag-title="Generative Adversarial Nets">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,025
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  一些GANs资料和简单代码解析。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h2 id="DCGANs-in-TensorFlow"><a href="#DCGANs-in-TensorFlow" class="headerlink" title="DCGANs in TensorFlow"></a>DCGANs in TensorFlow</h2><p><a href="https://github.com/carpedm20/DCGAN-tensorflow" target="_blank" rel="noopener">carpedm20/DCGAN-tensorflow</a><br>我们定义网络结构：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generator</span><span class="params">(self, z)</span>:</span></span><br><span class="line">    self.z_, self.h0_w, self.h0_b = linear(z, self.gf_dim*<span class="number">8</span>*<span class="number">4</span>*<span class="number">4</span>,</span><br><span class="line">                                           <span class="string">'g_h0_lin'</span>, with_w=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">    self.h0 = tf.reshape(self.z_, [<span class="number">-1</span>, <span class="number">4</span>, <span class="number">4</span>, self.gf_dim * <span class="number">8</span>])</span><br><span class="line">    h0 = tf.nn.relu(self.g_bn0(self.h0))</span><br><span class="line"></span><br><span class="line">    self.h1, self.h1_w, self.h1_b = conv2d_transpose(h0,</span><br><span class="line">        [self.batch_size, <span class="number">8</span>, <span class="number">8</span>, self.gf_dim*<span class="number">4</span>], name=<span class="string">'g_h1'</span>, with_w=<span class="keyword">True</span>)</span><br><span class="line">    h1 = tf.nn.relu(self.g_bn1(self.h1))</span><br><span class="line"></span><br><span class="line">    h2, self.h2_w, self.h2_b = conv2d_transpose(h1,</span><br><span class="line">        [self.batch_size, <span class="number">16</span>, <span class="number">16</span>, self.gf_dim*<span class="number">2</span>], name=<span class="string">'g_h2'</span>, with_w=<span class="keyword">True</span>)</span><br><span class="line">    h2 = tf.nn.relu(self.g_bn2(h2))</span><br><span class="line"></span><br><span class="line">    h3, self.h3_w, self.h3_b = conv2d_transpose(h2,</span><br><span class="line">        [self.batch_size, <span class="number">32</span>, <span class="number">32</span>, self.gf_dim*<span class="number">1</span>], name=<span class="string">'g_h3'</span>, with_w=<span class="keyword">True</span>)</span><br><span class="line">    h3 = tf.nn.relu(self.g_bn3(h3))</span><br><span class="line"></span><br><span class="line">    h4, self.h4_w, self.h4_b = conv2d_transpose(h3,</span><br><span class="line">        [self.batch_size, <span class="number">64</span>, <span class="number">64</span>, <span class="number">3</span>], name=<span class="string">'g_h4'</span>, with_w=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> tf.nn.tanh(h4)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">discriminator</span><span class="params">(self, image, reuse=False)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> reuse:</span><br><span class="line">        tf.get_variable_scope().reuse_variables()</span><br><span class="line"></span><br><span class="line">    h0 = lrelu(conv2d(image, self.df_dim, name=<span class="string">'d_h0_conv'</span>))</span><br><span class="line">    h1 = lrelu(self.d_bn1(conv2d(h0, self.df_dim*<span class="number">2</span>, name=<span class="string">'d_h1_conv'</span>)))</span><br><span class="line">    h2 = lrelu(self.d_bn2(conv2d(h1, self.df_dim*<span class="number">4</span>, name=<span class="string">'d_h2_conv'</span>)))</span><br><span class="line">    h3 = lrelu(self.d_bn3(conv2d(h2, self.df_dim*<span class="number">8</span>, name=<span class="string">'d_h3_conv'</span>)))</span><br><span class="line">    h4 = linear(tf.reshape(h3, [<span class="number">-1</span>, <span class="number">8192</span>]), <span class="number">1</span>, <span class="string">'d_h3_lin'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> tf.nn.sigmoid(h4), h4</span><br></pre></td></tr></table></figure>
+<p>当我们初始化这个类时，我们将使用这些函数来创建模型。 我们需要两个版本的鉴别器共享（或重用）参数。 一个用于来自数据分布的图像的minibatch，另一个用于来自发生器的图像的minibatch。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.G = self.generator(self.z)</span><br><span class="line">self.D, self.D_logits = self.discriminator(self.images)</span><br><span class="line">self.D_, self.D_logits_ = self.discriminator(self.G, reuse=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>接下来我们定义损失函数。我们在D的预测值和我们理想的判别器输出值之间使用<a href="https://en.wikipedia.org/wiki/Cross_entropy" target="_blank" rel="noopener">交叉熵</a>，而没有只用求和，因为这样的效果更好。判别器希望对“真实”数据的预测全部是1，并且来自生成器的“假”数据的预测全部是零。生成器希望判别器对所有假样本的预测都是1。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">self.d_loss_real = tf.reduce_mean(</span><br><span class="line">    tf.nn.sigmoid_cross_entropy_with_logits(self.D_logits,</span><br><span class="line">                                            tf.ones_like(self.D)))</span><br><span class="line">self.d_loss_fake = tf.reduce_mean(</span><br><span class="line">    tf.nn.sigmoid_cross_entropy_with_logits(self.D_logits_,</span><br><span class="line">                                            tf.zeros_like(self.D_)))</span><br><span class="line">self.d_loss = self.d_loss_real + self.d_loss_fake</span><br><span class="line"></span><br><span class="line">self.g_loss = tf.reduce_mean(</span><br><span class="line">    tf.nn.sigmoid_cross_entropy_with_logits(self.D_logits_,</span><br><span class="line">                                            tf.ones_like(self.D_)))</span><br></pre></td></tr></table></figure>
+<p>收集每个模型的变量，以便可以单独进行训练。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">t_vars = tf.trainable_variables()</span><br><span class="line"></span><br><span class="line">self.d_vars = [var <span class="keyword">for</span> var <span class="keyword">in</span> t_vars <span class="keyword">if</span> <span class="string">'d_'</span> <span class="keyword">in</span> var.name]</span><br><span class="line">self.g_vars = [var <span class="keyword">for</span> var <span class="keyword">in</span> t_vars <span class="keyword">if</span> <span class="string">'g_'</span> <span class="keyword">in</span> var.name]</span><br></pre></td></tr></table></figure>
+<p>现在我们准备好优化参数，我们将使用<a href="https://arxiv.org/abs/1412.6980" target="_blank" rel="noopener">ADAM</a>，这是一种在现代深度学习中常见的自适应非凸优化方法。ADAM通常与SGD竞争，并且（通常）不需要手动调节学习速率，动量和其他超参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">d_optim = tf.train.AdamOptimizer(config.learning_rate, beta1=config.beta1) \</span><br><span class="line">                    .minimize(self.d_loss, var_list=self.d_vars)</span><br><span class="line">g_optim = tf.train.AdamOptimizer(config.learning_rate, beta1=config.beta1) \</span><br><span class="line">                    .minimize(self.g_loss, var_list=self.g_vars)</span><br></pre></td></tr></table></figure>
+<p>我们已经准备好了解我们的数据。在每个epoch中，我们在每个minibatch中采样一些图像，并且运行优化器更新网络。有趣的是，如果G仅更新一次，判别器的损失则不会为零。另外，我认为<code>d_loss_fake</code>和<code>d_loss_real</code>在最后的额外的调用回到是一点点不必要的计算，并且是冗余的，因为这些值是作为<code>d_optim</code>和<code>g_optim</code>的一部分计算的。作为TensorFlow中的练习，您可以尝试优化此部分并将RP发送到原始库。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> xrange(config.epoch):</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> xrange(<span class="number">0</span>, batch_idxs):</span><br><span class="line">        batch_images = ...</span><br><span class="line">        batch_z = np.random.uniform(<span class="number">-1</span>, <span class="number">1</span>, [config.batch_size, self.z_dim]) \</span><br><span class="line">                    .astype(np.float32)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Update D network</span></span><br><span class="line">        _, summary_str = self.sess.run([d_optim, self.d_sum],</span><br><span class="line">            feed_dict=&#123; self.images: batch_images, self.z: batch_z &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Update G network</span></span><br><span class="line">        _, summary_str = self.sess.run([g_optim, self.g_sum],</span><br><span class="line">            feed_dict=&#123; self.z: batch_z &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Run g_optim twice to make sure that d_loss does not go to zero</span></span><br><span class="line">        <span class="comment"># (different from paper)</span></span><br><span class="line">        _, summary_str = self.sess.run([g_optim, self.g_sum],</span><br><span class="line">            feed_dict=&#123; self.z: batch_z &#125;)</span><br><span class="line"></span><br><span class="line">        errD_fake = self.d_loss_fake.eval(&#123;self.z: batch_z&#125;)</span><br><span class="line">        errD_real = self.d_loss_real.eval(&#123;self.images: batch_images&#125;)</span><br><span class="line">        errG = self.g_loss.eval(&#123;self.z: batch_z&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="Generative-Adversarial-Networks代码整理"><a href="#Generative-Adversarial-Networks代码整理" class="headerlink" title="Generative Adversarial Networks代码整理"></a>Generative Adversarial Networks代码整理</h3><ul>
+<li><p><a href="https://github.com/openai/InfoGAN" target="_blank" rel="noopener"><strong>InfoGAN-TensorFlow</strong></a>:InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets</p>
+</li>
+<li><p><a href="https://github.com/junyanz/iGAN" target="_blank" rel="noopener"><strong>iGAN-Theano</strong></a>:Generative Visual Manipulation on the Natural Image Manifold</p>
+</li>
+<li><p><a href="https://github.com/LantaoYu/SeqGAN" target="_blank" rel="noopener"><strong>SeqGAN-TensorFlow</strong></a>:SeqGAN: Sequence Generative Adversarial Nets with Policy Gradient</p>
+</li>
+<li><p><a href="https://github.com/carpedm20/DCGAN-tensorflow" target="_blank" rel="noopener"><strong>DCGAN-Tensorflow</strong></a>:Deep Convolutional Generative Adversarial Networks </p>
+</li>
+<li><p><a href="https://github.com/Newmu/dcgan_code" target="_blank" rel="noopener"><strong>dcgan_code-Theano</strong></a>:Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks</p>
+</li>
+<li><p><a href="https://github.com/openai/improved-gan" target="_blank" rel="noopener"><strong>improved-gan-Theano</strong></a>:Improved Techniques for Training GANs</p>
+</li>
+<li><p><a href="https://github.com/mattya/chainer-DCGAN" target="_blank" rel="noopener"><strong>chainer-DCGAN</strong></a>:Chainer implementation of Deep Convolutional Generative Adversarial Network</p>
+</li>
+<li><p><a href="https://github.com/jacobgil/keras-dcgan" target="_blank" rel="noopener"><strong>keras-dcgan</strong></a></p>
+</li>
+</ul>
+
       
     </div>
     
     
     
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Tianliang Zhang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tianliang Zhang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GAN/" rel="tag"># GAN</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/14/How-to-use-hexo/" rel="next" title="How to use hexo?">
+                <i class="fa fa-chevron-left"></i> How to use hexo?
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/14/Keras-Tutorial/" rel="prev" title="Keras Tutorial">
+                Keras Tutorial <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -371,8 +622,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -471,6 +731,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DCGANs-in-TensorFlow"><span class="nav-number">1.</span> <span class="nav-text">DCGANs in TensorFlow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Generative-Adversarial-Networks代码整理"><span class="nav-number">1.1.</span> <span class="nav-text">Generative Adversarial Networks代码整理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
