@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: Tianliang
 subtitle:
-description:
+description: Writing is the best form of thinking!
 keywords:
-author: John Doe
+author: Tianliang Zhang
 language:
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://xingkongliang.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -26,7 +26,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render:
+skip_render: README.md
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -35,7 +35,7 @@ titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -79,6 +79,15 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: <repository url>
-  branch: [branch]
-  message: [message]
+  repo: git@github.com:xingkongliang/xingkongliang.github.io.git
+  branch: master
+
+# Extensions
+## Plugins: http://hexo.io/plugins/
+plugins: hexo-generate-feed
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
