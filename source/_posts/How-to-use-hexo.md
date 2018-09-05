@@ -145,6 +145,9 @@ for i in range(10):
 ```
 
 显示一幅图像。
+```
+{% asset_img 003.jpg This is an example image %}
+```
 {% asset_img 003.jpg This is an example image %}
 
 
