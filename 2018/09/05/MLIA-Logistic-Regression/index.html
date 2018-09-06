@@ -90,14 +90,14 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/output_2_0.png">
 <meta property="og:image" content="https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/output_3_0.png">
-<meta property="og:image" content="https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/images/Fig5_2.png">
+<meta property="og:image" content="https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/Fig5_2.png">
 <meta property="og:image" content="https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/output_17_0.png">
 <meta property="og:image" content="https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/output_20_0.png">
 <meta property="og:image" content="https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/output_24_0.png">
 <meta property="og:image" content="https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/output_26_0.png">
 <meta property="og:image" content="https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/output_30_0.png">
 <meta property="og:image" content="https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/output_32_0.png">
-<meta property="og:updated_time" content="2018-09-06T02:36:25.386Z">
+<meta property="og:updated_time" content="2018-09-06T02:42:43.010Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[MLIA] Logistic Regression">
 <meta name="twitter:description" content="Logistic Regression And Code">
@@ -474,7 +474,7 @@
 <h2 id="梯度上升法"><a href="#梯度上升法" class="headerlink" title="梯度上升法"></a>梯度上升法</h2><p>梯度上升法：顾名思义就是利用梯度方向，寻找到某函数的最大值。</p>
 <p>梯度上升算法迭代公式：<br>$$w:=w+\alpha \nabla_w f(w)$$</p>
 <p>梯度下降法：和梯度上升想法，利用梯度方法，寻找某个函数的最小值。<br>梯度下降算法迭代公式：<br>$$w:=w-\alpha \nabla_w f(w)$$</p>
-<p><img src="./images/Fig5_2.png" alt=""></p>
+<p><img src="./Fig5_2.png" alt=""></p>
 <p>梯度上升算法每次更新之后，都会重新估计移动的方法，即梯度。</p>
 <h2 id="Logistic-回归梯度上升优化法"><a href="#Logistic-回归梯度上升优化法" class="headerlink" title="Logistic 回归梯度上升优化法"></a>Logistic 回归梯度上升优化法</h2><h3 id="加载数据"><a href="#加载数据" class="headerlink" title="加载数据"></a>加载数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataSet</span><span class="params">()</span>:</span></span><br><span class="line">    dataMat = []; labelMat = []</span><br><span class="line">    fr = open(<span class="string">'testSet.txt'</span>)</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> fr.readlines():</span><br><span class="line">        lineArr = line.strip().split()</span><br><span class="line">        dataMat.append([<span class="number">1.0</span>, float(lineArr[<span class="number">0</span>]), float(lineArr[<span class="number">1</span>])])</span><br><span class="line">        labelMat.append(int(lineArr[<span class="number">2</span>]))</span><br><span class="line">    <span class="keyword">return</span> dataMat,labelMat</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dataArray, labelMat = loadDataSet()</span><br><span class="line">print(<span class="string">"Total: "</span>, len(dataArray))</span><br><span class="line">print(<span class="string">"The first sample: "</span>, dataArray[<span class="number">0</span>])</span><br><span class="line">print(<span class="string">"The second sample: "</span>, dataArray[<span class="number">1</span>])</span><br><span class="line">print(<span class="string">"Label: "</span>, labelMat)</span><br></pre></td></tr></table></figure>
