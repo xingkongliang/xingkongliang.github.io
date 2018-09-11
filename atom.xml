@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://xingkongliang.github.io/"/>
+  <link href="https://www.starlg.cn/"/>
   <updated>2018-09-09T05:57:42.588Z</updated>
-  <id>https://xingkongliang.github.io/</id>
+  <id>https://www.starlg.cn/</id>
   
   <author>
     <name>Tianliang Zhang</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>Conda使用指南</title>
-    <link href="https://xingkongliang.github.io/2018/09/09/Conda-Tutorials/"/>
-    <id>https://xingkongliang.github.io/2018/09/09/Conda-Tutorials/</id>
+    <link href="https://www.starlg.cn/2018/09/09/Conda-Tutorials/"/>
+    <id>https://www.starlg.cn/2018/09/09/Conda-Tutorials/</id>
     <published>2018-09-09T05:07:18.000Z</published>
     <updated>2018-09-09T05:57:42.588Z</updated>
     
@@ -31,15 +31,15 @@
     
     </summary>
     
-      <category term="Python" scheme="https://xingkongliang.github.io/categories/Python/"/>
+      <category term="Python" scheme="https://www.starlg.cn/categories/Python/"/>
     
     
   </entry>
   
   <entry>
     <title>[MLIA] Logistic Regression</title>
-    <link href="https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/"/>
-    <id>https://xingkongliang.github.io/2018/09/05/MLIA-Logistic-Regression/</id>
+    <link href="https://www.starlg.cn/2018/09/05/MLIA-Logistic-Regression/"/>
+    <id>https://www.starlg.cn/2018/09/05/MLIA-Logistic-Regression/</id>
     <published>2018-09-05T14:45:58.000Z</published>
     <updated>2018-09-06T02:42:43.010Z</updated>
     
@@ -51,15 +51,15 @@
     
     </summary>
     
-      <category term="Machine Learning" scheme="https://xingkongliang.github.io/categories/Machine-Learning/"/>
+      <category term="Machine Learning" scheme="https://www.starlg.cn/categories/Machine-Learning/"/>
     
     
   </entry>
   
   <entry>
     <title>CornerNet: Detection Objects as Paired Keypoints</title>
-    <link href="https://xingkongliang.github.io/2018/09/02/CornerNet-Detection-Objects-as-Paired-Keypoints/"/>
-    <id>https://xingkongliang.github.io/2018/09/02/CornerNet-Detection-Objects-as-Paired-Keypoints/</id>
+    <link href="https://www.starlg.cn/2018/09/02/CornerNet-Detection-Objects-as-Paired-Keypoints/"/>
+    <id>https://www.starlg.cn/2018/09/02/CornerNet-Detection-Objects-as-Paired-Keypoints/</id>
     <published>2018-09-02T14:08:13.000Z</published>
     <updated>2018-09-02T14:35:34.600Z</updated>
     
@@ -75,14 +75,14 @@
     </summary>
     
     
-      <category term="Object Detection" scheme="https://xingkongliang.github.io/tags/Object-Detection/"/>
+      <category term="Object Detection" scheme="https://www.starlg.cn/tags/Object-Detection/"/>
     
   </entry>
   
   <entry>
     <title>行人检测（Pedestrian Detection）论文整理</title>
-    <link href="https://xingkongliang.github.io/2018/08/17/Pedestrian-Detection-Sources/"/>
-    <id>https://xingkongliang.github.io/2018/08/17/Pedestrian-Detection-Sources/</id>
+    <link href="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/"/>
+    <id>https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/</id>
     <published>2018-08-17T03:26:22.000Z</published>
     <updated>2018-09-05T07:34:05.340Z</updated>
     
@@ -95,14 +95,14 @@
     </summary>
     
     
-      <category term="Pedestrian Detection" scheme="https://xingkongliang.github.io/tags/Pedestrian-Detection/"/>
+      <category term="Pedestrian Detection" scheme="https://www.starlg.cn/tags/Pedestrian-Detection/"/>
     
   </entry>
   
   <entry>
     <title>Keras Tutorial</title>
-    <link href="https://xingkongliang.github.io/2018/08/14/Keras-Tutorial/"/>
-    <id>https://xingkongliang.github.io/2018/08/14/Keras-Tutorial/</id>
+    <link href="https://www.starlg.cn/2018/08/14/Keras-Tutorial/"/>
+    <id>https://www.starlg.cn/2018/08/14/Keras-Tutorial/</id>
     <published>2018-08-14T14:40:03.000Z</published>
     <updated>2018-08-14T15:15:58.804Z</updated>
     
@@ -114,17 +114,17 @@
     
     </summary>
     
-      <category term="Deep Learning" scheme="https://xingkongliang.github.io/categories/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://www.starlg.cn/categories/Deep-Learning/"/>
     
     
-      <category term="Keras" scheme="https://xingkongliang.github.io/tags/Keras/"/>
+      <category term="Keras" scheme="https://www.starlg.cn/tags/Keras/"/>
     
   </entry>
   
   <entry>
     <title>Generative Adversarial Nets</title>
-    <link href="https://xingkongliang.github.io/2018/08/14/Generative-Adversarial-Nets/"/>
-    <id>https://xingkongliang.github.io/2018/08/14/Generative-Adversarial-Nets/</id>
+    <link href="https://www.starlg.cn/2018/08/14/Generative-Adversarial-Nets/"/>
+    <id>https://www.starlg.cn/2018/08/14/Generative-Adversarial-Nets/</id>
     <published>2018-08-14T13:21:12.000Z</published>
     <updated>2018-08-14T14:45:18.283Z</updated>
     
@@ -136,17 +136,17 @@
     
     </summary>
     
-      <category term="Deep Learning" scheme="https://xingkongliang.github.io/categories/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://www.starlg.cn/categories/Deep-Learning/"/>
     
     
-      <category term="GAN" scheme="https://xingkongliang.github.io/tags/GAN/"/>
+      <category term="GAN" scheme="https://www.starlg.cn/tags/GAN/"/>
     
   </entry>
   
   <entry>
     <title>How to use hexo?</title>
-    <link href="https://xingkongliang.github.io/2018/08/14/How-to-use-hexo/"/>
-    <id>https://xingkongliang.github.io/2018/08/14/How-to-use-hexo/</id>
+    <link href="https://www.starlg.cn/2018/08/14/How-to-use-hexo/"/>
+    <id>https://www.starlg.cn/2018/08/14/How-to-use-hexo/</id>
     <published>2018-08-14T07:21:22.000Z</published>
     <updated>2018-09-02T14:33:26.398Z</updated>
     
