@@ -10,8 +10,10 @@ tags:
 
 ## 相关科研工作者
 - [张姗姗 scholar](https://scholar.google.com/citations?hl=zh-CN&user=pOSMWfQAAAAJ&view_op=list_works&sortby=pubdate)
-
 - [张姗姗 homepage](https://sites.google.com/site/shanshanzhangshomepage/)
+- [欧阳万里 scholar](https://scholar.google.com/citations?user=pw_0Z_UAAAAJ&%20hl=en)
+- [欧阳万里 homepage](http://www.ee.cuhk.edu.hk/~wlouyang/)
+
 
 ## 论文
 
@@ -105,14 +107,72 @@ tags:
 - github: 
 - blog: https://zhuanlan.zhihu.com/p/41288115
 
+### [TPAMI-2017] Jointly Learning Deep Features, Deformable Parts, Occlusion and Classification for Pedestrian Detection
+![Alt text| left | 300x0](./1537261066815.png)
+
+- paper: https://ieeexplore.ieee.org/abstract/document/8008790/
+- project website: 
+- slides: 
+- github caffe: 
+
+
+
 ### [BMVC-2017] PCN: Part and Context Information for Pedestrian Detection with CNNs
 ![Alt text| left | 300x0](./1533980559400.png)
 
 - arxiv: https://arxiv.org/abs/1804.044838
 - project website: 
 - slides: 
-- github: 
+- github caffe: 
 
+
+
+### [CVPR-2017] CityPersons: A Diverse Dataset for Pedestrian Detection
+
+
+![Alt text| left | 300x0](./1528194369562.png)
+
+- arxiv: http://arxiv.org/abs/1702.05693
+- project website: 
+- slides: 
+- github caffe: 
+
+
+---
+
+### [CVPR-2017] Learning Cross-Modal Deep Representations for Robust Pedestrian Detection
+![Alt text| left | 300x0](./1528194560698.png)
+
+- arxiv: https://arxiv.org/abs/1704.02431
+- project website: 
+- slides: 
+- github caffe: 
+
+![Alt text](./1528194591022.png)
+![Alt text](./1528194606094.png)
+
+
+### [CVPR-2017] What Can Help Pedestrian Detection?
+
+- arxiv: https://arxiv.org/abs/1704.02431
+- project website: 
+- slides: 
+- github caffe: 
+
+
+### [TPAMI-2017] Towards Reaching Human Performance in Pedestrian Detection
+
+- paper: http://ieeexplore.ieee.org/document/7917260/
+- arxiv: 
+- project website: 
+- slides: 
+- github caffe: 
+
+### [ICCV-2017] Multi-label Learning of Part Detectors for Heavily Occluded Pedestrian Detection
+- paper: http://openaccess.thecvf.com/content_ICCV_2017/papers/Zhou_Multi-Label_Learning_of_ICCV_2017_paper.pdf
+- arxiv: 
+- project website: 
+- slides: 
 
 ### [ICCV-2017]Illuminating Pedestrians via Simultaneous Detection & Segmentation
 
@@ -124,59 +184,13 @@ tags:
 - github caffe: https://github.com/garrickbrazil/SDS-RCNN
 
 
-### [CVPR-2017] CityPersons: A Diverse Dataset for Pedestrian Detection
-
-
-![Alt text| left | 300x0](./1528194369562.png)
-
-- arxiv: http://arxiv.org/abs/1702.05693
-- project website: 
-- slides: 
-- github: 
-
-
-
----
-
-### [CVPR-2017] Learning Cross-Modal Deep Representations for Robust Pedestrian Detection
-![Alt text| left | 300x0](./1528194560698.png)
-
-- arxiv: https://arxiv.org/abs/1704.02431
-- project website: 
-- slides: 
-- github: 
-
-![Alt text](./1528194591022.png)
-![Alt text](./1528194606094.png)
-
-
-### [CVPR-2017] What Can Help Pedestrian Detection?
-
-- arxiv: https://arxiv.org/abs/1704.02431
-- project website: 
-- slides: 
-- github: 
-
-
-### [TPAMI-2017] Towards Reaching Human Performance in Pedestrian Detection
-
-- paper: http://ieeexplore.ieee.org/document/7917260/
-- arxiv: 
-- project website: 
-- slides: 
-- github: 
-
-
-
 ### [CVPR-2016] Semantic Channels for Fast Pedestrian Detection
-
-{% asset_img 1528195250768.png Framework %}
+![Alt text| left | 300x0](./1528195250768.png)
 
 - paper: https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Costea_Semantic_Channels_for_CVPR_2016_paper.pdf
 - project website: 
 - slides: 
-- github: 
-
+- github caffe: 
 
 
 ### [CVPR-2016] How Far areWe from Solving Pedestrian Detection?
@@ -184,7 +198,43 @@ tags:
 - paper: https://www.cv-foundation.org/openaccess/content_cvpr_2016/app/S06-29.pdf
 - project website: 
 - slides: 
-- github: 
+- github caffe: 
+
+### [ICCV-2015] Deep Learning Strong Parts for Pedestrian Detection
+![Alt text| left | 300x0](./1537260670049.png)
+
+- paper: https://www.cv-foundation.org/openaccess/content_iccv_2015/html/Tian_Deep_Learning_Strong_ICCV_2015_paper.htmler.html
+- project website: 
+- slides: 
+- github caffe: 
+
+
+### [CVPR-2013] Joint Deep Learning for Pedestrian Detection Wanli
+![Alt text| left | 300x0](./1537260505221.png)
+
+- paper: https://www.cv-foundation.org/openaccess/content_iccv_2013/html/Ouyang_Joint_Deep_Learning_2013_ICCV_paper.html
+- project website: 
+- slides: 
+- github caffe: 
+
+
+### [CVPR-2012] A Discriminative Deep Model for Pedestrian Detection with Occlusion Handling
+![Alt text| left | 300x0](./1537260310332.png)
+
+- paper: http://mmlab.ie.cuhk.edu.hk/pdf/ouyangWcvpr2012.pdf
+- paper: https://ieeexplore.ieee.org/abstract/document/6248062/
+- project website: 
+- slides: 
+- github caffe: 
+
+
+### [CVPR-2010] Multi-Cue Pedestrian Classification With Partial Occlusion Handling
+![Alt text| left | 300x0](./1537260117170.png)
+
+- paper: https://ieeexplore.ieee.org/abstract/document/5540111/
+- project website: 
+- slides: 
+- github caffe: 
 
 ## 行人检测数据集
 
