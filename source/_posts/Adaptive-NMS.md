@@ -1,10 +1,11 @@
 ---
 title: Adaptive NMS Refining Pedestrian Detection in a Crowd
 date: 2019-05-20 17:11:31
-description: Adaptive NMS Refining Pedestrian Detection in a Crowd
+description: CVPR-19 oral Adaptive NMS Refining Pedestrian Detection in a Crowd
 categories: Pedestrian Detection
 tags:
 - Pedestrian Detection
+- Deep Learning
 ---
 
 
