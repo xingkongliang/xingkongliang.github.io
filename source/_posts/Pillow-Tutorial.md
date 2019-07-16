@@ -2,7 +2,7 @@
 title: Pillow Tutorial
 date: 2019-04-11 15:56:55
 description: Pillow 教程
-categories:
+categories: Python
 tags: Python
 ---
 

@@ -101,7 +101,7 @@ $$N_{11} \to N_{22} \to N_{33} \to N_{44}$$
 
 ## Exchange Unit
 
-```
+```python
     def _make_fuse_layers(self):
         if self.num_branches == 1:
             return None
@@ -162,7 +162,7 @@ $$N_{11} \to N_{22} \to N_{33} \to N_{44}$$
 
 ## HighResolutionModule
 
-```
+```python
 class HighResolutionModule(nn.Module):
     def __init__(self, num_branches, blocks, num_blocks, num_inchannels,
                  num_channels, fuse_method, multi_scale_output=True):
