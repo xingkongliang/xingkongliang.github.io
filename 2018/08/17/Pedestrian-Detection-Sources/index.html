@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Pedestrian Detection," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Tianliang" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="行人检测（Pedestrian Detection）论文整理，包含论文链接和代码地址。">
+<meta name="keywords" content="Pedestrian Detection">
+<meta property="og:type" content="article">
+<meta property="og:title" content="行人检测（Pedestrian Detection）论文整理">
+<meta property="og:url" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/index.html">
+<meta property="og:site_name" content="Tianliang">
+<meta property="og:description" content="行人检测（Pedestrian Detection）论文整理，包含论文链接和代码地址。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/CVPR19_CSP_Adaptive_NMS.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/CVPR19_CSP_PedestrianDetection.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/CVPR19_SSA-CNN.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1533980426553.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1533980383783.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/ECCV2018-Bi-box_Regression_2.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/ECCV2018-Bi-box_Regression.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/ECCV2-18-Learning_Efficien_Single-stage_Pedestrian_Detectors.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/ECCV2018-Graininess-Aware_Deep_Learning.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/ECCV2018-Occlusion-aware_R-CNN.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1533979932529.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1533980803719.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1533980145178.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1528195001788.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1537261066815.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1533980559400.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1528194369562.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1528194560698.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1528194591022.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1528194606094.png">
+<meta property="og:image" content="http://cvlab.cse.msu.edu/images/teasers/pedestrian-intro.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1528195250768.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1537260670049.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1537260505221.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1537260310332.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1537260117170.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1534569661113.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1517407508293.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1534570096814.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/1534569869602.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/eurocity-01.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/eurocity-02.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/crowdhuman-20190918-01.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/crowdhuman-20190918-02.png">
+<meta property="og:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/crowdhuman-20190918-03.png">
+<meta property="og:updated_time" content="2020-01-18T05:20:15.067Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="行人检测（Pedestrian Detection）论文整理">
+<meta name="twitter:description" content="行人检测（Pedestrian Detection）论文整理，包含论文链接和代码地址。">
+<meta name="twitter:image" content="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/CVPR19_CSP_Adaptive_NMS.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/"/>
+
+
+
+
+
+  <title>行人检测（Pedestrian Detection）论文整理 | Tianliang</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123915509-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7aa98e58b161f03ba9915003b72d71fa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tianliang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 't55H9pKd6Gm4xW2uPWRY','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.starlg.cn/2018/08/17/Pedestrian-Detection-Sources/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tianliang Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tianliang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">行人检测（Pedestrian Detection）论文整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-17T11:26:22+08:00">
+                2018-08-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Pedestrian-Detection/" itemprop="url" rel="index">
+                    <span itemprop="name">Pedestrian Detection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/17/Pedestrian-Detection-Sources/" class="leancloud_visitors" data-flag-title="行人检测（Pedestrian Detection）论文整理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,926
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  行人检测（Pedestrian Detection）论文整理，包含论文链接和代码地址。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="同步github地址"><a href="#同步github地址" class="headerlink" title="同步github地址"></a>同步github地址</h2><p>本文档同步至github:<a href="https://github.com/xingkongliang/Pedestrian-Detection" target="_blank" rel="noopener">here</a></p>
+<h2 id="相关科研工作者"><a href="#相关科研工作者" class="headerlink" title="相关科研工作者"></a>相关科研工作者</h2><ul>
+<li><a href="https://scholar.google.com/citations?user=a8Y2OJMAAAAJ&amp;hl=zh-CN" target="_blank" rel="noopener">Piotr Dollár scholar</a></li>
+<li><a href="https://pdollar.github.io/" target="_blank" rel="noopener">Piotr Dollár homepage</a></li>
+<li><a href="https://scholar.google.com/citations?hl=zh-CN&amp;user=pOSMWfQAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">张姗姗 scholar</a></li>
+<li><a href="https://sites.google.com/site/shanshanzhangshomepage/" target="_blank" rel="noopener">张姗姗 homepage</a></li>
+<li><a href="https://scholar.google.com/citations?user=pw_0Z_UAAAAJ&amp;%20hl=en" target="_blank" rel="noopener">欧阳万里 scholar</a></li>
+<li><a href="http://www.ee.cuhk.edu.hk/~wlouyang/" target="_blank" rel="noopener">欧阳万里 homepage</a></li>
+<li><a href="https://liuwei16.github.io/" target="_blank" rel="noopener">Liu Wei homepage</a></li>
+</ul>
+<h2 id="开放的代码"><a href="#开放的代码" class="headerlink" title="开放的代码"></a>开放的代码</h2><ul>
+<li><p><a href="https://github.com/Leotju/MGAN" target="_blank" rel="noopener"><strong>Leotju/MGAN</strong></a> [ICCV-2019] Mask-Guided Attention Network for Occluded Pedestrian Detection [<a href="http://openaccess.thecvf.com/content_ICCV_2019/papers/Pang_Mask-Guided_Attention_Network_for_Occluded_Pedestrian_Detection_ICCV_2019_paper.pdf" target="_blank" rel="noopener">paper</a>]</p>
+</li>
+<li><p><a href="https://github.com/lw396285v/CSP-pedestrian-detection-in-pytorch" target="_blank" rel="noopener"><strong>lw396285v/CSP-pedestrian-detection-in-pytorch 非官方实现</strong></a><br>[CVPR-2019] High-level Semantic Feature Detection:A New Perspective for Pedestrian Detection [<a href="https://arxiv.org/abs/1904.02948" target="_blank" rel="noopener">paper</a>]</p>
+</li>
+<li><p><a href="https://github.com/liuwei16/CSP" target="_blank" rel="noopener"><strong>liuwei16/CSP</strong></a><br>[CVPR-2019] High-level Semantic Feature Detection:A New Perspective for Pedestrian Detection [<a href="https://arxiv.org/abs/1904.02948" target="_blank" rel="noopener">paper</a>]</p>
+</li>
+<li><p><a href="https://github.com/liuwei16/ALFNet" target="_blank" rel="noopener"><strong>liuwei16/ALFNet</strong></a><br>[ECCV-2018] Learning Efficient Single-stage Pedestrian Detectors by Asymptotic Localization Fitting</p>
+</li>
+<li><p><a href="https://github.com/rainofmine/Bi-box_Regression" target="_blank" rel="noopener"><strong>rainofmine/Bi-box_Regression 非官方实现</strong></a><br>[ECCV-2018] Bi-box Regression for Pedestrian Detection and Occlusion Estimation</p>
+</li>
+<li><p><a href="https://github.com/rainofmine/Repulsion_Loss" target="_blank" rel="noopener"><strong>rainofmine/Repulsion_Loss 非官方实现</strong></a><br>[CVPR-2018] Repulsion Loss: Detecting Pedestrians in a Crowd</p>
+</li>
+<li><p><a href="https://github.com/garrickbrazil/SDS-RCNN" target="_blank" rel="noopener"><strong>garrickbrazil/SDS-RCNN</strong></a><br>[ICCV-2017] Illuminating Pedestrians via Simultaneous Detection &amp; Segmentation</p>
+</li>
+<li><p><a href="https://github.com/zhangliliang/RPN_BF" target="_blank" rel="noopener"><strong>zhangliliang/RPN_BF</strong></a><br>[ECCV-2016] Is Faster R-CNN Doing Well for Pedestrian Detection?</p>
+</li>
+</ul>
+<h2 id="Paper-List"><a href="#Paper-List" class="headerlink" title="Paper List"></a>Paper List</h2><ul>
+<li>[ICCV-2019] Semi-Supervised Pedestrian Instance Synthesis and Detection With Mutual Reinforcement [<a href="http://openaccess.thecvf.com/content_ICCV_2019/papers/Wu_Semi-Supervised_Pedestrian_Instance_Synthesis_and_Detection_With_Mutual_Reinforcement_ICCV_2019_paper.pdf" target="_blank" rel="noopener">paper</a>]</li>
+<li>[ICCV-2019] Weakly Aligned Cross-Modal Learning for Multispectral Pedestrian Detection [<a href="http://openaccess.thecvf.com/content_ICCV_2019/papers/Zhang_Weakly_Aligned_Cross-Modal_Learning_for_Multispectral_Pedestrian_Detection_ICCV_2019_paper.pdf" target="_blank" rel="noopener">paper</a>]</li>
+<li>[ICCV-2019] Discriminative Feature Transformation for Occluded Pedestrian Detection [<a href="http://openaccess.thecvf.com/content_ICCV_2019/papers/Zhou_Discriminative_Feature_Transformation_for_Occluded_Pedestrian_Detection_ICCV_2019_paper.pdf" target="_blank" rel="noopener">paper</a>]</li>
+<li>[ICCV-2019] Mask-Guided Attention Network for Occluded Pedestrian Detection [<a href="http://openaccess.thecvf.com/content_ICCV_2019/papers/Pang_Mask-Guided_Attention_Network_for_Occluded_Pedestrian_Detection_ICCV_2019_paper.pdf" target="_blank" rel="noopener">paper</a>] [<a href="https://github.com/Leotju/MGAN" target="_blank" rel="noopener"><strong>code</strong></a>]</li>
+<li>[TPAMI-2019] EuroCity Persons: A Novel Benchmark for Person Detection in Traffic Scenes [<a href="http://intelligent-vehicles.org/wp-content/uploads/2019/04/braun2019tpami_eurocity_persons.pdf" target="_blank" rel="noopener">paper</a>]</li>
+<li>[CVPR-2019 oral] Adaptive NMS: Refining Pedestrian Detection in a Crowd [<a href="https://arxiv.org/abs/1904.02948" target="_blank" rel="noopener">paper</a>]</li>
+<li>[CVPR-2019] High-level Semantic Feature Detection:A New Perspective for Pedestrian Detection [<a href="https://arxiv.org/abs/1904.02948" target="_blank" rel="noopener">paper</a>] [<a href="https://github.com/liuwei16/CSP" target="_blank" rel="noopener"><strong>code</strong></a>]</li>
+<li>[CVPR-2019] SSA-CNN: Semantic Self-Attention CNN for Pedestrian Detection</li>
+<li>[CVPR-2019] Pedestrian Detection in Thermal Images using Saliency Maps</li>
+<li>[TIP-2018] Too Far to See? Not Really:- Pedestrian Detection with Scale-Aware Localization Policy</li>
+<li>[ECCV-2018] Bi-box Regression for Pedestrian Detection and Occlusion Estimation [<a href="https://github.com/rainofmine/Bi-box_Regression" target="_blank" rel="noopener"><strong>code</strong></a>]</li>
+<li>[ECCV-2018] Learning Efficient Single-stage Pedestrian Detectors by Asymptotic Localization Fitting [<a href="https://github.com/liuwei16/ALFNet" target="_blank" rel="noopener"><strong>code</strong></a>]</li>
+<li>[ECCV-2018] Graininess-Aware Deep Feature Learning for Pedestrian Detection</li>
+<li>[ECCV-2018] Occlusion-aware R-CNN: Detecting Pedestrians in a Crowd</li>
+<li>[ECCV-2018] Small-scale Pedestrian Detection Based on Somatic Topology Localization and Temporal Feature Aggregation</li>
+<li>[CVPR-2018] Improving Occlusion and Hard Negative Handling for Single-Stage Pedestrian Detectors</li>
+<li>[CVPR-2018] Occluded Pedestrian Detection Through Guided Attention in CNNs</li>
+<li>[CVPR-2018] Repulsion Loss: Detecting Pedestrians in a Crowd [<a href="https://github.com/rainofmine/Repulsion_Loss" target="_blank" rel="noopener"><strong>code</strong></a>]</li>
+<li>[TCSVT-2018] Pushing the Limits of Deep CNNs for Pedestrian Detection</li>
+<li>[Trans Multimedia-2018] Scale-aware Fast R-CNN for Pedestrian Detection</li>
+<li>[TPAMI-2017] Jointly Learning Deep Features, Deformable Parts, Occlusion and Classification for Pedestrian Detection</li>
+<li>[BMVC-2017] PCN: Part and Context Information for Pedestrian Detection with CNNs</li>
+<li>[CVPR-2017] CityPersons: A Diverse Dataset for Pedestrian Detection</li>
+<li>[CVPR-2017] Learning Cross-Modal Deep Representations for Robust Pedestrian Detection</li>
+<li>[CVPR-2017] What Can Help Pedestrian Detection?</li>
+<li>[ICCV-2017] Multi-label Learning of Part Detectors for Heavily Occluded Pedestrian Detection</li>
+<li>[ICCV-2017] Illuminating Pedestrians via Simultaneous Detection &amp; Segmentation [<a href="https://github.com/garrickbrazil/SDS-RCNN" target="_blank" rel="noopener"><strong>code</strong></a>]</li>
+<li>[TPAMI-2017] Towards Reaching Human Performance in Pedestrian Detection</li>
+<li>[Transactions on Multimedia-2017] Scale-Aware Fast R-CNN for Pedestrian Detection</li>
+<li>[CVPR-2016] Semantic Channels for Fast Pedestrian Detection</li>
+<li>[CVPR-2016] How Far are We from Solving Pedestrian Detection?</li>
+<li>![CVPR-2016] Pedestrian Detection Inspired by Appearance Constancy and Shape Symmetry</li>
+<li>![CVPR-2016] Semantic Channels for Fast Pedestrian Detection</li>
+<li>![ECCV-2016] Is Faster R-CNN Doing Well for Pedestrian Detection? [<a href="https://github.com/zhangliliang/RPN_BF" target="_blank" rel="noopener"><strong>code</strong></a>]</li>
+<li>[CVPR-2015] Taking a Deeper Look at Pedestrians</li>
+<li>![ICCV-2015] Learning Complexity-Aware Cascades for Deep Pedestrian Detection</li>
+<li>[ICCV-2015] Deep Learning Strong Parts for Pedestrian Detection</li>
+<li>![ECCV-2014] Deep Learning of Scene-specific Classifier for Pedestrian Detection</li>
+<li>[CVPR-2013] Joint Deep Learning for Pedestrian Detection</li>
+<li>[CVPR-2012] A Discriminative Deep Model for Pedestrian Detection with Occlusion Handling</li>
+<li>[CVPR-2010] Multi-Cue Pedestrian Classification With Partial Occlusion Handling</li>
+<li>[CVPR-2009] Pedestrian detection: A benchmark</li>
+<li>[CVPR-2008] People-Tracking-by-Detection and People-Detection-by-Tracking</li>
+<li>[ECCV-2006] Human Detection Using Oriented Histograms of Flow and Appearance</li>
+<li>[CVPR-2005] Histograms of Oriented Gradients for Human Detection</li>
+</ul>
+<h2 id="论文"><a href="#论文" class="headerlink" title="论文"></a>论文</h2><h3 id="CVPR-2019-oral-Adaptive-NMS-Refining-Pedestrian-Detection-in-a-Crowd"><a href="#CVPR-2019-oral-Adaptive-NMS-Refining-Pedestrian-Detection-in-a-Crowd" class="headerlink" title="[CVPR-2019 oral] Adaptive NMS: Refining Pedestrian Detection in a Crowd"></a>[CVPR-2019 oral] Adaptive NMS: Refining Pedestrian Detection in a Crowd</h3><p><img src="./CVPR19_CSP_Adaptive_NMS.png" alt="CVPR19_CSP_Adaptive_NMS"></p>
+<ul>
+<li>paper: <a href="https://arxiv.org/abs/1904.02948" target="_blank" rel="noopener">https://arxiv.org/abs/1904.02948</a></li>
+</ul>
+<h3 id="CVPR-2019-High-level-Semantic-Feature-Detection-A-New-Perspective-for-Pedestrian-Detection"><a href="#CVPR-2019-High-level-Semantic-Feature-Detection-A-New-Perspective-for-Pedestrian-Detection" class="headerlink" title="[CVPR-2019] High-level Semantic Feature Detection:A New Perspective for Pedestrian Detection"></a>[CVPR-2019] High-level Semantic Feature Detection:A New Perspective for Pedestrian Detection</h3><p><img src="./CVPR19_CSP_PedestrianDetection.png" alt="Alt text"></p>
+<ul>
+<li>paper: <a href="https://arxiv.org/abs/1904.02948" target="_blank" rel="noopener">https://arxiv.org/abs/1904.02948</a></li>
+<li>github: <a href="https://github.com/liuwei16/CSP" target="_blank" rel="noopener">https://github.com/liuwei16/CSP</a></li>
+</ul>
+<h3 id="CVPR-2019-SSA-CNN-Semantic-Self-Attention-CNN-for-Pedestrian-Detection"><a href="#CVPR-2019-SSA-CNN-Semantic-Self-Attention-CNN-for-Pedestrian-Detection" class="headerlink" title="[CVPR-2019] SSA-CNN: Semantic Self-Attention CNN for Pedestrian Detection"></a>[CVPR-2019] SSA-CNN: Semantic Self-Attention CNN for Pedestrian Detection</h3><p><img src="./CVPR19_SSA-CNN.png" alt="Alt text"></p>
+<ul>
+<li>paper: <a href="https://arxiv.org/abs/1902.09080v1" target="_blank" rel="noopener">https://arxiv.org/abs/1902.09080v1</a></li>
+</ul>
+<h3 id="CVPR-2019-Pedestrian-Detection-in-Thermal-Images-using-Saliency-Maps"><a href="#CVPR-2019-Pedestrian-Detection-in-Thermal-Images-using-Saliency-Maps" class="headerlink" title="[CVPR-2019] Pedestrian Detection in Thermal Images using Saliency Maps"></a>[CVPR-2019] Pedestrian Detection in Thermal Images using Saliency Maps</h3><ul>
+<li>paper: <a href="https://arxiv.org/abs/1904.06859" target="_blank" rel="noopener">https://arxiv.org/abs/1904.06859</a></li>
+</ul>
+<h3 id="TIP-2018-Too-Far-to-See-Not-Really-Pedestrian-Detection-with-Scale-Aware-Localization-Policy"><a href="#TIP-2018-Too-Far-to-See-Not-Really-Pedestrian-Detection-with-Scale-Aware-Localization-Policy" class="headerlink" title="[TIP-2018] Too Far to See? Not Really: Pedestrian Detection with Scale-Aware Localization Policy"></a>[TIP-2018] Too Far to See? Not Really: Pedestrian Detection with Scale-Aware Localization Policy</h3><p><img src="./1533980426553.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>paper:</li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github:</li>
+</ul>
+<h3 id="Transactions-on-Multimedia-201８-Scale-Aware-Fast-R-CNN-for-Pedestrian-Detection"><a href="#Transactions-on-Multimedia-201８-Scale-Aware-Fast-R-CNN-for-Pedestrian-Detection" class="headerlink" title="[Transactions on Multimedia-201８] Scale-Aware Fast R-CNN for Pedestrian Detection"></a>[Transactions on Multimedia-201８] Scale-Aware Fast R-CNN for Pedestrian Detection</h3><p><img src="./1533980383783.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>paper: <a href="https://ieeexplore.ieee.org/abstract/document/8060595/" target="_blank" rel="noopener">https://ieeexplore.ieee.org/abstract/document/8060595/</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github:</li>
+</ul>
+<h3 id="ECCV-2018-Bi-box-Regression-for-Pedestrian-Detection-and-Occlusion-Estimation"><a href="#ECCV-2018-Bi-box-Regression-for-Pedestrian-Detection-and-Occlusion-Estimation" class="headerlink" title="[ECCV-2018] Bi-box Regression for Pedestrian Detection and Occlusion Estimation"></a>[ECCV-2018] Bi-box Regression for Pedestrian Detection and Occlusion Estimation</h3><p><img src="./ECCV2018-Bi-box_Regression_2.png" alt="Alt text| left | 300x0"><br><img src="./ECCV2018-Bi-box_Regression.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv:</li>
+<li>paper:<a href="http://openaccess.thecvf.com/content_ECCV_2018/papers/CHUNLUAN_ZHOU_Bi-box_Regression_for_ECCV_2018_paper.pdf" target="_blank" rel="noopener">http://openaccess.thecvf.com/content_ECCV_2018/papers/CHUNLUAN_ZHOU_Bi-box_Regression_for_ECCV_2018_paper.pdf</a></li>
+<li>slides:</li>
+<li>github: <a href="https://github.com/rainofmine/Bi-box_Regression" target="_blank" rel="noopener">https://github.com/rainofmine/Bi-box_Regression</a></li>
+</ul>
+<h3 id="ECCV-2018-Learning-Efficient-Single-stage-Pedestrian-Detectors-by-Asymptotic-Localization-Fitting"><a href="#ECCV-2018-Learning-Efficient-Single-stage-Pedestrian-Detectors-by-Asymptotic-Localization-Fitting" class="headerlink" title="[ECCV-2018] Learning Efficient Single-stage Pedestrian Detectors by Asymptotic Localization Fitting"></a>[ECCV-2018] Learning Efficient Single-stage Pedestrian Detectors by Asymptotic Localization Fitting</h3><p><img src="./ECCV2-18-Learning_Efficien_Single-stage_Pedestrian_Detectors.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv:</li>
+<li>paper:<a href="http://openaccess.thecvf.com/content_ECCV_2018/papers/Wei_Liu_Learning_Efficient_Single-stage_ECCV_2018_paper.pdf" target="_blank" rel="noopener">http://openaccess.thecvf.com/content_ECCV_2018/papers/Wei_Liu_Learning_Efficient_Single-stage_ECCV_2018_paper.pdf</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github: <a href="https://github.com/liuwei16/ALFNet" target="_blank" rel="noopener">https://github.com/liuwei16/ALFNet</a></li>
+</ul>
+<h3 id="ECCV-2018-Graininess-Aware-Deep-Feature-Learning-for-Pedestrian-Detection"><a href="#ECCV-2018-Graininess-Aware-Deep-Feature-Learning-for-Pedestrian-Detection" class="headerlink" title="[ECCV-2018] Graininess-Aware Deep Feature Learning for Pedestrian Detection"></a>[ECCV-2018] Graininess-Aware Deep Feature Learning for Pedestrian Detection</h3><p><img src="./ECCV2018-Graininess-Aware_Deep_Learning.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv:</li>
+<li>paper:<a href="http://openaccess.thecvf.com/content_ECCV_2018/papers/Chunze_Lin_Graininess-Aware_Deep_Feature_ECCV_2018_paper.pdf" target="_blank" rel="noopener">http://openaccess.thecvf.com/content_ECCV_2018/papers/Chunze_Lin_Graininess-Aware_Deep_Feature_ECCV_2018_paper.pdf</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github:</li>
+</ul>
+<h3 id="ECCV-2018-Occlusion-aware-R-CNN-Detecting-Pedestrians-in-a-Crowd"><a href="#ECCV-2018-Occlusion-aware-R-CNN-Detecting-Pedestrians-in-a-Crowd" class="headerlink" title="[ECCV-2018] Occlusion-aware R-CNN: Detecting Pedestrians in a Crowd"></a>[ECCV-2018] Occlusion-aware R-CNN: Detecting Pedestrians in a Crowd</h3><p><img src="./ECCV2018-Occlusion-aware_R-CNN.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv:<a href="http://arxiv.org/abs/1807.08407" target="_blank" rel="noopener">http://arxiv.org/abs/1807.08407</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github:</li>
+</ul>
+<h3 id="ECCV-2018-Small-scale-Pedestrian-Detection-Based-on-Somatic-Topology-Localization-and-Temporal-Feature-Aggregation"><a href="#ECCV-2018-Small-scale-Pedestrian-Detection-Based-on-Somatic-Topology-Localization-and-Temporal-Feature-Aggregation" class="headerlink" title="[ECCV-2018] Small-scale Pedestrian Detection Based on Somatic Topology Localization and Temporal Feature Aggregation"></a>[ECCV-2018] Small-scale Pedestrian Detection Based on Somatic Topology Localization and Temporal Feature Aggregation</h3><p><img src="./1533979932529.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv:<a href="https://arxiv.org/abs/1807.01438" target="_blank" rel="noopener">https://arxiv.org/abs/1807.01438</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github:</li>
+</ul>
+<h3 id="CVPR-2018-Improving-Occlusion-and-Hard-Negative-Handling-for-Single-Stage-Pedestrian-Detectors"><a href="#CVPR-2018-Improving-Occlusion-and-Hard-Negative-Handling-for-Single-Stage-Pedestrian-Detectors" class="headerlink" title="[CVPR-2018] Improving Occlusion and Hard Negative Handling for Single-Stage Pedestrian Detectors"></a>[CVPR-2018] Improving Occlusion and Hard Negative Handling for Single-Stage Pedestrian Detectors</h3><p><img src="./1533980803719.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv:</li>
+<li>paper: <a href="http://vision.snu.ac.kr/projects/partgridnet/data/noh_2018.pdf" target="_blank" rel="noopener">http://vision.snu.ac.kr/projects/partgridnet/data/noh_2018.pdf</a></li>
+<li>project website: <a href="http://vision.snu.ac.kr/projects/partgridnet/" target="_blank" rel="noopener">http://vision.snu.ac.kr/projects/partgridnet/</a></li>
+<li>slides:</li>
+<li>github:</li>
+</ul>
+<h3 id="CVPR-2018-Occluded-Pedestrian-Detection-Through-Guided-Attention-in-CNNs"><a href="#CVPR-2018-Occluded-Pedestrian-Detection-Through-Guided-Attention-in-CNNs" class="headerlink" title="[CVPR-2018] Occluded Pedestrian Detection Through Guided Attention in CNNs"></a>[CVPR-2018] Occluded Pedestrian Detection Through Guided Attention in CNNs</h3><p><img src="./1533980145178.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv:</li>
+<li>paper: <a href="http://openaccess.thecvf.com/content_cvpr_2018/papers/Zhang_Occluded_Pedestrian_Detection_CVPR_2018_paper.pdf" target="_blank" rel="noopener">http://openaccess.thecvf.com/content_cvpr_2018/papers/Zhang_Occluded_Pedestrian_Detection_CVPR_2018_paper.pdf</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github:</li>
+</ul>
+<h3 id="CVPR-2018-Repulsion-Loss-Detecting-Pedestrians-in-a-Crowd"><a href="#CVPR-2018-Repulsion-Loss-Detecting-Pedestrians-in-a-Crowd" class="headerlink" title="[CVPR-2018] Repulsion Loss: Detecting Pedestrians in a Crowd"></a>[CVPR-2018] Repulsion Loss: Detecting Pedestrians in a Crowd</h3><p><img src="./1528195001788.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv:<a href="http://arxiv.org/abs/1711.07752" target="_blank" rel="noopener">http://arxiv.org/abs/1711.07752</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github:</li>
+<li>blog: <a href="https://zhuanlan.zhihu.com/p/41288115" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/41288115</a></li>
+</ul>
+<h3 id="TPAMI-2017-Jointly-Learning-Deep-Features-Deformable-Parts-Occlusion-and-Classification-for-Pedestrian-Detection"><a href="#TPAMI-2017-Jointly-Learning-Deep-Features-Deformable-Parts-Occlusion-and-Classification-for-Pedestrian-Detection" class="headerlink" title="[TPAMI-2017] Jointly Learning Deep Features, Deformable Parts, Occlusion and Classification for Pedestrian Detection"></a>[TPAMI-2017] Jointly Learning Deep Features, Deformable Parts, Occlusion and Classification for Pedestrian Detection</h3><p><img src="./1537261066815.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>paper: <a href="https://ieeexplore.ieee.org/abstract/document/8008790/" target="_blank" rel="noopener">https://ieeexplore.ieee.org/abstract/document/8008790/</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<h3 id="BMVC-2017-PCN-Part-and-Context-Information-for-Pedestrian-Detection-with-CNNs"><a href="#BMVC-2017-PCN-Part-and-Context-Information-for-Pedestrian-Detection-with-CNNs" class="headerlink" title="[BMVC-2017] PCN: Part and Context Information for Pedestrian Detection with CNNs"></a>[BMVC-2017] PCN: Part and Context Information for Pedestrian Detection with CNNs</h3><p><img src="./1533980559400.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv: <a href="https://arxiv.org/abs/1804.044838" target="_blank" rel="noopener">https://arxiv.org/abs/1804.044838</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<h3 id="CVPR-2017-CityPersons-A-Diverse-Dataset-for-Pedestrian-Detection"><a href="#CVPR-2017-CityPersons-A-Diverse-Dataset-for-Pedestrian-Detection" class="headerlink" title="[CVPR-2017] CityPersons: A Diverse Dataset for Pedestrian Detection"></a>[CVPR-2017] CityPersons: A Diverse Dataset for Pedestrian Detection</h3><p><img src="./1528194369562.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv: <a href="http://arxiv.org/abs/1702.05693" target="_blank" rel="noopener">http://arxiv.org/abs/1702.05693</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<hr>
+<h3 id="CVPR-2017-Learning-Cross-Modal-Deep-Representations-for-Robust-Pedestrian-Detection"><a href="#CVPR-2017-Learning-Cross-Modal-Deep-Representations-for-Robust-Pedestrian-Detection" class="headerlink" title="[CVPR-2017] Learning Cross-Modal Deep Representations for Robust Pedestrian Detection"></a>[CVPR-2017] Learning Cross-Modal Deep Representations for Robust Pedestrian Detection</h3><p><img src="./1528194560698.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv: <a href="https://arxiv.org/abs/1704.02431" target="_blank" rel="noopener">https://arxiv.org/abs/1704.02431</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<p><img src="./1528194591022.png" alt="Alt text"><br><img src="./1528194606094.png" alt="Alt text"></p>
+<h3 id="CVPR-2017-What-Can-Help-Pedestrian-Detection"><a href="#CVPR-2017-What-Can-Help-Pedestrian-Detection" class="headerlink" title="[CVPR-2017] What Can Help Pedestrian Detection?"></a>[CVPR-2017] What Can Help Pedestrian Detection?</h3><ul>
+<li>arxiv: <a href="https://arxiv.org/abs/1704.02431" target="_blank" rel="noopener">https://arxiv.org/abs/1704.02431</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<h3 id="TPAMI-2017-Towards-Reaching-Human-Performance-in-Pedestrian-Detection"><a href="#TPAMI-2017-Towards-Reaching-Human-Performance-in-Pedestrian-Detection" class="headerlink" title="[TPAMI-2017] Towards Reaching Human Performance in Pedestrian Detection"></a>[TPAMI-2017] Towards Reaching Human Performance in Pedestrian Detection</h3><ul>
+<li>paper: <a href="http://ieeexplore.ieee.org/document/7917260/" target="_blank" rel="noopener">http://ieeexplore.ieee.org/document/7917260/</a></li>
+<li>arxiv:</li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<h3 id="ICCV-2017-Multi-label-Learning-of-Part-Detectors-for-Heavily-Occluded-Pedestrian-Detection"><a href="#ICCV-2017-Multi-label-Learning-of-Part-Detectors-for-Heavily-Occluded-Pedestrian-Detection" class="headerlink" title="[ICCV-2017] Multi-label Learning of Part Detectors for Heavily Occluded Pedestrian Detection"></a>[ICCV-2017] Multi-label Learning of Part Detectors for Heavily Occluded Pedestrian Detection</h3><ul>
+<li>paper: <a href="http://openaccess.thecvf.com/content_ICCV_2017/papers/Zhou_Multi-Label_Learning_of_ICCV_2017_paper.pdf" target="_blank" rel="noopener">http://openaccess.thecvf.com/content_ICCV_2017/papers/Zhou_Multi-Label_Learning_of_ICCV_2017_paper.pdf</a></li>
+<li>arxiv:</li>
+<li>project website:</li>
+<li>slides:</li>
+</ul>
+<h3 id="ICCV-2017-Illuminating-Pedestrians-via-Simultaneous-Detection-amp-Segmentation"><a href="#ICCV-2017-Illuminating-Pedestrians-via-Simultaneous-Detection-amp-Segmentation" class="headerlink" title="[ICCV-2017]Illuminating Pedestrians via Simultaneous Detection &amp; Segmentation"></a>[ICCV-2017]Illuminating Pedestrians via Simultaneous Detection &amp; Segmentation</h3><p><img src="http://cvlab.cse.msu.edu/images/teasers/pedestrian-intro.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>arxiv: <a href="https://arxiv.org/abs/1706.08564" target="_blank" rel="noopener">https://arxiv.org/abs/1706.08564</a></li>
+<li>project website: <a href="http://cvlab.cse.msu.edu/project-pedestrian-detection.html" target="_blank" rel="noopener">http://cvlab.cse.msu.edu/project-pedestrian-detection.html</a></li>
+<li>slides:</li>
+<li>github caffe: <a href="https://github.com/garrickbrazil/SDS-RCNN" target="_blank" rel="noopener">https://github.com/garrickbrazil/SDS-RCNN</a></li>
+</ul>
+<h3 id="CVPR-2016-Semantic-Channels-for-Fast-Pedestrian-Detection"><a href="#CVPR-2016-Semantic-Channels-for-Fast-Pedestrian-Detection" class="headerlink" title="[CVPR-2016] Semantic Channels for Fast Pedestrian Detection"></a>[CVPR-2016] Semantic Channels for Fast Pedestrian Detection</h3><p><img src="./1528195250768.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>paper: <a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Costea_Semantic_Channels_for_CVPR_2016_paper.pdf" target="_blank" rel="noopener">https://www.cv-foundation.org/openaccess/content_cvpr_2016/papers/Costea_Semantic_Channels_for_CVPR_2016_paper.pdf</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<h3 id="CVPR-2016-How-Far-areWe-from-Solving-Pedestrian-Detection"><a href="#CVPR-2016-How-Far-areWe-from-Solving-Pedestrian-Detection" class="headerlink" title="[CVPR-2016] How Far areWe from Solving Pedestrian Detection?"></a>[CVPR-2016] How Far areWe from Solving Pedestrian Detection?</h3><ul>
+<li>paper: <a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/app/S06-29.pdf" target="_blank" rel="noopener">https://www.cv-foundation.org/openaccess/content_cvpr_2016/app/S06-29.pdf</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<h3 id="ICCV-2015-Deep-Learning-Strong-Parts-for-Pedestrian-Detection"><a href="#ICCV-2015-Deep-Learning-Strong-Parts-for-Pedestrian-Detection" class="headerlink" title="[ICCV-2015] Deep Learning Strong Parts for Pedestrian Detection"></a>[ICCV-2015] Deep Learning Strong Parts for Pedestrian Detection</h3><p><img src="./1537260670049.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>paper: <a href="https://www.cv-foundation.org/openaccess/content_iccv_2015/html/Tian_Deep_Learning_Strong_ICCV_2015_paper.htmler.html" target="_blank" rel="noopener">https://www.cv-foundation.org/openaccess/content_iccv_2015/html/Tian_Deep_Learning_Strong_ICCV_2015_paper.htmler.html</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<h3 id="CVPR-2013-Joint-Deep-Learning-for-Pedestrian-Detection-Wanli"><a href="#CVPR-2013-Joint-Deep-Learning-for-Pedestrian-Detection-Wanli" class="headerlink" title="[CVPR-2013] Joint Deep Learning for Pedestrian Detection Wanli"></a>[CVPR-2013] Joint Deep Learning for Pedestrian Detection Wanli</h3><p><img src="./1537260505221.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>paper: <a href="https://www.cv-foundation.org/openaccess/content_iccv_2013/html/Ouyang_Joint_Deep_Learning_2013_ICCV_paper.html" target="_blank" rel="noopener">https://www.cv-foundation.org/openaccess/content_iccv_2013/html/Ouyang_Joint_Deep_Learning_2013_ICCV_paper.html</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<h3 id="CVPR-2012-A-Discriminative-Deep-Model-for-Pedestrian-Detection-with-Occlusion-Handling"><a href="#CVPR-2012-A-Discriminative-Deep-Model-for-Pedestrian-Detection-with-Occlusion-Handling" class="headerlink" title="[CVPR-2012] A Discriminative Deep Model for Pedestrian Detection with Occlusion Handling"></a>[CVPR-2012] A Discriminative Deep Model for Pedestrian Detection with Occlusion Handling</h3><p><img src="./1537260310332.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>paper: <a href="http://mmlab.ie.cuhk.edu.hk/pdf/ouyangWcvpr2012.pdf" target="_blank" rel="noopener">http://mmlab.ie.cuhk.edu.hk/pdf/ouyangWcvpr2012.pdf</a></li>
+<li>paper: <a href="https://ieeexplore.ieee.org/abstract/document/6248062/" target="_blank" rel="noopener">https://ieeexplore.ieee.org/abstract/document/6248062/</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<h3 id="CVPR-2010-Multi-Cue-Pedestrian-Classification-With-Partial-Occlusion-Handling"><a href="#CVPR-2010-Multi-Cue-Pedestrian-Classification-With-Partial-Occlusion-Handling" class="headerlink" title="[CVPR-2010] Multi-Cue Pedestrian Classification With Partial Occlusion Handling"></a>[CVPR-2010] Multi-Cue Pedestrian Classification With Partial Occlusion Handling</h3><p><img src="./1537260117170.png" alt="Alt text| left | 300x0"></p>
+<ul>
+<li>paper: <a href="https://ieeexplore.ieee.org/abstract/document/5540111/" target="_blank" rel="noopener">https://ieeexplore.ieee.org/abstract/document/5540111/</a></li>
+<li>project website:</li>
+<li>slides:</li>
+<li>github caffe:</li>
+</ul>
+<h2 id="行人检测数据集"><a href="#行人检测数据集" class="headerlink" title="行人检测数据集"></a>行人检测数据集</h2><h3 id="CityPersons"><a href="#CityPersons" class="headerlink" title="CityPersons"></a>CityPersons</h3><p><img src="./1534569661113.png" alt="Alt text"></p>
+<p>CityPersons数据集是在Cityscapes数据集基础上建立的，使用了Cityscapes数据集的数据，对一些类别进行了精确的标注。该数据集是在[CVPR-2017] CityPersons: A Diverse Dataset for Pedestrian Detection这篇论文中提出的，更多细节可以通过阅读该论文了解。</p>
+<p>上图中左侧是行人标注，右侧是原始的CityScapes数据集。</p>
+<ul>
+<li><a href="https://bitbucket.org/shanshanzhang/citypersons" target="_blank" rel="noopener"><strong>标注和评估文件</strong></a></li>
+<li><a href="https://www.cityscapes-dataset.com/" target="_blank" rel="noopener"><strong>数据集下载</strong></a></li>
+</ul>
+<p>文件格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#评测文件</span><br><span class="line">$/Cityscapes/shanshanzhang-citypersons/evaluation/eval_script/coco.py</span><br><span class="line">$/Cityscapes/shanshanzhang-citypersons/evaluation/eval_script/eval_demo.py</span><br><span class="line">$/Cityscapes/shanshanzhang-citypersons/evaluation/eval_script/eval_MR_multisetup.py</span><br><span class="line"></span><br><span class="line">#注释文件</span><br><span class="line">$/Cityscapes/shanshanzhang-citypersons/annotations</span><br><span class="line">$/Cityscapes/shanshanzhang-citypersons/annotations/anno_train.mat</span><br><span class="line">$/Cityscapes/shanshanzhang-citypersons/annotations/anno_val.mat</span><br><span class="line">$/Cityscapes/shanshanzhang-citypersons/annotations/README.txt</span><br><span class="line">#图片数据</span><br><span class="line"></span><br><span class="line">$/Cityscapes/leftImg8bit/train/*</span><br><span class="line">$/Cityscapes/leftImg8bit/val/*</span><br><span class="line">$/Cityscapes/leftImg8bit/test/*</span><br></pre></td></tr></table></figure>
+<p>注释文件格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">CityPersons annotations</span><br><span class="line">(1) data structure:</span><br><span class="line">    one image per cell</span><br><span class="line">    in each cell, there are three fields: city_name; im_name; bbs (bounding box annotations)</span><br><span class="line"></span><br><span class="line">(2) bounding box annotation format:</span><br><span class="line">　　 one object instance per row:</span><br><span class="line">　　 [class_label, x1,y1,w,h, instance_id, x1_vis, y1_vis, w_vis, h_vis]</span><br><span class="line"></span><br><span class="line">(3) class label definition:</span><br><span class="line">　 class_label =0: ignore regions (fake humans, e.g. people on posters, reflections etc.)</span><br><span class="line">    class_label =1: pedestrians</span><br><span class="line">    class_label =2: riders</span><br><span class="line">    class_label =3: sitting persons</span><br><span class="line">    class_label =4: other persons with unusual postures</span><br><span class="line">    class_label =5: group of people</span><br><span class="line"></span><br><span class="line">(4) boxes:</span><br><span class="line">　　visible boxes [x1_vis, y1_vis, w_vis, h_vis] are automatically generated from segmentation masks;</span><br><span class="line">      (x1,y1) is the upper left corner.</span><br><span class="line">      if class_label==1 or 2</span><br><span class="line">        [x1,y1,w,h] is a well-aligned bounding box to the full body ;</span><br><span class="line">      else</span><br><span class="line">        [x1,y1,w,h] = [x1_vis, y1_vis, w_vis, h_vis];</span><br></pre></td></tr></table></figure></p>
+<h3 id="Caltech"><a href="#Caltech" class="headerlink" title="Caltech"></a>Caltech</h3><p><img src="1517407508293.png" alt="caltech"></p>
+<ul>
+<li><a href="http://www.vision.caltech.edu/Image_Datasets/CaltechPedestrians/" target="_blank" rel="noopener"><strong>Caltech官网</strong></a><br>更所细节请阅读这篇论文，<br><a href="http://www.vision.caltech.edu/Image_Datasets/CaltechPedestrians/files/PAMI12pedestrians.pdf" target="_blank" rel="noopener">[TAPAMI-2012] Pedestrian Detection: An Evaluation of the State of the Art
+</a></li>
+</ul>
+<p><img src="./1534570096814.png" alt="Alt text"></p>
+<h3 id="KITTI"><a href="#KITTI" class="headerlink" title="KITTI"></a>KITTI</h3><p><img src="./1534569869602.png" alt="Alt text"></p>
+<ul>
+<li><a href="http://www.cvlibs.net/datasets/kitti/" target="_blank" rel="noopener"><strong>KITTI官网</strong></a></li>
+</ul>
+<h3 id="EuroCity"><a href="#EuroCity" class="headerlink" title="EuroCity"></a>EuroCity</h3><p><a href="https://eurocity-dataset.tudelft.nl/eval/overview/statistics" target="_blank" rel="noopener">EuroCity 官网</a></p>
+<p><a href="http://intelligent-vehicles.org/wp-content/uploads/2019/04/braun2019tpami_eurocity_persons.pdf" target="_blank" rel="noopener">EuroCity Paper</a></p>
+<ul>
+<li>[TPAMI-2019] EuroCity Persons: A Novel Benchmark for Person Detection in Traffic Scenes</li>
+</ul>
+<p>With over 238200 person instances manually labeled in over 47300 images, EuroCity Persons is nearly one order of magnitude larger than person datasets used previously for benchmarking. Diversity is gained by recording this dataset throughout Europe.</p>
+<p><img src="./eurocity-01.png" alt="EuroCity-01"></p>
+<p><img src="./eurocity-02.png" alt="EuroCity-02"></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Object Class</th>
+<th style="text-align:center"># objects (day)</th>
+<th style="text-align:center"># objects (night)</th>
+<th style="text-align:center"># objects (sum)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Pedestrian</td>
+<td style="text-align:center">183004</td>
+<td style="text-align:center">35309</td>
+<td style="text-align:center">218313</td>
+</tr>
+<tr>
+<td style="text-align:center">Rider</td>
+<td style="text-align:center">18216</td>
+<td style="text-align:center">1564</td>
+<td style="text-align:center">19780</td>
+</tr>
+</tbody>
+</table>
+<h3 id="CrowdHuman"><a href="#CrowdHuman" class="headerlink" title="CrowdHuman"></a>CrowdHuman</h3><p><a href="http://www.crowdhuman.org/" target="_blank" rel="noopener">CrowdHuman 主页</a></p>
+<p><a href="https://arxiv.org/abs/1805.00123" target="_blank" rel="noopener">CrowdHuman Paper</a></p>
+<p><img src="./crowdhuman-20190918-01.png" alt="CrowdHuman-20190918-01"></p>
+<p><img src="./crowdhuman-20190918-02.png" alt="CrowdHuman-20190918-02"></p>
+<p><img src="./crowdhuman-20190918-03.png" alt="CrowdHuman-20190918-03"></p>
+<h2 id="性能比较"><a href="#性能比较" class="headerlink" title="性能比较"></a>性能比较</h2><p>数据来自 <a href="https://bitbucket.org/shanshanzhang/citypersons/src/default/" target="_blank" rel="noopener">CityPersons</a> 官网。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Method</th>
+<th style="text-align:center">MR (Reasonable)</th>
+<th style="text-align:center">MR (Reasonable_small)</th>
+<th style="text-align:center">MR (Reasonable_occ=heavy)</th>
+<th style="text-align:center">MR (All)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">YT-PedDet</td>
+<td style="text-align:center">8.41%</td>
+<td style="text-align:center">10.60%</td>
+<td style="text-align:center">37.88%</td>
+<td style="text-align:center">37.22%</td>
+</tr>
+<tr>
+<td style="text-align:center">STNet</td>
+<td style="text-align:center">9.78%</td>
+<td style="text-align:center">10.95%</td>
+<td style="text-align:center">36.16%</td>
+<td style="text-align:center">31.36%</td>
+</tr>
+<tr>
+<td style="text-align:center">DVRNet</td>
+<td style="text-align:center">10.99%</td>
+<td style="text-align:center">15.68%</td>
+<td style="text-align:center">43.77%</td>
+<td style="text-align:center">41.48%</td>
+</tr>
+<tr>
+<td style="text-align:center">HBA-RCNN</td>
+<td style="text-align:center">11.06%</td>
+<td style="text-align:center">14.77%</td>
+<td style="text-align:center">43.61%</td>
+<td style="text-align:center">39.54%</td>
+</tr>
+<tr>
+<td style="text-align:center">OR-CNN</td>
+<td style="text-align:center">11.32%</td>
+<td style="text-align:center">14.19%</td>
+<td style="text-align:center">51.43%</td>
+<td style="text-align:center">40.19%</td>
+</tr>
+<tr>
+<td style="text-align:center">Repultion Loss</td>
+<td style="text-align:center">11.48%</td>
+<td style="text-align:center">15.67%</td>
+<td style="text-align:center">52.59%</td>
+<td style="text-align:center">39.17%</td>
+</tr>
+<tr>
+<td style="text-align:center">Adapted FasterRCNN</td>
+<td style="text-align:center">12.97%</td>
+<td style="text-align:center">37.24%</td>
+<td style="text-align:center">50.47%</td>
+<td style="text-align:center">43.86%</td>
+</tr>
+<tr>
+<td style="text-align:center">MS-CNN</td>
+<td style="text-align:center">13.32%</td>
+<td style="text-align:center">15.86%</td>
+<td style="text-align:center">51.88%</td>
+<td style="text-align:center">39.94%</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Tianliang Zhang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tianliang Zhang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Pedestrian-Detection/" rel="tag"># Pedestrian Detection</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/14/Keras-Tutorial/" rel="next" title="Keras Tutorial">
+                <i class="fa fa-chevron-left"></i> Keras Tutorial
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/02/CornerNet-Detection-Objects-as-Paired-Keypoints/" rel="prev" title="CornerNet: Detection Objects as Paired Keypoints">
+                CornerNet: Detection Objects as Paired Keypoints <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODg4MC8xNTQwOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460"
+                alt="Tianliang Zhang" />
+            
+              <p class="site-author-name" itemprop="name">Tianliang Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Writing is the best form of thinking!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/xingkongliang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:tianliangjay@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/xingkong_liang" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/1863221531" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#同步github地址"><span class="nav-number">1.</span> <span class="nav-text">同步github地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关科研工作者"><span class="nav-number">2.</span> <span class="nav-text">相关科研工作者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开放的代码"><span class="nav-number">3.</span> <span class="nav-text">开放的代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paper-List"><span class="nav-number">4.</span> <span class="nav-text">Paper List</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#论文"><span class="nav-number">5.</span> <span class="nav-text">论文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2019-oral-Adaptive-NMS-Refining-Pedestrian-Detection-in-a-Crowd"><span class="nav-number">5.1.</span> <span class="nav-text">[CVPR-2019 oral] Adaptive NMS: Refining Pedestrian Detection in a Crowd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2019-High-level-Semantic-Feature-Detection-A-New-Perspective-for-Pedestrian-Detection"><span class="nav-number">5.2.</span> <span class="nav-text">[CVPR-2019] High-level Semantic Feature Detection:A New Perspective for Pedestrian Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2019-SSA-CNN-Semantic-Self-Attention-CNN-for-Pedestrian-Detection"><span class="nav-number">5.3.</span> <span class="nav-text">[CVPR-2019] SSA-CNN: Semantic Self-Attention CNN for Pedestrian Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2019-Pedestrian-Detection-in-Thermal-Images-using-Saliency-Maps"><span class="nav-number">5.4.</span> <span class="nav-text">[CVPR-2019] Pedestrian Detection in Thermal Images using Saliency Maps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIP-2018-Too-Far-to-See-Not-Really-Pedestrian-Detection-with-Scale-Aware-Localization-Policy"><span class="nav-number">5.5.</span> <span class="nav-text">[TIP-2018] Too Far to See? Not Really: Pedestrian Detection with Scale-Aware Localization Policy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transactions-on-Multimedia-201８-Scale-Aware-Fast-R-CNN-for-Pedestrian-Detection"><span class="nav-number">5.6.</span> <span class="nav-text">[Transactions on Multimedia-201８] Scale-Aware Fast R-CNN for Pedestrian Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ECCV-2018-Bi-box-Regression-for-Pedestrian-Detection-and-Occlusion-Estimation"><span class="nav-number">5.7.</span> <span class="nav-text">[ECCV-2018] Bi-box Regression for Pedestrian Detection and Occlusion Estimation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ECCV-2018-Learning-Efficient-Single-stage-Pedestrian-Detectors-by-Asymptotic-Localization-Fitting"><span class="nav-number">5.8.</span> <span class="nav-text">[ECCV-2018] Learning Efficient Single-stage Pedestrian Detectors by Asymptotic Localization Fitting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ECCV-2018-Graininess-Aware-Deep-Feature-Learning-for-Pedestrian-Detection"><span class="nav-number">5.9.</span> <span class="nav-text">[ECCV-2018] Graininess-Aware Deep Feature Learning for Pedestrian Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ECCV-2018-Occlusion-aware-R-CNN-Detecting-Pedestrians-in-a-Crowd"><span class="nav-number">5.10.</span> <span class="nav-text">[ECCV-2018] Occlusion-aware R-CNN: Detecting Pedestrians in a Crowd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ECCV-2018-Small-scale-Pedestrian-Detection-Based-on-Somatic-Topology-Localization-and-Temporal-Feature-Aggregation"><span class="nav-number">5.11.</span> <span class="nav-text">[ECCV-2018] Small-scale Pedestrian Detection Based on Somatic Topology Localization and Temporal Feature Aggregation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2018-Improving-Occlusion-and-Hard-Negative-Handling-for-Single-Stage-Pedestrian-Detectors"><span class="nav-number">5.12.</span> <span class="nav-text">[CVPR-2018] Improving Occlusion and Hard Negative Handling for Single-Stage Pedestrian Detectors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2018-Occluded-Pedestrian-Detection-Through-Guided-Attention-in-CNNs"><span class="nav-number">5.13.</span> <span class="nav-text">[CVPR-2018] Occluded Pedestrian Detection Through Guided Attention in CNNs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2018-Repulsion-Loss-Detecting-Pedestrians-in-a-Crowd"><span class="nav-number">5.14.</span> <span class="nav-text">[CVPR-2018] Repulsion Loss: Detecting Pedestrians in a Crowd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TPAMI-2017-Jointly-Learning-Deep-Features-Deformable-Parts-Occlusion-and-Classification-for-Pedestrian-Detection"><span class="nav-number">5.15.</span> <span class="nav-text">[TPAMI-2017] Jointly Learning Deep Features, Deformable Parts, Occlusion and Classification for Pedestrian Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BMVC-2017-PCN-Part-and-Context-Information-for-Pedestrian-Detection-with-CNNs"><span class="nav-number">5.16.</span> <span class="nav-text">[BMVC-2017] PCN: Part and Context Information for Pedestrian Detection with CNNs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2017-CityPersons-A-Diverse-Dataset-for-Pedestrian-Detection"><span class="nav-number">5.17.</span> <span class="nav-text">[CVPR-2017] CityPersons: A Diverse Dataset for Pedestrian Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2017-Learning-Cross-Modal-Deep-Representations-for-Robust-Pedestrian-Detection"><span class="nav-number">5.18.</span> <span class="nav-text">[CVPR-2017] Learning Cross-Modal Deep Representations for Robust Pedestrian Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2017-What-Can-Help-Pedestrian-Detection"><span class="nav-number">5.19.</span> <span class="nav-text">[CVPR-2017] What Can Help Pedestrian Detection?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TPAMI-2017-Towards-Reaching-Human-Performance-in-Pedestrian-Detection"><span class="nav-number">5.20.</span> <span class="nav-text">[TPAMI-2017] Towards Reaching Human Performance in Pedestrian Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICCV-2017-Multi-label-Learning-of-Part-Detectors-for-Heavily-Occluded-Pedestrian-Detection"><span class="nav-number">5.21.</span> <span class="nav-text">[ICCV-2017] Multi-label Learning of Part Detectors for Heavily Occluded Pedestrian Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICCV-2017-Illuminating-Pedestrians-via-Simultaneous-Detection-amp-Segmentation"><span class="nav-number">5.22.</span> <span class="nav-text">[ICCV-2017]Illuminating Pedestrians via Simultaneous Detection &amp; Segmentation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2016-Semantic-Channels-for-Fast-Pedestrian-Detection"><span class="nav-number">5.23.</span> <span class="nav-text">[CVPR-2016] Semantic Channels for Fast Pedestrian Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2016-How-Far-areWe-from-Solving-Pedestrian-Detection"><span class="nav-number">5.24.</span> <span class="nav-text">[CVPR-2016] How Far areWe from Solving Pedestrian Detection?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ICCV-2015-Deep-Learning-Strong-Parts-for-Pedestrian-Detection"><span class="nav-number">5.25.</span> <span class="nav-text">[ICCV-2015] Deep Learning Strong Parts for Pedestrian Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2013-Joint-Deep-Learning-for-Pedestrian-Detection-Wanli"><span class="nav-number">5.26.</span> <span class="nav-text">[CVPR-2013] Joint Deep Learning for Pedestrian Detection Wanli</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2012-A-Discriminative-Deep-Model-for-Pedestrian-Detection-with-Occlusion-Handling"><span class="nav-number">5.27.</span> <span class="nav-text">[CVPR-2012] A Discriminative Deep Model for Pedestrian Detection with Occlusion Handling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CVPR-2010-Multi-Cue-Pedestrian-Classification-With-Partial-Occlusion-Handling"><span class="nav-number">5.28.</span> <span class="nav-text">[CVPR-2010] Multi-Cue Pedestrian Classification With Partial Occlusion Handling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行人检测数据集"><span class="nav-number">6.</span> <span class="nav-text">行人检测数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CityPersons"><span class="nav-number">6.1.</span> <span class="nav-text">CityPersons</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Caltech"><span class="nav-number">6.2.</span> <span class="nav-text">Caltech</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KITTI"><span class="nav-number">6.3.</span> <span class="nav-text">KITTI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EuroCity"><span class="nav-number">6.4.</span> <span class="nav-text">EuroCity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CrowdHuman"><span class="nav-number">6.5.</span> <span class="nav-text">CrowdHuman</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能比较"><span class="nav-number">7.</span> <span class="nav-text">性能比较</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tianliang Zhang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ksw0nRfaEzFJTORKsUHFkboY-gzGzoHsz", "HgFpOq4Y7wfrEiCV9HwxJziH");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
