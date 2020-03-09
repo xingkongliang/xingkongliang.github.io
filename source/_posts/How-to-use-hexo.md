@@ -1,8 +1,8 @@
 ---
 title: How to use hexo?
 date: 2018-08-14 15:21:22
-categories: 
-tags: 
+categories:
+tags:
 description: 使用Hexo的基本方法。
 ---
 
@@ -17,7 +17,7 @@ $ hexo init [folder]
 新建一个网站，如果没有设置｀folder｀，Hexo默认在目前的文件夹建立网站。
 
 
-### new 
+### new
 
 ```
 $ hexo new [layout] <title>
@@ -32,12 +32,6 @@ $ hexo generate
 $ hexo g  # 简写
 ```
 <!--more-->
-
-### publish
-```
-$ hexo publish [layout] <filename>
-```
-发表草稿。
 
 ### server
 
@@ -95,6 +89,25 @@ $ hexo --draft
 ```
 显示`source/_drafts`文件夹中的草稿文件。
 
+### 浏览草稿文章
+```
+$ hexo S --draft
+```
+
+### publish
+```
+$ hexo publish [layout] <filename>
+$ hexo P [layout] <filename>  # 缩写
+```
+发表草稿。
+
+其中 <filename> 为不包含 md 后缀的文章名称。它的原理只是将文章从 `source/_drafts` 移动到 `source/_posts` 而已。
+
+之后的 `hexo generat`e 与 `hexo deploy` 的用法就完全一样了。
+
+若日后想将正式文章转为为草稿，只需手动将文章从 `source/_posts` 目录移动到 `source/_drafts` 目录即可。
+
+
 ### 自定义CWD
 
 ```
@@ -113,10 +126,10 @@ $ hexo --cwd /path/to/cwd
 在文章中的`front-matter`中添加description，
 ```
 ---
-title: 
+title:
 date: 2018-08-14 15:21:22
-categories: 
-tags: 
+categories:
+tags:
 description: 描述。。
 ---
 

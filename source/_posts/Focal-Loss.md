@@ -2,7 +2,7 @@
 title: Focal Loss for Dense Object Detection
 date: 2019-01-10 21:03:52
 description:
-categories: Detection
+categories: Object Detection
 tags: Object Detection
 ---
 

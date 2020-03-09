@@ -2,7 +2,7 @@
 title: 行人检测（Pedestrian Detection）论文整理
 date: 2018-08-17 11:26:22
 description: 行人检测（Pedestrian Detection）论文整理，包含论文链接和代码地址。
-categories:
+categories: Pedestrian Detection
 tags:
 - Pedestrian Detection
 ---
@@ -17,36 +17,40 @@ tags:
 - [张姗姗 homepage](https://sites.google.com/site/shanshanzhangshomepage/)
 - [欧阳万里 scholar](https://scholar.google.com/citations?user=pw_0Z_UAAAAJ&%20hl=en)
 - [欧阳万里 homepage](http://www.ee.cuhk.edu.hk/~wlouyang/)
+- [Liu Wei homepage](https://liuwei16.github.io/)
 
 ## 开放的代码
 
+- [**Leotju/MGAN**](https://github.com/Leotju/MGAN) [ICCV-2019] Mask-Guided Attention Network for Occluded Pedestrian Detection [[paper](http://openaccess.thecvf.com/content_ICCV_2019/papers/Pang_Mask-Guided_Attention_Network_for_Occluded_Pedestrian_Detection_ICCV_2019_paper.pdf)]
+
+- [**lw396285v/CSP-pedestrian-detection-in-pytorch 非官方实现**](https://github.com/lw396285v/CSP-pedestrian-detection-in-pytorch)
+[CVPR-2019] High-level Semantic Feature Detection:A New Perspective for Pedestrian Detection [[paper](https://arxiv.org/abs/1904.02948)]
 
 - [**liuwei16/CSP**](https://github.com/liuwei16/CSP)
-
 [CVPR-2019] High-level Semantic Feature Detection:A New Perspective for Pedestrian Detection [[paper](https://arxiv.org/abs/1904.02948)]
 
 - [**liuwei16/ALFNet**](https://github.com/liuwei16/ALFNet)
-
 [ECCV-2018] Learning Efficient Single-stage Pedestrian Detectors by Asymptotic Localization Fitting
 
 - [**rainofmine/Bi-box_Regression 非官方实现**](https://github.com/rainofmine/Bi-box_Regression)
-
 [ECCV-2018] Bi-box Regression for Pedestrian Detection and Occlusion Estimation
 
 - [**rainofmine/Repulsion_Loss 非官方实现**](https://github.com/rainofmine/Repulsion_Loss)
-
 [CVPR-2018] Repulsion Loss: Detecting Pedestrians in a Crowd
 
 - [**garrickbrazil/SDS-RCNN**](https://github.com/garrickbrazil/SDS-RCNN)
-
 [ICCV-2017] Illuminating Pedestrians via Simultaneous Detection & Segmentation
 
 - [**zhangliliang/RPN_BF**](https://github.com/zhangliliang/RPN_BF)
-
 [ECCV-2016] Is Faster R-CNN Doing Well for Pedestrian Detection?
 
 ## Paper List
 
+- [ICCV-2019] Semi-Supervised Pedestrian Instance Synthesis and Detection With Mutual Reinforcement [[paper](http://openaccess.thecvf.com/content_ICCV_2019/papers/Wu_Semi-Supervised_Pedestrian_Instance_Synthesis_and_Detection_With_Mutual_Reinforcement_ICCV_2019_paper.pdf)]
+- [ICCV-2019] Weakly Aligned Cross-Modal Learning for Multispectral Pedestrian Detection [[paper](http://openaccess.thecvf.com/content_ICCV_2019/papers/Zhang_Weakly_Aligned_Cross-Modal_Learning_for_Multispectral_Pedestrian_Detection_ICCV_2019_paper.pdf)]
+- [ICCV-2019] Discriminative Feature Transformation for Occluded Pedestrian Detection [[paper](http://openaccess.thecvf.com/content_ICCV_2019/papers/Zhou_Discriminative_Feature_Transformation_for_Occluded_Pedestrian_Detection_ICCV_2019_paper.pdf)]
+- [ICCV-2019] Mask-Guided Attention Network for Occluded Pedestrian Detection [[paper](http://openaccess.thecvf.com/content_ICCV_2019/papers/Pang_Mask-Guided_Attention_Network_for_Occluded_Pedestrian_Detection_ICCV_2019_paper.pdf)] [[**code**](https://github.com/Leotju/MGAN)]
+- [TPAMI-2019] EuroCity Persons: A Novel Benchmark for Person Detection in Traffic Scenes [[paper](http://intelligent-vehicles.org/wp-content/uploads/2019/04/braun2019tpami_eurocity_persons.pdf)]
 - [CVPR-2019 oral] Adaptive NMS: Refining Pedestrian Detection in a Crowd [[paper](https://arxiv.org/abs/1904.02948)]
 - [CVPR-2019] High-level Semantic Feature Detection:A New Perspective for Pedestrian Detection [[paper](https://arxiv.org/abs/1904.02948)] [[**code**](https://github.com/liuwei16/CSP)]
 - [CVPR-2019] SSA-CNN: Semantic Self-Attention CNN for Pedestrian Detection
@@ -407,6 +411,38 @@ CityPersons annotations
 
 - [**KITTI官网**](http://www.cvlibs.net/datasets/kitti/)
 
+### EuroCity
+
+
+[EuroCity 官网](https://eurocity-dataset.tudelft.nl/eval/overview/statistics)
+
+[EuroCity Paper](http://intelligent-vehicles.org/wp-content/uploads/2019/04/braun2019tpami_eurocity_persons.pdf)
+
+- [TPAMI-2019] EuroCity Persons: A Novel Benchmark for Person Detection in Traffic Scenes
+
+With over 238200 person instances manually labeled in over 47300 images, EuroCity Persons is nearly one order of magnitude larger than person datasets used previously for benchmarking. Diversity is gained by recording this dataset throughout Europe.
+
+![EuroCity-01](./eurocity-01.png)
+
+![EuroCity-02](./eurocity-02.png)
+
+
+| Object Class | # objects (day) | # objects (night) | # objects (sum) |
+|:------------:|:---------------:|:-----------------:|:---------------:|
+|  Pedestrian  |     183004      |       35309       |     218313      |
+|    Rider     |      18216      |       1564        |      19780      |
+
+### CrowdHuman
+
+[CrowdHuman 主页](http://www.crowdhuman.org/)
+
+[CrowdHuman Paper](https://arxiv.org/abs/1805.00123)
+
+![CrowdHuman-20190918-01](./crowdhuman-20190918-01.png)
+
+![CrowdHuman-20190918-02](./crowdhuman-20190918-02.png)
+
+![CrowdHuman-20190918-03](./crowdhuman-20190918-03.png)
 
 ## 性能比较
 

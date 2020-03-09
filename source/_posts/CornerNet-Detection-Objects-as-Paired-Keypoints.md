@@ -1,8 +1,8 @@
 ---
 title: 'CornerNet: Detection Objects as Paired Keypoints'
 date: 2018-09-02 22:08:13
-description: 
-categories:
+description:
+categories: Object Detection
 tags:
  - Object Detection
 ---
