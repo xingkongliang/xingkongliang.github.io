@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Instance Segmentation," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Tianliang" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="K-Net 统一了语义、实例和全景分割框架，它通过一组可学习的 kernels 来分割实例和语义类别，其中每个 kernel 负责为潜在实例或 stuff 类别生成 mask。为了解决区分不同实例的困难，论文提出一种 kernel update 策略，改策略使每个 kernel 能够动态并以输入图像中意义组为条件。">
+<meta name="keywords" content="Instance Segmentation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K-Net:Towards Unified Image Segmentation">
+<meta property="og:url" content="https://www.starlg.cn/2022/05/20/K-Net/index.html">
+<meta property="og:site_name" content="Tianliang">
+<meta property="og:description" content="K-Net 统一了语义、实例和全景分割框架，它通过一组可学习的 kernels 来分割实例和语义类别，其中每个 kernel 负责为潜在实例或 stuff 类别生成 mask。为了解决区分不同实例的困难，论文提出一种 kernel update 策略，改策略使每个 kernel 能够动态并以输入图像中意义组为条件。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.starlg.cn/2022/05/20/K-Net/NeurIPS2021_K-Net_Figure1.png">
+<meta property="og:image" content="https://www.starlg.cn/2022/05/20/K-Net/NeurIPS2021_K-Net_Figure2.png">
+<meta property="og:image" content="https://www.starlg.cn/2022/05/20/K-Net/NeurIPS2021_K-Net_Figure3.png">
+<meta property="og:image" content="https://www.starlg.cn/2022/05/20/K-Net/NeurIPS2021_K-Net_Table1.png">
+<meta property="og:image" content="https://www.starlg.cn/2022/05/20/K-Net/NeurIPS2021_K-Net_Table2.png">
+<meta property="og:image" content="https://www.starlg.cn/2022/05/20/K-Net/NeurIPS2021_K-Net_Table3.png">
+<meta property="og:image" content="https://www.starlg.cn/2022/05/20/K-Net/NeurIPS2021_K-Net_Table4.png">
+<meta property="og:image" content="https://www.starlg.cn/2022/05/20/K-Net/NeurIPS2021_K-Net_Figure4.png">
+<meta property="og:updated_time" content="2022-05-30T14:09:30.590Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="K-Net:Towards Unified Image Segmentation">
+<meta name="twitter:description" content="K-Net 统一了语义、实例和全景分割框架，它通过一组可学习的 kernels 来分割实例和语义类别，其中每个 kernel 负责为潜在实例或 stuff 类别生成 mask。为了解决区分不同实例的困难，论文提出一种 kernel update 策略，改策略使每个 kernel 能够动态并以输入图像中意义组为条件。">
+<meta name="twitter:image" content="https://www.starlg.cn/2022/05/20/K-Net/NeurIPS2021_K-Net_Figure1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.starlg.cn/2022/05/20/K-Net/"/>
+
+
+
+
+
+  <title>K-Net:Towards Unified Image Segmentation | Tianliang</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123915509-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7aa98e58b161f03ba9915003b72d71fa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tianliang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 't55H9pKd6Gm4xW2uPWRY','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.starlg.cn/2022/05/20/K-Net/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tianliang Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tianliang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">K-Net:Towards Unified Image Segmentation</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-05-20T10:32:23+08:00">
+                2022-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2022/05/20/K-Net/" class="leancloud_visitors" data-flag-title="K-Net:Towards Unified Image Segmentation">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2,508
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  K-Net 统一了语义、实例和全景分割框架，它通过一组可学习的 kernels 来分割实例和语义类别，其中每个 kernel 负责为潜在实例或 stuff 类别生成 mask。为了解决区分不同实例的困难，论文提出一种 kernel update 策略，改策略使每个 kernel 能够动态并以输入图像中意义组为条件。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Paper: [NeurIPS 2021] K-Net: Towards Unified Image Segmentation</p>
+<p>Arxiv: https://arxiv.org/abs/2106.14855</p>
+<p>Github: https://github.com/ZwwWayne/K-Net/</p>
+<h2 id="介绍">介绍</h2>
+<p>语义、实例和全景分割之间尽管存在潜在联系，但是它们使用不同的和特定的框架来解决各自任务。这个工作为这些任务提供了一个统一、简单且有效的框架，即 K-Net。它通过一组可学习的 kernels 来分割实例和语义类别，其中每个 kernel 负责为潜在实例或 stuff 类别生成 mask。为了解决区分不同实例的困难，论文提出一种 kernel update 策略，改策略使每个 kernel 能够动态并以输入图像中意义组为条件。K-Net 可以通过二分匹配进行端到端的训练，其中训练和推理是不需要 NMS 和 矩形框的。</p>
+<img src="/2022/05/20/K-Net/NeurIPS2021_K-Net_Figure1.png" title="Figure 1. 语义分割（a）、实例分割（b）、全景分割（c）任务在本论文中由一个通用框架统一起来">
+<p>在传统的语义分割中，每个 convolutinal kernel 对应一个语义类。我们的框架扩展了这个概念，是每个 kernel 对应一个潜在的实例或者一个语义类。</p>
+<p>在本文中，我们首次尝试制定一个统一且有效的框架，通过 kernels 的概念来连接看似不同的图像分割任务（语义、实例和全景）。我们的方法被称为 K-Net（“K”代表内核）。它从一组随机初始化的卷积核开始，并根据现有的分割目标学习 kernels，即用于语义类别的 semantic kernels 和用于实例身份的 instance kernels（图1b)）。semantic kernels 和 instance kernels 的简单组合可以自然地进行全景分割（图1c)。在前向传递中，kernels 对图像特征进行卷积以获得相应的分割预测。</p>
+<p>K-Net 的多功能性和简单性是通过两种设计实现的。首先，我们制定了 K-Net，以便它动态更新 kernels，使它们以它们在图像上的激活为条件。这种内容感知（content-aware）机制对于确保每个 kernel（尤其是 instance kernel）准确响应图像中的不同对象至关重要。通过迭代应用这种自适应 kernel 更新策略，K-Net 显着提高了 kernels 的判别能力并提升了最终的分割性能。值得注意的是，这种策略普遍适用于所有分割任务的 kernels 。</p>
+<p>其次，受目标检测 DETR 最新进展的启发，我们采用二分匹配策略为每个内核分配学习目标。这种训练方法有利于传统的训练策略，因为它在图像中的 kernels 和实例之间建立了一对一的映射。因此，它解决了处理图像中不同数量的实例的问题。此外，它是纯 mask 驱动的，不涉及 boxes。因此，K-Net 自然是无 NMS 和无框的，这对实时应用很有吸引力。</p>
+<h2 id="方法">方法</h2>
+<h3 id="k-net">K-Net</h3>
+<p>尽管“有意义的组”有不同的定义，但所有分割任务本质都将每个像素分配给一个预定义的有意义的组。由于通常假设图片中的组数是有限的，因此我们可以将分割任务的最大组设置为 N。例如，有 N 个预定义的语义类用于语义分割，或者图像中最多有 N 个目标用于实例分割。对于全景分割，N 是图像中 stuff 类和 objects 的总数。因此，我们可以使用 N 个内核将图像划分为 N 个组，其中每个 kernel 负责找到属于期对应组的像素。具体来说，给定由深度神经网络生成的 B 副图像的输入特征图 <span class="math inline">\(F \in R^{B \times C \times H \times W}\)</span>，我们只需要 N 个内核 <span class="math inline">\(K \in R^{N \times C}\)</span> 与 <span class="math inline">\(F\)</span> 进行卷积即可获得相应的分割预测 <span class="math inline">\(M \in R^{B \times N \times H \times W}\)</span> 为</p>
+<p><span class="math display">\[M = \sigma (K \ast F)，\]</span></p>
+<p>其中 C，H 和 W 分别是特征图的通道数、高度和宽度。如果我们只想将每个像素分配给一个 kernel（通常用于语义分割），则激活函数 <span class="math inline">\(\sigma\)</span> 可以是 softmax 函数。如果我们允许一个像素属于多个 mask，则 Sigmoid 函数也可以用作激活函数，通过在激活图上设置一个阈值（如 0.5）（通常用于实例分割），这会产生 N 个二进制 masks。</p>
+<p>这个公式已经主导了语义分割多年。在语义分割中，每个 kernel 负责在图像中找到相似类别的所有像素。而在实例分割中，每个像素组对应一个对象。然而，以前的方法通过额外的步骤而不是 kernel 来分离实例。</p>
+<p>本文是第一个探讨语义分割中的 kernel 概念是否同样适用于实例分割，以及更普遍的全景分割的研究。为了通过内核分离实例，K-Net 中的每个内核最多只能分割图像中的一个对象（图 1b）。通过这种方式，K-Net 区分实例并同时进行分割，无需额外步骤即可一次性实现实例分割。为简单起见，我们在本文中将这些内核称为 semantic kernel 和 instance kernels，分别用于语义和实例分割。实例内核和语义内核的简单组合可以自然地执行全景分割，将像素分配给 an instance ID 或 a class of stuff（图1c)）。</p>
+<h3 id="group-aware-kernels">Group-Aware Kernels</h3>
+<p>尽管 K-Net 很简单，但直接通过内核分离实例并非易事。因为实例 kernels 需要区分图像内和图像间尺度和外观不同的 objects。没有像语义类别这样的共同和明确的特征，instance kernels 需要比 static kernels 更强的判别能力。</p>
+<img src="/2022/05/20/K-Net/NeurIPS2021_K-Net_Figure2.png" title="Figure 2. Kernel Update Head">
+<p>为了克服这一挑战，我们提供了一种方法，通过 kernel update head 使 kernel 以相应的像素组为条件，如图2所示。Kernel update head <span class="math inline">\(f_i\)</span> 包含三个关键步骤：组特征组装（group feture assembling）、自适应内核更新（adaptive kernel update），和内核交互（kernel interaction）。首先，使用 mask 预测 <span class="math inline">\(M_{i-1}\)</span> 组装每个像素组的 group feature <span class="math inline">\(F^K\)</span>????。由于是每个组的上下文将它们彼此区分开来，因此使用 <span class="math inline">\(F^K\)</span> 自适应地更新其对应的内核 <span class="math inline">\(K_{i-1}\)</span>。之后，内核相互交互，对图像上下文进行全面建模。 最后，获得的 group-aware kernels <span class="math inline">\(K_i\)</span> 对特征图 <span class="math inline">\(F\)</span> 进行卷积以获得更准确的 mask 预测 <span class="math inline">\(M_i\)</span>。 如图3所示，这个过程可以迭代地进行，因为更精细的分区通常会降低组特征中的噪声，从而产生更具辨别力的内核。这个过程被表述为</p>
+<p><span class="math display">\[K_i, M_i = f_i(M_{i-1},K_{i-1},F)。\]</span></p>
+<img src="/2022/05/20/K-Net/NeurIPS2021_K-Net_Figure3.png" title="Figure 3. K-Net for panoptic segmentation.">
+<p>一组 learned kernels 首先与特征图 <span class="math inline">\(F\)</span> 进行卷积以预测 mask <span class="math inline">\(M_0\)</span>。然后这个 kernel update head 将 mask 预测 <span class="math inline">\(M_0\)</span>、learned kernels <span class="math inline">\(K_0\)</span> 和 特征图 <span class="math inline">\(F\)</span> 作为输入，并生成类预测、group-aware (dynamic) kenrels 和 mask 预测。生成的 mask 预测、dynamic kernels 和特征图 <span class="math inline">\(F\)</span> 被发送到下一个 kernel update head。迭代执行此过程以逐步细化 kernel 和 mask 预测。</p>
+<p>值得注意的是，具有迭代细化的 kernel update head 是通用的，因为它不依赖于 kernel 的特性。因此，它不仅可以增强 instance kernels，还可以增强 semantic kernels。</p>
+<h2 id="实验">实验</h2>
+<img src="/2022/05/20/K-Net/NeurIPS2021_K-Net_Table1.png" title="Table 1. 在COCO数据集上和SOTA全景分割方法进行比较">
+<img src="/2022/05/20/K-Net/NeurIPS2021_K-Net_Table2.png" title="Table 2. 在COCO数据集上和SOTA实例分割方法进行比较">
+<img src="/2022/05/20/K-Net/NeurIPS2021_K-Net_Table3.png" title="Table 3. 在ADE20K语义分割数据集上的结果">
+<img src="/2022/05/20/K-Net/NeurIPS2021_K-Net_Table4.png" title="Table 4. K-Net在实例分割任务上的消融实验">
+<p>表4a表明 adaptive kernel update 和 kernel interaction 是高性能的必要条件。从表4b中可以看出，positional information 是有益的，positional encoding 略好于 coordinate convolution。但是两者组合没有进一步提升性能，因此在此框架中进使用了 positional enconding。表4c表明 kernel update 的轮数在第4轮的时候，性能接近饱和。最后，在 instance kernels 的数量实验中，增加 N 的数量可以提升性能，但是当 N 较大时，提升幅度变缓。</p>
+<h4 id="可视化分析">可视化分析</h4>
+<img src="/2022/05/20/K-Net/NeurIPS2021_K-Net_Figure4.png" title="Figure 4. kernels 及其 masks 的可视化分析">
+<p>Kernels 的总体分布。我们通过分析 val split 中 5000 个图像中 100 个实例内核的掩码激活平均值，仔细分析了在 K-Net 中学习到的实例内核的属性。所有 masks 都调整大小以具有类似的 <span class="math inline">\(200 \times 200\)</span> 分辨率以进行分析。如图 4a 所示，学习到的 kernels 是有意义的。不同的 kernels 专注于图像的不同区域和不同大小的对象，而每个 kernel 关注图像中靠近位置的相似大小的对象。</p>
+<p>通过 Kernel Update 优化的 Masks。我们进一步分析了如何通过图 4b 中的 kernel update 来改进 kernel 的 mask 预测。在这里，我们采用 K-Net 进行全景分割，以彻底分析语义和实例掩码。static kernels 生成的 masks 是不完整的，例如，河流和建筑物的掩码缺失。内核更新后，分割掩码完全覆盖了内容，尽管掩码的边界仍然不理想。更多内核更新后，边界得到了细化。内核更新后实例的分类置信度也会增加。</p>
+<h2 id="总结">总结</h2>
+<p>本文探讨了可以在分割过程中学习分离实例的实例内核。因此，以前辅助实例分割的额外组件可以被实例内核替换，包括边界框、嵌入生成和手工制作的后处理，如 NMS、内核融合和像素分组。这种尝试首次允许通过统一的框架处理不同的图像分割任务。该框架被称为 K-Net，首先通过学习的静态内核将图像划分为不同的组，然后通过从划分组中组装的特征迭代地细化这些内核及其对图像的划分。K-Net 在全景和语义分割基准上获得了新的SOTA的单模型性能，并在最近的实例分割框架中以最快的推理速度超越了成熟的 Cascade Mask R-CNN。我们希望 K-Net 和分析能够为未来统一图像分割框架的研究铺平道路。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Tianliang Zhang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tianliang Zhang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Instance-Segmentation/" rel="tag"># Instance Segmentation</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/05/19/SOTR/" rel="next" title="SOTR:Segmenting Objects with Transformers [ICCV 2021]">
+                <i class="fa fa-chevron-left"></i> SOTR:Segmenting Objects with Transformers [ICCV 2021]
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODg4MC8xNTQwOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460"
+                alt="Tianliang Zhang" />
+            
+              <p class="site-author-name" itemprop="name">Tianliang Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Writing is the best form of thinking!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/xingkongliang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:tianliangjay@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/xingkong_liang" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/1863221531" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#k-net"><span class="nav-number">2.1.</span> <span class="nav-text">K-Net</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#group-aware-kernels"><span class="nav-number">2.2.</span> <span class="nav-text">Group-Aware Kernels</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">3.</span> <span class="nav-text">实验</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可视化分析"><span class="nav-number">3.0.1.</span> <span class="nav-text">可视化分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tianliang Zhang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ksw0nRfaEzFJTORKsUHFkboY-gzGzoHsz", "HgFpOq4Y7wfrEiCV9HwxJziH");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

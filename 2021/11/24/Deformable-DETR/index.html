@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Object Detection,Transformer," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Tianliang" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Deformable DETR 缓解了 DETR 收敛慢和高计算复杂性的问题。它组合了 deformable 卷积的稀疏空间采样特性和 Transformer 的相关性的建模能力。论文提出的 deformable attention 模块将一小组采样位置作为所有特征图像素中重要的关键元素的预过滤器。">
+<meta name="keywords" content="Object Detection,Transformer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deformable DETR">
+<meta property="og:url" content="https://www.starlg.cn/2021/11/24/Deformable-DETR/index.html">
+<meta property="og:site_name" content="Tianliang">
+<meta property="og:description" content="Deformable DETR 缓解了 DETR 收敛慢和高计算复杂性的问题。它组合了 deformable 卷积的稀疏空间采样特性和 Transformer 的相关性的建模能力。论文提出的 deformable attention 模块将一小组采样位置作为所有特征图像素中重要的关键元素的预过滤器。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.starlg.cn/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Figure1.png">
+<meta property="og:image" content="https://www.starlg.cn/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Figure2.png">
+<meta property="og:image" content="https://www.starlg.cn/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Figure3.png">
+<meta property="og:image" content="https://www.starlg.cn/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Table1.png">
+<meta property="og:image" content="https://www.starlg.cn/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Table3.png">
+<meta property="og:image" content="https://www.starlg.cn/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Table4.png">
+<meta property="og:updated_time" content="2022-05-30T14:09:03.531Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deformable DETR">
+<meta name="twitter:description" content="Deformable DETR 缓解了 DETR 收敛慢和高计算复杂性的问题。它组合了 deformable 卷积的稀疏空间采样特性和 Transformer 的相关性的建模能力。论文提出的 deformable attention 模块将一小组采样位置作为所有特征图像素中重要的关键元素的预过滤器。">
+<meta name="twitter:image" content="https://www.starlg.cn/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Figure1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.starlg.cn/2021/11/24/Deformable-DETR/"/>
+
+
+
+
+
+  <title>Deformable DETR | Tianliang</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123915509-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7aa98e58b161f03ba9915003b72d71fa";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tianliang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 't55H9pKd6Gm4xW2uPWRY','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.starlg.cn/2021/11/24/Deformable-DETR/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tianliang Zhang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tianliang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Deformable DETR</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-11-24T12:33:31+08:00">
+                2021-11-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Object-Detection/" itemprop="url" rel="index">
+                    <span itemprop="name">Object Detection</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/11/24/Deformable-DETR/" class="leancloud_visitors" data-flag-title="Deformable DETR">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  2,271
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  Deformable DETR 缓解了 DETR 收敛慢和高计算复杂性的问题。它组合了 deformable 卷积的稀疏空间采样特性和 Transformer 的相关性的建模能力。论文提出的 deformable attention 模块将一小组采样位置作为所有特征图像素中重要的关键元素的预过滤器。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Paper：https://arxiv.org/abs/2010.04159</p>
+<p>Code：https://github.com/fundamentalvision/Deformable-DETR</p>
+<h2 id="介绍">介绍</h2>
+<p>最近提出的 DETR 消除了目标检测中很多手工设计的组件，然而降低了精度。除此之外，由于受到 Tranformer attention 模块在处理图片特征的限制，导致它收敛很慢，并且限制了特征空间分辨率。</p>
+<p>为了解决上述问题，论文提出了 Deformable DETR，它的 <strong>attention 模块</strong>仅仅关注 <strong>参考点 附近的一组关键采样点</strong>。Deformable DETR 可以获得比 DETR 更好的性能（尤其是在小物体上），并且训练次数减少了 10 倍。</p>
+<img src="/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Figure1.png" title="Deformable DETR object detector">
+<p>DETR存在的两个问题：（1）比起现存的目标检测器，它的收敛要求太长时间的训练周期。例如，在COCO数据集上，DETR 需要 500 epochs 才能收敛，而这大约比 Faster RCNN 慢了 10~20 倍。（2）DETR 在检测小目标上存在较低的性能。当前的检测器通常利用多尺度特征，这这些特征上小目标可以从高分辨率特征上被检测。然而，高分辨率的特征图给 DETR 带来的严重的计算代价。 上述问题主要归因于 Transformer 组件在处理图像特征图方面的不足。在初始化的时候，attention modules 将几乎统一的注意力权重投射到特征图中的所有像素。让学习注意力权重专注于稀疏有意义的位置，长时间的训练周期是必要的。 另一方面，Transformer 编码器中的注意力权重计算是像素数的平方计算量。 因此，处理高分辨率特征图具有非常高的计算和内存复杂性。</p>
+<p>在图片领域，deformable 卷积是一种强有力且高效的关注稀疏空间位置的机制。它可以天然的避免上述提到的问题。然而它缺乏元素关系建模机制，这是DETR成功的关键。</p>
+<p>在这篇论文中，作者提出 Deformable DETR，它缓解了 DETR 收敛慢和高计算复杂性的问题。它组合了 deformable 卷积的稀疏空间采样特性和 Transformer 的相关性的建模能力。论文提出的 deformable attention 模块将一小组采样位置作为所有特征图像素中重要的关键元素的预过滤器。</p>
+<p>由于其快速收敛以及计算和内存效率，Deformable DETR 为我们开辟了利用端到端对象检测器变体的可能性。 作者探索了一种简单有效的迭代边界框细化（iterative bounding box refinement）机制来提高检测性能。 论文还尝试了一个 two-stage Deformable DETR，其中 region proposal 也是由 Deformable DETR 的变体生成的，它们被进一步输入 decoder 以进行 iterative bounding box refinement。</p>
+<h2 id="回顾-transformer-和-detr">回顾 Transformer 和 DETR</h2>
+<h3 id="multi-head-attention-in-transformers">Multi-Head Attention in Transformers</h3>
+<p>Transformers 是针对机器翻译任务设计的一种基于注意力机制的网络结构。给一个 query 元素（例如，在一个输出句子中的一个目标单词）和一组 key 元素（例如，在输入句子中的原单词），multi-head attention 模块根据注意力权重自适应地汇聚关键信息，这个注意力权重可以测量 query-key 对 质检的一致性。为了允许让模型从不同表示子空间和不同位置中关注信息，不同 attention heads 的输出是使用学到的权重线性聚合的结果。Multi-head attention 特征可以计算为：</p>
+<p><span class="math display">\[
+\operatorname{MultiHeadAttn}\left(\boldsymbol{z}_{q}, \boldsymbol{x}\right)=\sum_{m=1}^{M} \boldsymbol{W}_{m}\left[\sum_{k \in \Omega_{k}} A_{m q k} \cdot \boldsymbol{W}_{m}^{\prime} \boldsymbol{x}_{k}\right]
+\]</span></p>
+<p><span class="math inline">\(q \in \Omega_{q}\)</span> 表示 一个 query 元素的索引，其特征表示为 <span class="math inline">\(z_q \in \mathbb{R}^{C}\)</span></p>
+<p><span class="math inline">\(k \in \Omega_{k}\)</span> 表示一个 key 元素的索引，其特征表示为 <span class="math inline">\(x_k \in \mathbb{R}^C\)</span></p>
+<p><span class="math inline">\(C\)</span> 特征的维度</p>
+<p><span class="math inline">\(M\)</span> attention head 的数量，<span class="math inline">\(m\)</span> 是 attention head 的索引</p>
+<p><span class="math inline">\(\mathbf{W}_{m}^{\prime} \in \mathbb{R}^{C_{v}\times C}\)</span> 和 <span class="math inline">\(\mathbf{W}_{m} \in \mathbb{R}^{C_{v}\times C}\)</span> 是可学习的权重，并且 <span class="math inline">\(C_{v} = C/M\)</span></p>
+<p><span class="math inline">\(A_{m q k} \propto \exp \left\{\frac{\mathbf{z}_{q}^{T} \mathbf{U}_{m}^{T} \mathbf{V}_{m} \mathbf{x}_{k}}{\sqrt{C_{v}}}\right\}\)</span> 是 attention 权重，它被归一化，并且 <span class="math inline">\(\sum_{k\in \Omega_{k}} A_{mqk}=1\)</span> 其中 <span class="math inline">\(\mathbf{U}_{m}\)</span> 和 <span class="math inline">\(\mathbf{V}_{m}\)</span> 也是可学习的权重。</p>
+<p>为了消除不同空间位置的歧义，表示特征 <span class="math inline">\(x_q\)</span> 和 <span class="math inline">\(x_k\)</span> 通常是和 positional embedding 的串联/求和。</p>
+<h3 id="detr">DETR</h3>
+<p>对于 DETR 中的 Transformer encoder，query 和 key 元素都是特征图中的像素。输入是 ResNet 特征图（带有编码的 positional embeddings）。让 <span class="math inline">\(H\)</span> 和 <span class="math inline">\(W\)</span> 分别表示特征图的高度和宽度。 self-attention 的计算复杂度为 <span class="math inline">\(O(H^2 W^2 C)\)</span> ，随空间大小呈二次方增长。</p>
+<p>对于 DETR 中的 Transformer dncoder，输入包括来自 encoder 的特征图和 由可学习位置嵌入（例如，N = 100）表示的 N object queries。decoder 中有两种注意力模块，即 cross-attention 和 self-attention 模块。在 cross-attention 模块中，object query 从特征图中提取特征。query 元素属于object queries，key 元素属于encoder 的输出特征图。其中，<span class="math inline">\(N_q = N\)</span>，<span class="math inline">\(N_k = H \times W\)</span>，交叉注意力的复杂度为 <span class="math inline">\(O(HWC^2 + NHWC)\)</span>。复杂性随着特征图的空间大小线性增长。在 self-attention 模块中，object queries 相互交互，以捕获它们的关系。 query 和 key 元素都是 object queries。 其中，<span class="math inline">\(N_q = N_k = N\)</span>，self-attention 模块的复杂度为 <span class="math inline">\(O(2NC^2 +N^2 C)\)</span>。 中等数量的对象查询的复杂性是可以接受的。</p>
+<p>这主要是因为处理图像特征的注意力模块很难训练。 例如，在初始化时，cross-attention 模块几乎对整个特征图具有平均注意力。而在训练结束时，attention maps 被学习到非常稀疏，只关注对象的外轮廓（extremities）。 似乎 DETR 需要很长的训练才能学习注意力图的如此显着的变化。</p>
+<h2 id="method">Method</h2>
+<h3 id="ddformable-transformer-for-end-to-end-object-detection">Ddformable Transformer for End-To-End Object Detection</h3>
+<img src="/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Figure2.png" title="deformable attention module">
+<h4 id="deformable-attention-module">Deformable Attention Module</h4>
+<p><span class="math display">\[
+\operatorname{DeformAttn}\left(\boldsymbol{z}_{q}, \boldsymbol{p}_{q}, \boldsymbol{x}\right)=\sum_{m=1}^{M} \boldsymbol{W}_{m}\left[\sum_{k=1}^{K} A_{m q k} \cdot \boldsymbol{W}_{m}^{\prime} \boldsymbol{x}\left(\boldsymbol{p}_{q}+\Delta \boldsymbol{p}_{m q k}\right)\right]
+\]</span></p>
+<p>这里 <span class="math inline">\(m\)</span> attention head 的索引，<span class="math inline">\(k\)</span> 采样 keys 的索引，<span class="math inline">\(K\)</span> 是总采样的 key 的数量 <span class="math inline">\(（K \ll HW）\)</span>。<span class="math inline">\(\Delta p_{mqk}\)</span> 和 <span class="math inline">\(A_{mqk}\)</span> 是采样的偏置和在 <span class="math inline">\(m^{th}\)</span> attention head 上的 <span class="math inline">\(k^{th}\)</span> 采样点的 attention weight。</p>
+<h4 id="multi-scale-deformable-attention-module">Multi-scale Deformable Attention Module</h4>
+<p><span class="math display">\[
+\operatorname{MSDeformAttn}\left(\boldsymbol{z}_{q}, \hat{\boldsymbol{p}}_{q},\left\{\boldsymbol{x}^{l}\right\}_{l=1}^{L}\right)=\sum_{m=1}^{M} \boldsymbol{W}_{m}\left[\sum_{l=1}^{L} \sum_{k=1}^{K} A_{m l q k} \cdot \boldsymbol{W}_{m}^{\prime} \boldsymbol{x}^{l}\left(\phi_{l}\left(\hat{\boldsymbol{p}}_{q}\right)+\Delta \boldsymbol{p}_{m l q k}\right)\right]
+\]</span></p>
+<h4 id="deformable-transformer-encoder">Deformable Transformer Encoder</h4>
+<p>由于提出的 multi-scale deformable attention 可以再不同多尺度特征层上交换信息，所以没有使用 FPN 结构。</p>
+<p>在 encoder 中 multi-scale deformable attention 模块的应用中，输出是与输入具有相同分辨率的多尺度特征图。key 和 query 元素都是来自多尺度特征图的像素。对于每一个 query 像素，这个参考点（reference point）就是它自己。为了识别每个 query 像素位于哪个特征级别，除了 positional embedding 之外，我们还向特征表示中添加了 a scale-level embedding，表示为 <span class="math inline">\(e_l\)</span>。与固定编码的 positional embedding 不同，scale-level embedding <span class="math inline">\(\{e_l\}^L_l=1\)</span> 是随机初始化并与网络联合训练。</p>
+<h4 id="deformable-transformer-decoder">Deformable Transformer Decoder</h4>
+<p>decoder 中有 cross-attention 和 self-attention 模块。这两种注意力模块的 query 元素都是 object queries。在 cross-attention 模块中，object queries 从特征图中提取特征，其中 key 元素是来自 encoder 的输出特征图。在 self-attention 模块中，object queries 相互交互，其中 key 元素是 object queries。由于我们提出的 deformable attantion 模块是为处理卷积特征图作为 key 元素而设计的，因此我们仅将每个 cross-attention 模块替换为 multi-scale deformable attention 模块，而保持 self-attention 模块不变。对于每个 object query，参考点 <span class="math inline">\(\hat p_q\)</span> 的二维归一化坐标是从其 object query embedding 中通过可学习的线性投影和 <span class="math inline">\(\mathrm{sigmoid}\)</span> 函数预测的。</p>
+<p>因为 multi-scale deformable attention 模块提取参考点（reference point）周围的图像特征，我们让检测头将边界框预测为相对偏移，也就是参考点进一步降低优化难度。 参考点用作框中心的初始猜测。检测头预测相对偏移，也就是参考点。这样，学习到的 decoder attention 将与预测的边界框有很强的相关性，这也加速了训练收敛。</p>
+<p>通过在 DETR 中用 deformable attention 模块替换 Transformer attention 模块，我们建立了一个高效且快速收敛的检测系统，称为 Deformable DETR。</p>
+<h3 id="其他改进-和-变体">其他改进 和 变体</h3>
+<p>Iterative Bounding Box Refinemen</p>
+<p>Two-Stage Deformable DETR</p>
+<h2 id="实验结果">实验结果</h2>
+<img src="/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Figure3.png" title="Convergence curves of Deformable DETR and DETR-DC5.">
+<p>由上图可以看出，Deformable DETR 明显提升了训练速度。</p>
+<img src="/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Table1.png">
+<img src="/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Table3.png">
+<h2 id="论文中的符号说明">论文中的符号说明</h2>
+<img src="/2021/11/24/Deformable-DETR/20211124_Deformable_DETR_Table4.png" title="Table 4">
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Tianliang Zhang WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tianliang Zhang Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Object-Detection/" rel="tag"># Object Detection</a>
+          
+            <a href="/tags/Transformer/" rel="tag"># Transformer</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/13/Beancount-01/" rel="next" title="复式记账 Beancount 使用">
+                <i class="fa fa-chevron-left"></i> 复式记账 Beancount 使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/12/27/Efficient-DETR/" rel="prev" title="Efficient DETR">
+                Efficient DETR <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODg4MC8xNTQwOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460"
+                alt="Tianliang Zhang" />
+            
+              <p class="site-author-name" itemprop="name">Tianliang Zhang</p>
+              <p class="site-description motion-element" itemprop="description">Writing is the best form of thinking!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/xingkongliang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:tianliangjay@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://www.zhihu.com/people/xingkong_liang" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-globe"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/1863221531" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回顾-transformer-和-detr"><span class="nav-number">2.</span> <span class="nav-text">回顾 Transformer 和 DETR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#multi-head-attention-in-transformers"><span class="nav-number">2.1.</span> <span class="nav-text">Multi-Head Attention in Transformers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#detr"><span class="nav-number">2.2.</span> <span class="nav-text">DETR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#method"><span class="nav-number">3.</span> <span class="nav-text">Method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ddformable-transformer-for-end-to-end-object-detection"><span class="nav-number">3.1.</span> <span class="nav-text">Ddformable Transformer for End-To-End Object Detection</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#deformable-attention-module"><span class="nav-number">3.1.1.</span> <span class="nav-text">Deformable Attention Module</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#multi-scale-deformable-attention-module"><span class="nav-number">3.1.2.</span> <span class="nav-text">Multi-scale Deformable Attention Module</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deformable-transformer-encoder"><span class="nav-number">3.1.3.</span> <span class="nav-text">Deformable Transformer Encoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deformable-transformer-decoder"><span class="nav-number">3.1.4.</span> <span class="nav-text">Deformable Transformer Decoder</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他改进-和-变体"><span class="nav-number">3.2.</span> <span class="nav-text">其他改进 和 变体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验结果"><span class="nav-number">4.</span> <span class="nav-text">实验结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#论文中的符号说明"><span class="nav-number">5.</span> <span class="nav-text">论文中的符号说明</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tianliang Zhang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ksw0nRfaEzFJTORKsUHFkboY-gzGzoHsz", "HgFpOq4Y7wfrEiCV9HwxJziH");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
