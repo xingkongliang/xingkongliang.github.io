@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Adaptive NMS Refining Pedestrian Detection in a Crowd</title>
+    <url>/2019/05/20/Adaptive-NMS/</url>
+    <content><![CDATA[<p><a href="http://arxiv.org/abs/1904.03629">paper link</a></p>
+<h1 id="简介">简介</h1>
+<p>这篇论文主要提出一个新颖的非极大值抑制（Non-Maximum Suppression,
+NMS）算法更好地改善检测器给出的检测框。本文主要贡献：</p>
+<ol type="1">
+<li>提出adaptive-NMS，该算法根据目标的密度使用一个动态抑制阈值。</li>
+<li>设计一个高效网络学习密度得分，这个得分可以方便地嵌入到single-stage和two-stage检测器中。</li>
+<li>实现了CityPersons和CrowdHuman数据集上的 state of the art 结果。</li>
+</ol>
+<h1 id="motivation">Motivation</h1>
+<img src="/2019/05/20/Adaptive-NMS/2019-05-20-greddy-NMS-results.png" class="" title="Figure 1. greedy-NMS不同阈值的结果">
+<p>图1展示了不同阈值下的greedy-NMS的结果。蓝色的框表示丢失的目标，红色的框表示假正例（false
+positives）。（b）中的检测框是Faster
+R-CNN在NMS之前的检测结果。如图c，一个低的NMS阈值可能会移除正例（true
+positives）。如同d，一个高的NMS阈值可能会增加假正例（false
+positives）。</p>
+<p>在本文中，作者提出了一种新的NMS算法，名为adaptive-NMS，它可以作为人群中行人检测的更有效的替代方案。直观地，高NMS阈值保持更多拥挤的实例，而低NMS阈值消除更多误报。因此，自适应NMS应用动态抑制策略，其中阈值随着实例聚集和相互遮挡而上升，并且当实例单独出现时衰减。为此，我们设计了一个辅助且可学习的子网络来预测每个实例的自适应NMS阈值。</p>
+<h1 id="adaptive-nms">Adaptive-NMS</h1>
+<img src="/2019/05/20/Adaptive-NMS/adaptive-nms-pseudo-code.png" class="" title="Figure 2. adaptive-NMS伪代码">
+<p>当物体处于拥挤区域时，增加NMS的阈值可以保留高覆盖率。同样，在稀疏场景下，应该去掉重复度高的候选框，因为它们很可能是假正例。</p>
+<p><span class="math display">\[
+d_i:= \max_{b_j \in \mathcal{G}, i \neq j} \mathrm{iou}(b_i, b_j)
+\]</span></p>
+<p>目标<span class="math inline">\(i\)</span>的密度被定义和在ground
+truth集合<span
+class="math inline">\(\mathcal{G}\)</span>中的其他目标的最大紧致框的IoU的值。目标的密度表示拥挤遮挡的程度。</p>
+<p>使用这个定义，我们提出更新下面策略中的移除步骤，</p>
+<p><span class="math display">\[
+N_\mathcal{M} := \max(N_t, d_\mathcal{M})
+\]</span></p>
+<img src="/2019/05/20/Adaptive-NMS/2019-05-20-greddy-NMS-eq3.png" class="">
+<p><span class="math inline">\(N_t\)</span>表示对于<span
+class="math inline">\(\mathcal{M}\)</span>的adaptive NMS的阈值，<span
+class="math inline">\(d_{\mathcal{M}}\)</span>表示目标<span
+class="math inline">\(\mathcal{M}\)</span>覆盖的密度。</p>
+<p>这个抑制策略有三个性质： 1. 当相邻的框远离<span
+class="math inline">\(\mathcal{M}\)</span>时，即<span
+class="math inline">\(\mathrm{iou}(\mathcal{M}, b_i) &lt;
+N_t\)</span>，它们与原始NMS保持一致。 2. 如果<span
+class="math inline">\(\mathcal{M}\)</span>定位到拥挤的区域，即<span
+class="math inline">\(d_{\mathcal{M}} &gt; N_t\)</span>，<span
+class="math inline">\(\mathcal{M}\)</span>的密度被使用作为adaptive
+NMS的阈值。 3. 对与稀疏区域的目标，即<span
+class="math inline">\(d_{\mathcal{M}} \leq N_t\)</span>，NMS阈值<span
+class="math inline">\(N_\mathcal{M}\)</span>和原始NMS阈值相等，非常接近的框被作为假正例所抑制。</p>
+<p>这个算法具体步骤如图2所示。</p>
+<h1 id="density-prediction">Density Prediction</h1>
+<img src="/2019/05/20/Adaptive-NMS/CVPR19_CSP_Adaptive_NMS.png" class="" title="Figure 3. 密度估计网络">
+<p>作者把密度估计作为一个回归问题，目标密度值的计算根据它的定义，使用Smooth-L1损失函数作为训练损失。</p>
+<p>一个天然的方式就是为这个回归在网络顶部添加一个并行的层，像分类和定位一样。然而，用于检测的特征仅仅包含目标自己的信息，比如外表、语义特征和位置。对于密度估计，使用独立目标的信息很难估计其密度，密度估计需要使用其周围目标的更多的线索。</p>
+<p>为了解决这个，作者设计了一个额外的网络，它由三层卷积层构成，如图3所示。首选使用一个1x1的卷积层做特征维度降维，然后级联降维后的特征、用于RPN分类的特征和用于RPN回归的特征。最后使用一个大尺度的卷积核5x5作为最后的卷积层，为了把周围的信息送入网络。具体如图中Density
+subnet绿色框区域结构。</p>
+<h1 id="experiments">Experiments</h1>
+<img src="/2019/05/20/Adaptive-NMS/2019-05-20-Adaptive-NMS-Comparison.png" class="" title="Table 2. 在CityPersons验证集上的性能">
+<img src="/2019/05/20/Adaptive-NMS/2019-05-20-Adaptive-NMS-compare-detection-results.png" class="" title="Figure 5. 部分结果对比">
+<img src="/2019/05/20/Adaptive-NMS/2019-05-20-Adaptive-NMS-Comparison-CityPersons-test.png" class="" title="Table 3. 在CityPersons测试集上的性能">
+<img src="/2019/05/20/Adaptive-NMS/2019-05-20-Adaptive-NMS-CrowdHuman-val.png" class="" title="Table 5. 在CrowdHuman验证集上full body的测试结果">
+]]></content>
+      <categories>
+        <category>Pedestrian Detection</category>
+      </categories>
+      <tags>
+        <tag>Pedestrian Detection</tag>
+        <tag>Deep Learning</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>复式记账 Beancount 使用</title>
     <url>/2019/07/13/Beancount-01/</url>
     <content><![CDATA[<h1 id="beancount">Beancount</h1>
@@ -186,72 +255,31 @@ Beancount 打造个人的记账系统</a></p>
       </tags>
   </entry>
   <entry>
-    <title>Adaptive NMS Refining Pedestrian Detection in a Crowd</title>
-    <url>/2019/05/20/Adaptive-NMS/</url>
-    <content><![CDATA[<p><a href="http://arxiv.org/abs/1904.03629">paper link</a></p>
-<h1 id="简介">简介</h1>
-<p>这篇论文主要提出一个新颖的非极大值抑制（Non-Maximum Suppression,
-NMS）算法更好地改善检测器给出的检测框。本文主要贡献：</p>
-<ol type="1">
-<li>提出adaptive-NMS，该算法根据目标的密度使用一个动态抑制阈值。</li>
-<li>设计一个高效网络学习密度得分，这个得分可以方便地嵌入到single-stage和two-stage检测器中。</li>
-<li>实现了CityPersons和CrowdHuman数据集上的 state of the art 结果。</li>
-</ol>
-<h1 id="motivation">Motivation</h1>
-<img src="/2019/05/20/Adaptive-NMS/2019-05-20-greddy-NMS-results.png" class="" title="Figure 1. greedy-NMS不同阈值的结果">
-<p>图1展示了不同阈值下的greedy-NMS的结果。蓝色的框表示丢失的目标，红色的框表示假正例（false
-positives）。（b）中的检测框是Faster
-R-CNN在NMS之前的检测结果。如图c，一个低的NMS阈值可能会移除正例（true
-positives）。如同d，一个高的NMS阈值可能会增加假正例（false
-positives）。</p>
-<p>在本文中，作者提出了一种新的NMS算法，名为adaptive-NMS，它可以作为人群中行人检测的更有效的替代方案。直观地，高NMS阈值保持更多拥挤的实例，而低NMS阈值消除更多误报。因此，自适应NMS应用动态抑制策略，其中阈值随着实例聚集和相互遮挡而上升，并且当实例单独出现时衰减。为此，我们设计了一个辅助且可学习的子网络来预测每个实例的自适应NMS阈值。</p>
-<h1 id="adaptive-nms">Adaptive-NMS</h1>
-<img src="/2019/05/20/Adaptive-NMS/adaptive-nms-pseudo-code.png" class="" title="Figure 2. adaptive-NMS伪代码">
-<p>当物体处于拥挤区域时，增加NMS的阈值可以保留高覆盖率。同样，在稀疏场景下，应该去掉重复度高的候选框，因为它们很可能是假正例。</p>
-<p><span class="math display">\[
-d_i:= \max_{b_j \in \mathcal{G}, i \neq j} \mathrm{iou}(b_i, b_j)
-\]</span></p>
-<p>目标<span class="math inline">\(i\)</span>的密度被定义和在ground
-truth集合<span
-class="math inline">\(\mathcal{G}\)</span>中的其他目标的最大紧致框的IoU的值。目标的密度表示拥挤遮挡的程度。</p>
-<p>使用这个定义，我们提出更新下面策略中的移除步骤，</p>
-<p><span class="math display">\[
-N_\mathcal{M} := \max(N_t, d_\mathcal{M})
-\]</span></p>
-<img src="/2019/05/20/Adaptive-NMS/2019-05-20-greddy-NMS-eq3.png" class="">
-<p><span class="math inline">\(N_t\)</span>表示对于<span
-class="math inline">\(\mathcal{M}\)</span>的adaptive NMS的阈值，<span
-class="math inline">\(d_{\mathcal{M}}\)</span>表示目标<span
-class="math inline">\(\mathcal{M}\)</span>覆盖的密度。</p>
-<p>这个抑制策略有三个性质： 1. 当相邻的框远离<span
-class="math inline">\(\mathcal{M}\)</span>时，即<span
-class="math inline">\(\mathrm{iou}(\mathcal{M}, b_i) &lt;
-N_t\)</span>，它们与原始NMS保持一致。 2. 如果<span
-class="math inline">\(\mathcal{M}\)</span>定位到拥挤的区域，即<span
-class="math inline">\(d_{\mathcal{M}} &gt; N_t\)</span>，<span
-class="math inline">\(\mathcal{M}\)</span>的密度被使用作为adaptive
-NMS的阈值。 3. 对与稀疏区域的目标，即<span
-class="math inline">\(d_{\mathcal{M}} \leq N_t\)</span>，NMS阈值<span
-class="math inline">\(N_\mathcal{M}\)</span>和原始NMS阈值相等，非常接近的框被作为假正例所抑制。</p>
-<p>这个算法具体步骤如图2所示。</p>
-<h1 id="density-prediction">Density Prediction</h1>
-<img src="/2019/05/20/Adaptive-NMS/CVPR19_CSP_Adaptive_NMS.png" class="" title="Figure 3. 密度估计网络">
-<p>作者把密度估计作为一个回归问题，目标密度值的计算根据它的定义，使用Smooth-L1损失函数作为训练损失。</p>
-<p>一个天然的方式就是为这个回归在网络顶部添加一个并行的层，像分类和定位一样。然而，用于检测的特征仅仅包含目标自己的信息，比如外表、语义特征和位置。对于密度估计，使用独立目标的信息很难估计其密度，密度估计需要使用其周围目标的更多的线索。</p>
-<p>为了解决这个，作者设计了一个额外的网络，它由三层卷积层构成，如图3所示。首选使用一个1x1的卷积层做特征维度降维，然后级联降维后的特征、用于RPN分类的特征和用于RPN回归的特征。最后使用一个大尺度的卷积核5x5作为最后的卷积层，为了把周围的信息送入网络。具体如图中Density
-subnet绿色框区域结构。</p>
-<h1 id="experiments">Experiments</h1>
-<img src="/2019/05/20/Adaptive-NMS/2019-05-20-Adaptive-NMS-Comparison.png" class="" title="Table 2. 在CityPersons验证集上的性能">
-<img src="/2019/05/20/Adaptive-NMS/2019-05-20-Adaptive-NMS-compare-detection-results.png" class="" title="Figure 5. 部分结果对比">
-<img src="/2019/05/20/Adaptive-NMS/2019-05-20-Adaptive-NMS-Comparison-CityPersons-test.png" class="" title="Table 3. 在CityPersons测试集上的性能">
-<img src="/2019/05/20/Adaptive-NMS/2019-05-20-Adaptive-NMS-CrowdHuman-val.png" class="" title="Table 5. 在CrowdHuman验证集上full body的测试结果">
+    <title>变量——看见社会小趋势</title>
+    <url>/2019/06/20/Book-BianLiang/</url>
+    <content><![CDATA[<h1 id="作者简介">作者简介</h1>
+<p>何帆，男，现任北京大学汇丰商学院经济学教授，兼熵一资本首席经济学家。曾任中国社会科学院世界经济与政治研究所副所长，在政策研究领域研究已经超过20年
+[3] ，发表学术论文100多篇，出版专著10余部，如《变量》《何帆大局观》等
+。现被厦门大学EMBA管理学院特聘为EMBA讲师，同陆磊教授一同讲授EMBA课程-《宏观经济理论与实践》。同时，何帆是得到App《何帆大局观》《何帆的读书俱乐部》《何帆报告》课程主理人。</p>
+<p>作者简介来自百度百科</p>
+<h1 id="摘抄">摘抄</h1>
+<h2 id="第一章-这样观察一棵树">第一章　这样观察一棵树</h2>
+<p>2018年是一个新的开端。生活在2018年的人感受到的是中国经济遇到的各种冲击：中美贸易战、经济增长回落、股市下跌。他们会感到焦虑和担忧。旧路标已经消失，新秩序尚未出现。未来30年出现的一系列变化将挑战我们的认知，但历史从来都是一位“魔术师”，未来会出现意想不到的变化。在这一章，我会讲述如何像细致地观察一棵树一样观察历史，怎样从每年长出的“嫩芽”去判断中国文明这棵大树的生命力。我还会告诉你两个重要的概念：<strong>慢变量</strong>和<strong>小趋势</strong>。感知历史，就要会从慢变量中寻找小趋势。</p>
+<h2 id="第二章-在无人地带寻找无人机">第二章　在无人地带寻找无人机</h2>
+<p>2018年，关于技术发展路径的讨论引起全民关注。中国到底是应该集中全力补上“核心技术”，还是应该扬己所长发展“应用技术”呢？我将带你回顾美国在工业革命时期的经验，并试图发现中国在信息化时代的最佳战略。我找到的第二个变量是：<strong>技术赋能</strong>。在创新阶段，寻找新技术的应用场景更重要，在边缘地带更容易找到新技术的应用场景，技术必须与市场需求匹配。我们会到新疆去看无人机，而你很可能会在酒店里邂逅机器人。中国革命的成功靠的是“群众路线”，中国经济的崛起也要走“群众路线”。</p>
+<h2 id="第三章-老兵不死">第三章　老兵不死</h2>
+<p>2018年，谁是新兴产业，谁是传统产业？哪个更胜一筹？在过去几年，互联网大军就好像当年来自中亚大草原的游牧民族，兵强马壮，来去如风。在互联网大军的攻势下，传统产业的护城河形同虚设。到了2018年，这股“为跨不破”，精于“降维打击”的大军，却在一座城堡前久攻不下。这就是工业化的代表————已经有上百年历史的汽车行业。2018年，我发现的第三个变量是：<strong>老兵不死</strong>。我要带你到传统制造业的腹地，看看他们是如何抵御互联网行业的迅猛攻势。在这里，你会看到，传统行业的老兵早已经悄悄穿上了新的军装，而新兴的产业正在积极地想传统产业学习。新兴产业和传统产业的边界，也许并没有你想象的那般泾渭分明。</p>
+<h2
+id="第四章-在菜市场遇见城市设计师">第四章　在菜市场遇见城市设计师</h2>
+<p>2018年，人们最关心的是房价是否会出现拐点，但从长时间来看更值得关注的是城市化的拐点。自上而下的城市化已不可持续。我观察到的第四个变量是：<strong>自下而上的力量浮出水面</strong>。城市化的进程不会停止，未来会有更多的城市圈，但这些都市圈是放大了的城市，还是一种新的城市物种呢？未来的城市不一定都能扩张，假如城市不得不“收缩”，该怎样才能像瘦身一样，瘦了更健康？未来的城市将深受互联网影响，城市空间布局会跟过去有很大的不同。“位置、位置、位置”的传统房地产“金律”很可能不再适用。我们会看到，城市会爆发一场“颜值革命”。这场“颜值革命”来自哪里呢？归根到底，它来自人民群众自己创造美好生活的能量。</p>
+<h2 id="第五章-阿那亚和范家小学">第五章　阿那亚和范家小学</h2>
+<p>2018年，我们听到了很多负面的社会新闻：米脂杀人、衡阳装车、高铁霸座......这个社会变得越来越糟糕了吗？其中这是一种误解。虽然从表明上看，有些人只关心自我私利，但大家对集体生活的向往并没有泯灭。中国人已经意识到，只有重建集体生活，才能更好地发现自我。我看到的第五个变量就是：<strong>重建社群</strong>。有哪些地方的人们正在“凝结”起来，形成新的社群？这些新的社群只是孤岛，还是将成为群岛？培养孩子也需要一个社群。我会带你到一所偏僻的农村小学看看。2018年，我找到的中国教育理念最先进的小学不是北京或上海名校，而是山区里的一所农村小学。你不必吃惊，社会发展的剧情经常会有令人意想不到的转变。</p>
 ]]></content>
       <categories>
-        <category>Pedestrian Detection</category>
+        <category>Book</category>
       </categories>
       <tags>
-        <tag>Pedestrian Detection</tag>
-        <tag>Deep Learning</tag>
+        <tag>Book</tag>
       </tags>
   </entry>
   <entry>
@@ -328,34 +356,6 @@ unit）输出的高分辨率表示中回归热图。损失函数（定义为均�
       <tags>
         <tag>Deep Learning</tag>
         <tag>Pose Estimation</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>变量——看见社会小趋势</title>
-    <url>/2019/06/20/Book-BianLiang/</url>
-    <content><![CDATA[<h1 id="作者简介">作者简介</h1>
-<p>何帆，男，现任北京大学汇丰商学院经济学教授，兼熵一资本首席经济学家。曾任中国社会科学院世界经济与政治研究所副所长，在政策研究领域研究已经超过20年
-[3] ，发表学术论文100多篇，出版专著10余部，如《变量》《何帆大局观》等
-。现被厦门大学EMBA管理学院特聘为EMBA讲师，同陆磊教授一同讲授EMBA课程-《宏观经济理论与实践》。同时，何帆是得到App《何帆大局观》《何帆的读书俱乐部》《何帆报告》课程主理人。</p>
-<p>作者简介来自百度百科</p>
-<h1 id="摘抄">摘抄</h1>
-<h2 id="第一章-这样观察一棵树">第一章　这样观察一棵树</h2>
-<p>2018年是一个新的开端。生活在2018年的人感受到的是中国经济遇到的各种冲击：中美贸易战、经济增长回落、股市下跌。他们会感到焦虑和担忧。旧路标已经消失，新秩序尚未出现。未来30年出现的一系列变化将挑战我们的认知，但历史从来都是一位“魔术师”，未来会出现意想不到的变化。在这一章，我会讲述如何像细致地观察一棵树一样观察历史，怎样从每年长出的“嫩芽”去判断中国文明这棵大树的生命力。我还会告诉你两个重要的概念：<strong>慢变量</strong>和<strong>小趋势</strong>。感知历史，就要会从慢变量中寻找小趋势。</p>
-<h2 id="第二章-在无人地带寻找无人机">第二章　在无人地带寻找无人机</h2>
-<p>2018年，关于技术发展路径的讨论引起全民关注。中国到底是应该集中全力补上“核心技术”，还是应该扬己所长发展“应用技术”呢？我将带你回顾美国在工业革命时期的经验，并试图发现中国在信息化时代的最佳战略。我找到的第二个变量是：<strong>技术赋能</strong>。在创新阶段，寻找新技术的应用场景更重要，在边缘地带更容易找到新技术的应用场景，技术必须与市场需求匹配。我们会到新疆去看无人机，而你很可能会在酒店里邂逅机器人。中国革命的成功靠的是“群众路线”，中国经济的崛起也要走“群众路线”。</p>
-<h2 id="第三章-老兵不死">第三章　老兵不死</h2>
-<p>2018年，谁是新兴产业，谁是传统产业？哪个更胜一筹？在过去几年，互联网大军就好像当年来自中亚大草原的游牧民族，兵强马壮，来去如风。在互联网大军的攻势下，传统产业的护城河形同虚设。到了2018年，这股“为跨不破”，精于“降维打击”的大军，却在一座城堡前久攻不下。这就是工业化的代表————已经有上百年历史的汽车行业。2018年，我发现的第三个变量是：<strong>老兵不死</strong>。我要带你到传统制造业的腹地，看看他们是如何抵御互联网行业的迅猛攻势。在这里，你会看到，传统行业的老兵早已经悄悄穿上了新的军装，而新兴的产业正在积极地想传统产业学习。新兴产业和传统产业的边界，也许并没有你想象的那般泾渭分明。</p>
-<h2
-id="第四章-在菜市场遇见城市设计师">第四章　在菜市场遇见城市设计师</h2>
-<p>2018年，人们最关心的是房价是否会出现拐点，但从长时间来看更值得关注的是城市化的拐点。自上而下的城市化已不可持续。我观察到的第四个变量是：<strong>自下而上的力量浮出水面</strong>。城市化的进程不会停止，未来会有更多的城市圈，但这些都市圈是放大了的城市，还是一种新的城市物种呢？未来的城市不一定都能扩张，假如城市不得不“收缩”，该怎样才能像瘦身一样，瘦了更健康？未来的城市将深受互联网影响，城市空间布局会跟过去有很大的不同。“位置、位置、位置”的传统房地产“金律”很可能不再适用。我们会看到，城市会爆发一场“颜值革命”。这场“颜值革命”来自哪里呢？归根到底，它来自人民群众自己创造美好生活的能量。</p>
-<h2 id="第五章-阿那亚和范家小学">第五章　阿那亚和范家小学</h2>
-<p>2018年，我们听到了很多负面的社会新闻：米脂杀人、衡阳装车、高铁霸座......这个社会变得越来越糟糕了吗？其中这是一种误解。虽然从表明上看，有些人只关心自我私利，但大家对集体生活的向往并没有泯灭。中国人已经意识到，只有重建集体生活，才能更好地发现自我。我看到的第五个变量就是：<strong>重建社群</strong>。有哪些地方的人们正在“凝结”起来，形成新的社群？这些新的社群只是孤岛，还是将成为群岛？培养孩子也需要一个社群。我会带你到一所偏僻的农村小学看看。2018年，我找到的中国教育理念最先进的小学不是北京或上海名校，而是山区里的一所农村小学。你不必吃惊，社会发展的剧情经常会有令人意想不到的转变。</p>
-]]></content>
-      <categories>
-        <category>Book</category>
-      </categories>
-      <tags>
-        <tag>Book</tag>
       </tags>
   </entry>
   <entry>
@@ -1319,76 +1319,6 @@ Cascade Mask R-CNN。我们希望 K-Net
       </tags>
   </entry>
   <entry>
-    <title>Keras Tutorial</title>
-    <url>/2018/08/14/Keras-Tutorial/</url>
-    <content><![CDATA[<p>Github地址：<a
-href="https://github.com/xingkongliang/Keras-Tutorials">here</a></p>
-<h1 id="keras-tutorials">Keras-Tutorials</h1>
-<blockquote>
-<p>版本：0.0.1</p>
-</blockquote>
-<blockquote>
-<p>作者：张天亮</p>
-</blockquote>
-<blockquote>
-<p>邮箱：zhangtianliang13@mails.ucas.ac.cn</p>
-</blockquote>
-<p>Github 加载 .ipynb 的速度较慢，建议在 <a
-href="http://nbviewer.ipython.org/github/xingkongliang/Keras-Tutorials">Nbviewer</a>
-中查看该项目。</p>
-<h2 id="简介">简介</h2>
-<p>大部分内容来自keras项目中的<a
-href="https://github.com/fchollet/keras/tree/master/examples">examples</a></p>
-<h2 id="目录">目录</h2>
-<ul>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/01.mnist_mpl.ipynb">01.多层感知机实现</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/02.save_model.ipynb">02.模型的保存</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/03.load_model.ipynb">03.模型的加载</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/04.plot_acc_loss.ipynb">04.绘制精度和损失曲线</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/05.mnist_cnn.ipynb">05.卷积神经网络实现</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/06.cifar10_cnn.ipynb">06.CIFAR10_cnn</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/07.mnist_lstm.ipynb">07.mnist_lstm</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/08.vgg-16.ipynb">08.VGG16调用</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/09.conv_filter_visualization.ipynb">09.卷积滤波器可视化</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/10.variational_autoencoder.ipynb">10.variational_autoencoder</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/11.mnist_transfer_cnn.ipynb">11.锁定层fine-tuning网络</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/12.mnist_sklearn_wrapper.ipynb">12.使用sklearn
-wrapper进行的参数搜索</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/13.Keras_with_tensorflow.ipynb">13.Keras和Tensorflow联合使用</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/14.finetune_InceptionV3.ipynb">14.Finetune
-InceptionV3样例</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/15.autoencoder.ipynb">15.自编码器</a></li>
-<li><a
-href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/16.Convolutional_autoencoder.ipynb">16.卷积自编码器</a></li>
-</ul>
-<p>更多Keras使用方法请查看手册 - <a
-href="http://keras-cn.readthedocs.io/en/latest/">中文手册</a> - <a
-href="https://keras.io/">英文手册</a> - <a
-href="https://github.com/fchollet/keras">github</a></p>
-]]></content>
-      <categories>
-        <category>Deep Learning</category>
-      </categories>
-      <tags>
-        <tag>Keras</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>[MLIA] Logistic Regression</title>
     <url>/2018/09/05/MLIA-Logistic-Regression/</url>
     <content><![CDATA[<h1 id="logistic-regression">Logistic Regression</h1>
@@ -1516,6 +1446,76 @@ after 10 iterations the average error rate is: 0.379104</code></pre>
       <categories>
         <category>Machine Learning</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Keras Tutorial</title>
+    <url>/2018/08/14/Keras-Tutorial/</url>
+    <content><![CDATA[<p>Github地址：<a
+href="https://github.com/xingkongliang/Keras-Tutorials">here</a></p>
+<h1 id="keras-tutorials">Keras-Tutorials</h1>
+<blockquote>
+<p>版本：0.0.1</p>
+</blockquote>
+<blockquote>
+<p>作者：张天亮</p>
+</blockquote>
+<blockquote>
+<p>邮箱：zhangtianliang13@mails.ucas.ac.cn</p>
+</blockquote>
+<p>Github 加载 .ipynb 的速度较慢，建议在 <a
+href="http://nbviewer.ipython.org/github/xingkongliang/Keras-Tutorials">Nbviewer</a>
+中查看该项目。</p>
+<h2 id="简介">简介</h2>
+<p>大部分内容来自keras项目中的<a
+href="https://github.com/fchollet/keras/tree/master/examples">examples</a></p>
+<h2 id="目录">目录</h2>
+<ul>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/01.mnist_mpl.ipynb">01.多层感知机实现</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/02.save_model.ipynb">02.模型的保存</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/03.load_model.ipynb">03.模型的加载</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/04.plot_acc_loss.ipynb">04.绘制精度和损失曲线</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/05.mnist_cnn.ipynb">05.卷积神经网络实现</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/06.cifar10_cnn.ipynb">06.CIFAR10_cnn</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/07.mnist_lstm.ipynb">07.mnist_lstm</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/08.vgg-16.ipynb">08.VGG16调用</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/09.conv_filter_visualization.ipynb">09.卷积滤波器可视化</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/10.variational_autoencoder.ipynb">10.variational_autoencoder</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/11.mnist_transfer_cnn.ipynb">11.锁定层fine-tuning网络</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/12.mnist_sklearn_wrapper.ipynb">12.使用sklearn
+wrapper进行的参数搜索</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/13.Keras_with_tensorflow.ipynb">13.Keras和Tensorflow联合使用</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/14.finetune_InceptionV3.ipynb">14.Finetune
+InceptionV3样例</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/15.autoencoder.ipynb">15.自编码器</a></li>
+<li><a
+href="https://github.com/xingkongliang/Keras-Tutorials/blob/master/16.Convolutional_autoencoder.ipynb">16.卷积自编码器</a></li>
+</ul>
+<p>更多Keras使用方法请查看手册 - <a
+href="http://keras-cn.readthedocs.io/en/latest/">中文手册</a> - <a
+href="https://keras.io/">英文手册</a> - <a
+href="https://github.com/fchollet/keras">github</a></p>
+]]></content>
+      <categories>
+        <category>Deep Learning</category>
+      </categories>
+      <tags>
+        <tag>Keras</tag>
+      </tags>
   </entry>
   <entry>
     <title>Pandas Tutorial</title>
@@ -2560,63 +2560,6 @@ draft = L (128, 128)</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>Squeeze-and-Excitation Networks</title>
-    <url>/2019/05/17/Squeeze-and-Excitation-Networks/</url>
-    <content><![CDATA[<h1 id="senet介绍">SENet介绍</h1>
-<p>卷积神经网络（CNNs）的核心模块是卷积操作，这个操作使得网络能够通过每层的局部感受野融合空间和通道的信息，来构建有信息的特征。之前大量的工作已经研究了这种关系的空间组成部分，试图通过提高整个特征层次中空间编码的质量来增强CNN的表征能力。在这项工作中，作者将重点放在通道关系上，并且提出一个新的构架单元，成为“Squeeze-and-Excitation”（SE）块，通过明确地建模通道之间的相互依赖性来自适应地重新校准通道方面的特征响应。</p>
-<h1 id="squeeze-and-excitation-blocks">Squeeze-and-Excitation
-Blocks</h1>
-<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet.png" class="">
-<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet-eq1.png" class="">
-<h2 id="squeeze-全局信息嵌入">Squeeze: 全局信息嵌入</h2>
-<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet-eq2.png" class="">
-<h2 id="excition-适应性地校准">Excition: 适应性地校准</h2>
-<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet-eq3.png" class="">
-<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet-eq4.png" class="">
-<h1 id="实例化到resnet和inception">实例化到ResNet和Inception</h1>
-<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sE-Inception.png" class="" title="Figure 1. SE-Inception module">
-<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sE-ResNet.png" class="" title="Figure 1. SE-Inception module">
-<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet-Table1.png" class="" title="Figure 1. SE-Inception module">
-<h1 id="代码">代码</h1>
-<h2 id="caffe">Caffe</h2>
-<p><a href="https://github.com/hujie-frank/SENet">Caffe SENet</a></p>
-<h2 id="第三方实现">第三方实现</h2>
-<ol start="0" type="1">
-<li>Caffe. SE-mudolues are integrated with a modificated ResNet-50 using
-a stride 2 in the 3x3 convolution instead of the first 1x1 convolution
-which obtains better performance: <a
-href="https://github.com/shicai/SENet-Caffe">Repository</a>.</li>
-<li>TensorFlow. SE-modules are integrated with a pre-activation
-ResNet-50 which follows the setup in <a
-href="https://github.com/facebook/fb.resnet.torch">fb.resnet.torch</a>:
-<a
-href="https://github.com/ppwwyyxx/tensorpack/tree/master/examples/ResNet">Repository</a>.</li>
-<li>TensorFlow. Simple Tensorflow implementation of SENets using
-Cifar10: <a
-href="https://github.com/taki0112/SENet-Tensorflow">Repository</a>.</li>
-<li>MatConvNet. All the released SENets are imported into <a
-href="https://github.com/vlfeat/matconvnet">MatConvNet</a>: <a
-href="https://github.com/albanie/mcnSENets">Repository</a>.</li>
-<li>MXNet. SE-modules are integrated with the ResNeXt and more
-architectures are coming soon: <a
-href="https://github.com/bruinxiong/SENet.mxnet">Repository</a>.</li>
-<li>PyTorch. Implementation of SENets by PyTorch: <a
-href="https://github.com/moskomule/senet.pytorch">Repository</a>.</li>
-<li>Chainer. Implementation of SENets by Chainer: <a
-href="https://github.com/nutszebra/SENets">Repository</a>.</li>
-</ol>
-<h2 id="pytorch实现se模块">Pytorch实现SE模块</h2>
-<p>来自https://github.com/moskomule/senet.pytorch/blob/master/senet/se_module.py的se_module.py文件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">from torch import nn</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class SELayer(nn.Module):</span><br><span class="line">    def __init__(self, channel, reduction=16):</span><br><span class="line">        super(SELayer, self).__init__()</span><br><span class="line">        self.avg_pool = nn.AdaptiveAvgPool2d(1)</span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(channel, channel // reduction, bias=False),</span><br><span class="line">            nn.ReLU(inplace=True),</span><br><span class="line">            nn.Linear(channel // reduction, channel, bias=False),</span><br><span class="line">            nn.Sigmoid()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    def forward(self, x):</span><br><span class="line">        b, c, _, _ = x.size()</span><br><span class="line">        y = self.avg_pool(x).view(b, c)</span><br><span class="line">        y = self.fc(y).view(b, c, 1, 1)</span><br><span class="line">        return x * y.expand_as(x)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Deep Learning</category>
-      </categories>
-      <tags>
-        <tag>Deep Learning</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SOTR:Segmenting Objects with Transformers [ICCV 2021]</title>
     <url>/2022/05/19/SOTR/</url>
     <content><![CDATA[<p>Paper: [ICCV 2021] SOTR: Segmenting Objects with Transformers</p>
@@ -2753,6 +2696,63 @@ mask 或通过动态卷积操作连续分割对象。前者不需要额外的 fu
       <tags>
         <tag>Transformer</tag>
         <tag>Instance Segmentation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Squeeze-and-Excitation Networks</title>
+    <url>/2019/05/17/Squeeze-and-Excitation-Networks/</url>
+    <content><![CDATA[<h1 id="senet介绍">SENet介绍</h1>
+<p>卷积神经网络（CNNs）的核心模块是卷积操作，这个操作使得网络能够通过每层的局部感受野融合空间和通道的信息，来构建有信息的特征。之前大量的工作已经研究了这种关系的空间组成部分，试图通过提高整个特征层次中空间编码的质量来增强CNN的表征能力。在这项工作中，作者将重点放在通道关系上，并且提出一个新的构架单元，成为“Squeeze-and-Excitation”（SE）块，通过明确地建模通道之间的相互依赖性来自适应地重新校准通道方面的特征响应。</p>
+<h1 id="squeeze-and-excitation-blocks">Squeeze-and-Excitation
+Blocks</h1>
+<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet.png" class="">
+<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet-eq1.png" class="">
+<h2 id="squeeze-全局信息嵌入">Squeeze: 全局信息嵌入</h2>
+<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet-eq2.png" class="">
+<h2 id="excition-适应性地校准">Excition: 适应性地校准</h2>
+<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet-eq3.png" class="">
+<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet-eq4.png" class="">
+<h1 id="实例化到resnet和inception">实例化到ResNet和Inception</h1>
+<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sE-Inception.png" class="" title="Figure 1. SE-Inception module">
+<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sE-ResNet.png" class="" title="Figure 1. SE-Inception module">
+<img src="/2019/05/17/Squeeze-and-Excitation-Networks/sENet-Table1.png" class="" title="Figure 1. SE-Inception module">
+<h1 id="代码">代码</h1>
+<h2 id="caffe">Caffe</h2>
+<p><a href="https://github.com/hujie-frank/SENet">Caffe SENet</a></p>
+<h2 id="第三方实现">第三方实现</h2>
+<ol start="0" type="1">
+<li>Caffe. SE-mudolues are integrated with a modificated ResNet-50 using
+a stride 2 in the 3x3 convolution instead of the first 1x1 convolution
+which obtains better performance: <a
+href="https://github.com/shicai/SENet-Caffe">Repository</a>.</li>
+<li>TensorFlow. SE-modules are integrated with a pre-activation
+ResNet-50 which follows the setup in <a
+href="https://github.com/facebook/fb.resnet.torch">fb.resnet.torch</a>:
+<a
+href="https://github.com/ppwwyyxx/tensorpack/tree/master/examples/ResNet">Repository</a>.</li>
+<li>TensorFlow. Simple Tensorflow implementation of SENets using
+Cifar10: <a
+href="https://github.com/taki0112/SENet-Tensorflow">Repository</a>.</li>
+<li>MatConvNet. All the released SENets are imported into <a
+href="https://github.com/vlfeat/matconvnet">MatConvNet</a>: <a
+href="https://github.com/albanie/mcnSENets">Repository</a>.</li>
+<li>MXNet. SE-modules are integrated with the ResNeXt and more
+architectures are coming soon: <a
+href="https://github.com/bruinxiong/SENet.mxnet">Repository</a>.</li>
+<li>PyTorch. Implementation of SENets by PyTorch: <a
+href="https://github.com/moskomule/senet.pytorch">Repository</a>.</li>
+<li>Chainer. Implementation of SENets by Chainer: <a
+href="https://github.com/nutszebra/SENets">Repository</a>.</li>
+</ol>
+<h2 id="pytorch实现se模块">Pytorch实现SE模块</h2>
+<p>来自https://github.com/moskomule/senet.pytorch/blob/master/senet/se_module.py的se_module.py文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">from torch import nn</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class SELayer(nn.Module):</span><br><span class="line">    def __init__(self, channel, reduction=16):</span><br><span class="line">        super(SELayer, self).__init__()</span><br><span class="line">        self.avg_pool = nn.AdaptiveAvgPool2d(1)</span><br><span class="line">        self.fc = nn.Sequential(</span><br><span class="line">            nn.Linear(channel, channel // reduction, bias=False),</span><br><span class="line">            nn.ReLU(inplace=True),</span><br><span class="line">            nn.Linear(channel // reduction, channel, bias=False),</span><br><span class="line">            nn.Sigmoid()</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    def forward(self, x):</span><br><span class="line">        b, c, _, _ = x.size()</span><br><span class="line">        y = self.avg_pool(x).view(b, c)</span><br><span class="line">        y = self.fc(y).view(b, c, 1, 1)</span><br><span class="line">        return x * y.expand_as(x)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Deep Learning</category>
+      </categories>
+      <tags>
+        <tag>Deep Learning</tag>
       </tags>
   </entry>
   <entry>
