@@ -1,94 +1,31 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="">
+<html lang="default">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.starlg.cn","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Object Detection,Transformer," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Tianliang" type="application/atom+xml" />
-
-
-
-
-
-
-<meta name="description" content="Efficient DETR 一种用于端到端目标检测的简单高效的流程，它通过同时利用密集检测（dense detection）和稀疏集合检测（sparse set detection），Efficient DETR 在初始化 object containers 利用密集先验，并且弥补了 1 层 decoder 结构和 6 层 decoder 结构的性能差异。">
-<meta name="keywords" content="Object Detection,Transformer">
+    <meta name="description" content="Efficient DETR 一种用于端到端目标检测的简单高效的流程，它通过同时利用密集检测（dense detection）和稀疏集合检测（sparse set detection），Efficient DETR 在初始化 object containers 利用密集先验，并且弥补了 1 层 decoder 结构和 6 层 decoder 结构的性能差异。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Efficient DETR">
 <meta property="og:url" content="https://www.starlg.cn/2021/12/27/Efficient-DETR/index.html">
 <meta property="og:site_name" content="Tianliang">
 <meta property="og:description" content="Efficient DETR 一种用于端到端目标检测的简单高效的流程，它通过同时利用密集检测（dense detection）和稀疏集合检测（sparse set detection），Efficient DETR 在初始化 object containers 利用密集先验，并且弥补了 1 层 decoder 结构和 6 层 decoder 结构的性能差异。">
-<meta property="og:locale" content="default">
+<meta property="og:locale">
 <meta property="og:image" content="https://www.starlg.cn/2021/12/27/Efficient-DETR/Efficient-DETR_Figure_1.png">
 <meta property="og:image" content="https://www.starlg.cn/2021/12/27/Efficient-DETR/Efficient-DETR_Table_1.png">
 <meta property="og:image" content="https://www.starlg.cn/2021/12/27/Efficient-DETR/Efficient-DETR_Table_2.png">
@@ -98,836 +35,457 @@
 <meta property="og:image" content="https://www.starlg.cn/2021/12/27/Efficient-DETR/Efficient-DETR_Table_4.png">
 <meta property="og:image" content="https://www.starlg.cn/2021/12/27/Efficient-DETR/Efficient-DETR_Figure_5.png">
 <meta property="og:image" content="https://www.starlg.cn/2021/12/27/Efficient-DETR/Efficient-DETR_Table_5.png">
-<meta property="og:updated_time" content="2022-05-30T14:16:36.000Z">
+<meta property="article:published_time" content="2021-12-27T01:03:47.000Z">
+<meta property="article:modified_time" content="2022-05-30T14:16:36.000Z">
+<meta property="article:author" content="Tianliang Zhang">
+<meta property="article:tag" content="Object Detection">
+<meta property="article:tag" content="Transformer">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Efficient DETR">
-<meta name="twitter:description" content="Efficient DETR 一种用于端到端目标检测的简单高效的流程，它通过同时利用密集检测（dense detection）和稀疏集合检测（sparse set detection），Efficient DETR 在初始化 object containers 利用密集先验，并且弥补了 1 层 decoder 结构和 6 层 decoder 结构的性能差异。">
 <meta name="twitter:image" content="https://www.starlg.cn/2021/12/27/Efficient-DETR/Efficient-DETR_Figure_1.png">
 
 
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<link rel="canonical" href="https://www.starlg.cn/2021/12/27/Efficient-DETR/">
 
 
 
-  <link rel="canonical" href="https://www.starlg.cn/2021/12/27/Efficient-DETR/"/>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"https://www.starlg.cn/2021/12/27/Efficient-DETR/","path":"2021/12/27/Efficient-DETR/","title":"Efficient DETR"}</script>
 
-
-
-
-
-  <title>Efficient DETR | Tianliang</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Efficient DETR | Tianliang</title>
   
 
 
 
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-123915509-1', 'auto');
-  ga('send', 'pageview');
-</script>
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?7aa98e58b161f03ba9915003b72d71fa";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
 
 
 
 
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Tianliang</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Tianliang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
   </div>
 </div>
 
-<nav class="site-nav">
+
+
+
+
+
+
+</header>
+        
   
+  <aside class="sidebar">
 
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Home
-          </a>
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
         </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            About
-          </a>
+        <li class="sidebar-nav-overview">
+          Overview
         </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archives
-          </a>
-        </li>
-      
+      </ul>
 
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="st-search-show-outputs">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            Search
-          </a>
-        </li>
-      
-    </ul>
-  
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A2%E7%B4%A2-detr"><span class="nav-number">2.1.</span> <span class="nav-text">探索 DETR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E5%BD%92-detr"><span class="nav-number">2.1.1.</span> <span class="nav-text">回归 DETR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#object-containers-%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">2.1.2.</span> <span class="nav-text">Object Containers
+初始化的影响</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#efficient-detr"><span class="nav-number">3.</span> <span class="nav-text">Efficient DETR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E9%83%A8%E5%88%86"><span class="nav-number">4.</span> <span class="nav-text">实验部分</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-  
-    <div class="site-search">
-      
-  <form class="site-search-form">
-  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
-</form>
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tianliang Zhang</p>
+  <div class="site-description" itemprop="description">Writing is the best form of thinking!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
 
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+        </div>
+      </div>
+    </div>
 
-  _st('install', 't55H9pKd6Gm4xW2uPWRY','2.0.0');
-</script>
-
+    
+  </aside>
 
 
     </div>
-  
-</nav>
 
+    <div class="main-inner post posts-expand">
 
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="default">
     <link itemprop="mainEntityOfPage" href="https://www.starlg.cn/2021/12/27/Efficient-DETR/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Tianliang Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Tianliang">
+      <meta itemprop="description" content="Writing is the best form of thinking!">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Efficient DETR | Tianliang">
+      <meta itemprop="description" content="Efficient DETR 一种用于端到端目标检测的简单高效的流程，它通过同时利用密集检测（dense detection）和稀疏集合检测（sparse set detection），Efficient DETR 在初始化 object containers 利用密集先验，并且弥补了 1 层 decoder 结构和 6 层 decoder 结构的性能差异。">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Efficient DETR
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">Efficient DETR</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-12-27T12:03:47+08:00">
-                2021-12-27
-              </time>
-            
+      <time title="Created: 2021-12-27 12:03:47" itemprop="dateCreated datePublished" datetime="2021-12-27T12:03:47+11:00">2021-12-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-05-31 00:16:36" itemprop="dateModified" datetime="2022-05-31T00:16:36+10:00">2022-05-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Object-Detection/" itemprop="url" rel="index"><span itemprop="name">Object Detection</span></a>
+        </span>
+    </span>
 
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Object-Detection/" itemprop="url" rel="index">
-                    <span itemprop="name">Object Detection</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2021/12/27/Efficient-DETR/" class="leancloud_visitors" data-flag-title="Efficient DETR">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  3,176
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  12
-                </span>
-              
-            </div>
-          
-
-          
-              <div class="post-description">
-                  Efficient DETR 一种用于端到端目标检测的简单高效的流程，它通过同时利用密集检测（dense detection）和稀疏集合检测（sparse set detection），Efficient DETR 在初始化 object containers 利用密集先验，并且弥补了 1 层 decoder 结构和 6 层 decoder 结构的性能差异。
-              </div>
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>Paper：https://arxiv.org/abs/2104.01318</p>
-<p>Code：暂未开源</p>
-<h2 id="摘要">摘要</h2>
-<p>最近提出的端到端 transformer 检测器 （例如 DETR 和 Deformable DETR）有一个堆叠的 6 个解码器层的级联结构，以用来迭代更新 object queries，否则它们的性能会严重下降。在这篇论文中，作者研究了 object containers 的随机初始化，object containers 包含 object queries 和 reference points，用于负责多次迭代的要求。基于这个发现，作者提出 Efficient DETR，一种用于端到端目标检测的简单高效的流程。通过同时利用密集检测（dense detection）和稀疏集合检测（sparse set detection），Efficient DETR 在初始化 object containers 利用密集先验，并且弥补了 1 层 decoder 结构和 6 层 decoder 结构的性能差异。在 MS COCO 上进行的实验表明，该的方法只有 3 encoder layers 和 1 decoder layer，与 state-of-the-art 目标检测方法相比，性能具有竞争力。 Efficient DETR 在拥挤的场景中也很强大，它在 CrowdHuman 数据集上大大优于当前的目标检测器。</p>
-<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Figure_1.png" title="Figure 1. 之前端到端检测器和 Efficient DETR 比较">
-<h2 id="介绍">介绍</h2>
-<p>最近，DETR 提出一种基于 encoder-decoder transformer 架构和二部图匹配构建的端到端框架，改框架可以直接预测一组边界框，而无需后处理（NMS）。然而，DETR 需要比当前主流检测器 10 到 20 倍训练的 epoch 才能收敛，并且在检测小目标方面表现出相对较低的性能。</p>
-<p>DETR 的检测流程可以抽象成 Fig.1(a)。我们首先定义 <em>object container</em> 作为一种结构信息的容器，它可以包含不同种的目标特征。object queries 和 reference points 都属于 object container，因为 object queries 和 reference points 可以表示抽象的特征和目标的位置信息。一组随机初始化的 object containers 被送入特征精练器（feature refiner）中，用于和从图像提取的特征做交互作用。具体来说，具有 cross-attention 模块的 6 decoder layers 扮演了 cascade feature refiner的角色，它迭代的更新 object containers。这个精练之后的 object containers 有助于 DETR最后的预测。此外，图片的特征是通过 feature extractor 提取到的，在 DETR 中的 feature extractor 包括 a CNN backbone 和 6 encoder layer。总之，图像和随机初始化的 object containers 通过 feature extractor 和 cascade feature refiner 得到最终的结果。在这个流程中，DETR 和 Deformable DETR 都具有 6-encoder 和 6-decoder transformer 架构。我们假设这种结构是 DETR 系列 实现目标检测高精度的关键。</p>
-<p>在这篇论文中，作者研究了 DETR 的各个组成部分，并且了解其机制。作者通过大量实验发现具有<strong>额外辅助损失</strong>的 decoder layer 对性能的贡献最大。transformer decoders 迭代地用特征图与 object containers 进行交互。作者探索了 DETR 中 object containers 随机初始化和多次修正的要求导致了收敛缓慢。</p>
-<p>然而，很难直接分析 object queries，因为它们只是一组抽象特征。Deformable DETR 为 object queries 提出了 reference points。Reference points 是一个2维张量，表示猜想的框的中心点。通过可视化训练模型的参考点，作者发现它们被证明仅用作基于锚点的方法中的 anchor points。 此外，作者报告了 1-decoder 结构的 reference points 的不同初始化导致巨大性能差异。 问题来了：<strong>对于端到端检测器中的 object containers，哪种初始化更好？</strong></p>
-<h3 id="探索-detr">探索 DETR</h3>
-<h4 id="回归-detr">回归 DETR</h4>
-<p><strong>Encoder and decoder.</strong> DETR 系列方法是在一个 encoder-decoder transformer 架构上。encoder 和 decoder 都级联了 6 个相同的层。An encoder layer 由 a mullti-head self-attention 和 a feed-forward network (FFN) 组成，而 a decoder layer 有一个额外的 multi-head cross attention layer。encoder layer 起到了与卷积类似的作用，并且从具有 multi-head self-attention 的 CNN backbone 上提取上线文特征。在 decoders 中，一组 256 维的 object queries 与整个图像的 encoder features 进行交互，并通过 multi-head cross attention 聚合信息。辅助二分匹配损失应用于每一个 decoder layer。表 1 说明 DETR 对 decoder layer 的数量更加的敏感，这意味着 decoder 比 encoder 对于 DETR 来说更加的重要。特别是，采用具有 3-encoders 和 3-decoders 的 DETR 作为我们的 baseline。如果在 decoder 中移除 2 层 layer，AP 可以减少约 9.3。相比之下，删除 encoder 中的 2 层 layer，仅导致 1.7 AP 的下降。</p>
-<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Table_1.png" title="Table 1. Encoder vs. Decoder">
-<p><strong>为什么 decoder 比 encoder 更加的重要？</strong> 它们都是在一个级联的框架下，但是 decoder 的每个相同的层上都有 一个额外的辅助损失。在表 1 中，我们发现这个辅助的解码损失是 DETR 对 decoder layer 数量敏感的主要原因。在没有辅助损失的情况下，encoder 和 decoder 的行为趋于相同。我们指出辅助解码损失在更新 query feature 时引入了强监督，这使得 decoder 更高效。decoder 级联结构通过逐层的辅助损失来精练特征。迭代次数越多，辅助解码监督越有效。</p>
-<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Table_2.png" title="Table 2. DETR 中 decoder layer 数量的影响">
-<p>为了进一步套索 decoder 的级联结构，作者尝试了不同数量的 decoder layer。表 2 显示，随着级联次数的减少，性能显著降低。6-layer decoder 和 1-layer decoder 存在 10.3 AP 的巨大下降。值得注意的是，在 decoder 中每次迭代后，仅仅 object queries 得到了更新。Object queries 与性能密切相关，因为最终的预测是来自 object queries 并由检测头预测。然而，object queries 在训练开始时是随机初始化的。我们假设这种随机初始化不能提供良好的初始状态，这可能是 DETR 需要 6 次迭代的级联结构来实现竞争性能的原因。</p>
-<h4 id="object-containers-初始化的影响">Object Containers 初始化的影响</h4>
-<p>基于前面的分析，object queries 的初始是值得研究的。object query 属于object container 中的特征信息。object query 被定义为可学习的位置嵌入，它是一个 256 维的抽象张量，因此很难分析。然而，我们观察到 DETR 中的每个 object query 都学会了专注于具有多种操作模式的特定区域和框的大小。我们假设研究 object query 的空间投影可能有助于直观的理解。</p>
-<p>Deformable DETR 引入了一个新的组件，即与 object queries 相关的 reference point。Reference points 是表示框中心预测的 2 维张量，属于 object container 的位置信息。此外，参考点是通过线性投影从 256 维 object queries 中预测的。它们可以作为 object query 在 2D 空间中的投影，并提供 object query 中位置信息的直观表示。Reference point 和 object query 在 decoder 迭代期间更新，并作用到最终结果。</p>
-<p>考虑到 reference points 直观地表示 object queries 中的位置信息，开始对其进行研究。在传递到 decoder layers 之前，reference points 试试通过随机初始化的 object queries 的线性投影生成的，如图 3（a）所示。我们称这个过程为参考点的初始化。图 2 展示了模型收敛之后的参考点。初始阶段的参考点均匀分布在图像上，覆盖整个图像区域。这种初始化类似于 anchor-based detectors 的 anchor points 的生成。随着迭代阶段的增加，reference points 逐渐聚集到前景的中心，最终在最后阶段几乎覆盖了所有的前景。直观的说，reference points 充当定位前景的 anchor points，并使得注意力模块专注于前景周围的一小组关键采样点。</p>
-<p>在研究了 reference points 的更新之后，我们开始探索它们的初始化，这就是参考点的生成方式。对于剩下的部分，我们将 reference points 和 object queries 的初始化称为 object containers 的初始化。</p>
-<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Figure_3.png" title="Figure 3. 3 种不同的初始化方法">
-<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Table_3.png" title="Table 3. Reference points 不同初始化的影响">
-<p><strong>Reference Point 不同的初始化。</strong> 在 anchor-based detectors 中，anchors 的生成对模型的性能有一个较大的影响。anchors 在每一个滑动窗口的位置生成，并且为目标可能出现的位置提供了一个合适的初始化。在 reference points 的初始化中，它的作用类似于 anchor points，可能对 Deformable DETR 的性能有影响。作者针对级联（6-decoder）和非级联（1-decoder）结构尝试了不同的初始化，并且比较它们的性能。如表 3 所示，不同的初始化在非级联结构上表现确实不同。相反，在级联结构上它们有一个相似的性能。与推测一致，网格（grid）初始化是在滑动窗口的中心生成 reference points，它的结果类似于可学习的初始化。然而，另外两种初始化，中心（center）和边界（border），在没有迭代的情况下，导致了准确率的巨大下降。为了更好的分析，我们再几个阶段可视化了不同初始化的 reference points，如图 4 所示。随着迭代的增加，它们的 reference points 往往处于相同的分布，并且在最终的阶段以相似的模式定位前景。总之，reference points 的不同初始化导致模型在非级联结构中性能的巨大差异，而级联结构通过多次迭代带来了它们的差距。 从另一个角度来看，更好的 reference points 初始化可能会提高非级联结构的性能。</p>
-<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Figure_4.png" title="Figure 4. Reference points 的不同初始化">
-<p><strong>我们能否通过更好的初始化来弥补 1-decoder 结构和 6-decoder 结构的差距？</strong></p>
-<p>基于以上的发现，reference points 更好的初始化可以提升性能，尤其对 1-decoder 结构。考虑到 reference points 类似于 anchor points，我们假设在主流检测器中 anchor 的先验可以帮助解决这个问题。在当前的 two-stage 检测器中，region proposals 通过 RPN 以一个滑窗的操作生成的，它可以针对前景提供一组类比无关的候选区域。</p>
-<p>RPN 使用 dense 的先验生成前景的粗糙的边界框。如图 3(b) 所示，我们将 RPN 层添加到从 encoder 出来的 dense feature 上。RPN head 共享 encoder 的特征，并且为每一个 anchor 预测 objectness score 和 偏移。得分较高的边界框被选择作为 region proposals。然后，我们再非级联的结构中使用这些 region proposals 的中心作为 reference points 的初始化。表 3 表明了这种方式带来的较大的性能提升。图 5 可视化了这个方法，这里 reference points 作为初始化阶段得到了与其他方法最后阶段相似的分布。Region proposals 以一种更合理的分布初始化了 reference points，提升了非级联结构的 Deformable DETR 的准确性。</p>
-<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Table_4.png" title="Table 4. Reference point 和 object query 使用 dense 先验作为初始化。">
-<p>如表 4 所示，使用 dense 先验作为 reference point 的初始化，使得它达到了一个更好的初始化状态，并且在 1-decoder 结构中带来了显著的性能提升。然而，reference point 仅仅是 object query 的空间映射，object query 包含额外的抽象信息。因此，怎么同时使用 dense 先验初始化 256-d 的 object feature呢？</p>
-<p>直观上，对于 proposal 初始化中的每个 reference point，我们从特征图中选择其对应的特征，即来自 encoder 的 256-d 张量，作为其 object query 的初始化。我们的方法如图 3(c) 所示。 在表 4 中，我们的方法将 1-decoder 结构进一步改进了 3 AP。此外，仅使用 dense 先验初始化 object query 并使用没有reference point 的原始 decoder 也可以显着改善 baseline。</p>
-<p>这些结果表明 object container 的初始状态，包括 Deformable DETR 中的 reference point 和 object query，与非级联结构的性能高度相关。RPN 中的 proposals 信息提供了更好的初始化，有可能通过 dense 先验提高性能。基于我们的研究，我们提出了 Efficient DETR，它能够缩小 1-decoder 结构和 6-decoder 结构之间的性能差距。</p>
-<h2 id="efficient-detr">Efficient DETR</h2>
-<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Figure_5.png" title="Figure 5. Efficient DETR">
-<p>Efficient DETR 包含 3 encoder layers 和仅仅 1 decoder layer，并且在 decoder 中没有级联结构。这个框架如图 5 所示。Efficient DETR 包含两个部分：dense 和 sparse。Dense 部分在来自 encoder 的 dense 特征上做预测。它从 dense 的预测结果中选择 top-k proposals。这个 4-d proposals 和它对应的 256-d feature 作为 reference points 和 object queries 的初始化。在 sparse 部分，object containers（包含 reference points 和 object queries ）使用 dense 先验作为初始化，并且送入到 1-layer decoder，使其与 encoder feature 做信息交互更新特征。最终的预测结果来自于这个更新之后的 object containers。</p>
-<h2 id="实验部分">实验部分</h2>
-<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Table_5.png" title="Table 5. 在 COCO 2017 val 数据集上，和其他方法的结果比较">
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div></div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>Donate</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.png" alt="Tianliang Zhang WeChat Pay"/>
-        <p>WeChat Pay</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tianliang Zhang Alipay"/>
-        <p>Alipay</p>
-      </div>
-    
-
-    
-
-  </div>
+  
 </div>
 
-      </div>
-    
+            <div class="post-description">Efficient DETR 一种用于端到端目标检测的简单高效的流程，它通过同时利用密集检测（dense detection）和稀疏集合检测（sparse set detection），Efficient DETR 在初始化 object containers 利用密集先验，并且弥补了 1 层 decoder 结构和 6 层 decoder 结构的性能差异。</div>
+        </div>
+      </header>
 
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Paper：https://arxiv.org/abs/2104.01318</p>
+<p>Code：暂未开源</p>
+<h2 id="摘要">摘要</h2>
+<p>最近提出的端到端 transformer 检测器 （例如 DETR 和 Deformable
+DETR）有一个堆叠的 6 个解码器层的级联结构，以用来迭代更新 object
+queries，否则它们的性能会严重下降。在这篇论文中，作者研究了 object
+containers 的随机初始化，object containers 包含 object queries 和
+reference points，用于负责多次迭代的要求。基于这个发现，作者提出
+Efficient
+DETR，一种用于端到端目标检测的简单高效的流程。通过同时利用密集检测（dense
+detection）和稀疏集合检测（sparse set detection），Efficient DETR
+在初始化 object containers 利用密集先验，并且弥补了 1 层 decoder 结构和
+6 层 decoder 结构的性能差异。在 MS COCO 上进行的实验表明，该的方法只有 3
+encoder layers 和 1 decoder layer，与 state-of-the-art
+目标检测方法相比，性能具有竞争力。 Efficient DETR
+在拥挤的场景中也很强大，它在 CrowdHuman
+数据集上大大优于当前的目标检测器。</p>
+<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Figure_1.png" class="" title="Figure 1. 之前端到端检测器和 Efficient DETR 比较">
+<h2 id="介绍">介绍</h2>
+<p>最近，DETR 提出一种基于 encoder-decoder transformer
+架构和二部图匹配构建的端到端框架，改框架可以直接预测一组边界框，而无需后处理（NMS）。然而，DETR
+需要比当前主流检测器 10 到 20 倍训练的 epoch
+才能收敛，并且在检测小目标方面表现出相对较低的性能。</p>
+<p>DETR 的检测流程可以抽象成 Fig.1(a)。我们首先定义 <em>object
+container</em>
+作为一种结构信息的容器，它可以包含不同种的目标特征。object queries 和
+reference points 都属于 object container，因为 object queries 和
+reference points 可以表示抽象的特征和目标的位置信息。一组随机初始化的
+object containers 被送入特征精练器（feature
+refiner）中，用于和从图像提取的特征做交互作用。具体来说，具有
+cross-attention 模块的 6 decoder layers 扮演了 cascade feature
+refiner的角色，它迭代的更新 object containers。这个精练之后的 object
+containers 有助于 DETR最后的预测。此外，图片的特征是通过 feature
+extractor 提取到的，在 DETR 中的 feature extractor 包括 a CNN backbone
+和 6 encoder layer。总之，图像和随机初始化的 object containers 通过
+feature extractor 和 cascade feature refiner
+得到最终的结果。在这个流程中，DETR 和 Deformable DETR 都具有 6-encoder
+和 6-decoder transformer 架构。我们假设这种结构是 DETR 系列
+实现目标检测高精度的关键。</p>
+<p>在这篇论文中，作者研究了 DETR
+的各个组成部分，并且了解其机制。作者通过大量实验发现具有<strong>额外辅助损失</strong>的
+decoder layer 对性能的贡献最大。transformer decoders 迭代地用特征图与
+object containers 进行交互。作者探索了 DETR 中 object containers
+随机初始化和多次修正的要求导致了收敛缓慢。</p>
+<p>然而，很难直接分析 object
+queries，因为它们只是一组抽象特征。Deformable DETR 为 object queries
+提出了 reference points。Reference points
+是一个2维张量，表示猜想的框的中心点。通过可视化训练模型的参考点，作者发现它们被证明仅用作基于锚点的方法中的
+anchor points。 此外，作者报告了 1-decoder 结构的 reference points
+的不同初始化导致巨大性能差异。 问题来了：<strong>对于端到端检测器中的
+object containers，哪种初始化更好？</strong></p>
+<h3 id="探索-detr">探索 DETR</h3>
+<h4 id="回归-detr">回归 DETR</h4>
+<p><strong>Encoder and decoder.</strong> DETR 系列方法是在一个
+encoder-decoder transformer 架构上。encoder 和 decoder 都级联了 6
+个相同的层。An encoder layer 由 a mullti-head self-attention 和 a
+feed-forward network (FFN) 组成，而 a decoder layer 有一个额外的
+multi-head cross attention layer。encoder layer
+起到了与卷积类似的作用，并且从具有 multi-head self-attention 的 CNN
+backbone 上提取上线文特征。在 decoders 中，一组 256 维的 object queries
+与整个图像的 encoder features 进行交互，并通过 multi-head cross
+attention 聚合信息。辅助二分匹配损失应用于每一个 decoder layer。表 1
+说明 DETR 对 decoder layer 的数量更加的敏感，这意味着 decoder 比 encoder
+对于 DETR 来说更加的重要。特别是，采用具有 3-encoders 和 3-decoders 的
+DETR 作为我们的 baseline。如果在 decoder 中移除 2 层 layer，AP
+可以减少约 9.3。相比之下，删除 encoder 中的 2 层 layer，仅导致 1.7 AP
+的下降。</p>
+<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Table_1.png" class="" title="Table 1. Encoder vs. Decoder">
+<p><strong>为什么 decoder 比 encoder 更加的重要？</strong>
+它们都是在一个级联的框架下，但是 decoder 的每个相同的层上都有
+一个额外的辅助损失。在表 1 中，我们发现这个辅助的解码损失是 DETR 对
+decoder layer 数量敏感的主要原因。在没有辅助损失的情况下，encoder 和
+decoder 的行为趋于相同。我们指出辅助解码损失在更新 query feature
+时引入了强监督，这使得 decoder 更高效。decoder
+级联结构通过逐层的辅助损失来精练特征。迭代次数越多，辅助解码监督越有效。</p>
+<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Table_2.png" class="" title="Table 2. DETR 中 decoder layer 数量的影响">
+<p>为了进一步套索 decoder 的级联结构，作者尝试了不同数量的 decoder
+layer。表 2 显示，随着级联次数的减少，性能显著降低。6-layer decoder 和
+1-layer decoder 存在 10.3 AP 的巨大下降。值得注意的是，在 decoder
+中每次迭代后，仅仅 object queries 得到了更新。Object queries
+与性能密切相关，因为最终的预测是来自 object queries
+并由检测头预测。然而，object queries
+在训练开始时是随机初始化的。我们假设这种随机初始化不能提供良好的初始状态，这可能是
+DETR 需要 6 次迭代的级联结构来实现竞争性能的原因。</p>
+<h4 id="object-containers-初始化的影响">Object Containers
+初始化的影响</h4>
+<p>基于前面的分析，object queries 的初始是值得研究的。object query
+属于object container 中的特征信息。object query
+被定义为可学习的位置嵌入，它是一个 256
+维的抽象张量，因此很难分析。然而，我们观察到 DETR 中的每个 object query
+都学会了专注于具有多种操作模式的特定区域和框的大小。我们假设研究 object
+query 的空间投影可能有助于直观的理解。</p>
+<p>Deformable DETR 引入了一个新的组件，即与 object queries 相关的
+reference point。Reference points 是表示框中心预测的 2 维张量，属于
+object container 的位置信息。此外，参考点是通过线性投影从 256 维 object
+queries 中预测的。它们可以作为 object query 在 2D 空间中的投影，并提供
+object query 中位置信息的直观表示。Reference point 和 object query 在
+decoder 迭代期间更新，并作用到最终结果。</p>
+<p>考虑到 reference points 直观地表示 object queries
+中的位置信息，开始对其进行研究。在传递到 decoder layers 之前，reference
+points 试试通过随机初始化的 object queries 的线性投影生成的，如图
+3（a）所示。我们称这个过程为参考点的初始化。图 2
+展示了模型收敛之后的参考点。初始阶段的参考点均匀分布在图像上，覆盖整个图像区域。这种初始化类似于
+anchor-based detectors 的 anchor points
+的生成。随着迭代阶段的增加，reference points
+逐渐聚集到前景的中心，最终在最后阶段几乎覆盖了所有的前景。直观的说，reference
+points 充当定位前景的 anchor
+points，并使得注意力模块专注于前景周围的一小组关键采样点。</p>
+<p>在研究了 reference points
+的更新之后，我们开始探索它们的初始化，这就是参考点的生成方式。对于剩下的部分，我们将
+reference points 和 object queries 的初始化称为 object containers
+的初始化。</p>
+<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Figure_3.png" class="" title="Figure 3. 3 种不同的初始化方法">
+<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Table_3.png" class="" title="Table 3. Reference points 不同初始化的影响">
+<p><strong>Reference Point 不同的初始化。</strong> 在 anchor-based
+detectors 中，anchors 的生成对模型的性能有一个较大的影响。anchors
+在每一个滑动窗口的位置生成，并且为目标可能出现的位置提供了一个合适的初始化。在
+reference points 的初始化中，它的作用类似于 anchor points，可能对
+Deformable DETR
+的性能有影响。作者针对级联（6-decoder）和非级联（1-decoder）结构尝试了不同的初始化，并且比较它们的性能。如表
+3
+所示，不同的初始化在非级联结构上表现确实不同。相反，在级联结构上它们有一个相似的性能。与推测一致，网格（grid）初始化是在滑动窗口的中心生成
+reference
+points，它的结果类似于可学习的初始化。然而，另外两种初始化，中心（center）和边界（border），在没有迭代的情况下，导致了准确率的巨大下降。为了更好的分析，我们再几个阶段可视化了不同初始化的
+reference points，如图 4 所示。随着迭代的增加，它们的 reference points
+往往处于相同的分布，并且在最终的阶段以相似的模式定位前景。总之，reference
+points
+的不同初始化导致模型在非级联结构中性能的巨大差异，而级联结构通过多次迭代带来了它们的差距。
+从另一个角度来看，更好的 reference points
+初始化可能会提高非级联结构的性能。</p>
+<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Figure_4.png" class="" title="Figure 4. Reference points 的不同初始化">
+<p><strong>我们能否通过更好的初始化来弥补 1-decoder 结构和 6-decoder
+结构的差距？</strong></p>
+<p>基于以上的发现，reference points 更好的初始化可以提升性能，尤其对
+1-decoder 结构。考虑到 reference points 类似于 anchor
+points，我们假设在主流检测器中 anchor
+的先验可以帮助解决这个问题。在当前的 two-stage 检测器中，region
+proposals 通过 RPN
+以一个滑窗的操作生成的，它可以针对前景提供一组类比无关的候选区域。</p>
+<p>RPN 使用 dense 的先验生成前景的粗糙的边界框。如图 3(b) 所示，我们将
+RPN 层添加到从 encoder 出来的 dense feature 上。RPN head 共享 encoder
+的特征，并且为每一个 anchor 预测 objectness score 和
+偏移。得分较高的边界框被选择作为 region
+proposals。然后，我们再非级联的结构中使用这些 region proposals
+的中心作为 reference points 的初始化。表 3
+表明了这种方式带来的较大的性能提升。图 5 可视化了这个方法，这里
+reference points
+作为初始化阶段得到了与其他方法最后阶段相似的分布。Region proposals
+以一种更合理的分布初始化了 reference points，提升了非级联结构的
+Deformable DETR 的准确性。</p>
+<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Table_4.png" class="" title="Table 4. Reference point 和 object query 使用 dense 先验作为初始化。">
+<p>如表 4 所示，使用 dense 先验作为 reference point
+的初始化，使得它达到了一个更好的初始化状态，并且在 1-decoder
+结构中带来了显著的性能提升。然而，reference point 仅仅是 object query
+的空间映射，object query 包含额外的抽象信息。因此，怎么同时使用 dense
+先验初始化 256-d 的 object feature呢？</p>
+<p>直观上，对于 proposal 初始化中的每个 reference
+point，我们从特征图中选择其对应的特征，即来自 encoder 的 256-d
+张量，作为其 object query 的初始化。我们的方法如图 3(c) 所示。 在表 4
+中，我们的方法将 1-decoder 结构进一步改进了 3 AP。此外，仅使用 dense
+先验初始化 object query 并使用没有reference point 的原始 decoder
+也可以显着改善 baseline。</p>
+<p>这些结果表明 object container 的初始状态，包括 Deformable DETR 中的
+reference point 和 object query，与非级联结构的性能高度相关。RPN 中的
+proposals 信息提供了更好的初始化，有可能通过 dense
+先验提高性能。基于我们的研究，我们提出了 Efficient DETR，它能够缩小
+1-decoder 结构和 6-decoder 结构之间的性能差距。</p>
+<h2 id="efficient-detr">Efficient DETR</h2>
+<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Figure_5.png" class="" title="Figure 5. Efficient DETR">
+<p>Efficient DETR 包含 3 encoder layers 和仅仅 1 decoder layer，并且在
+decoder 中没有级联结构。这个框架如图 5 所示。Efficient DETR
+包含两个部分：dense 和 sparse。Dense 部分在来自 encoder 的 dense
+特征上做预测。它从 dense 的预测结果中选择 top-k proposals。这个 4-d
+proposals 和它对应的 256-d feature 作为 reference points 和 object
+queries 的初始化。在 sparse 部分，object containers（包含 reference
+points 和 object queries ）使用 dense 先验作为初始化，并且送入到 1-layer
+decoder，使其与 encoder feature
+做信息交互更新特征。最终的预测结果来自于这个更新之后的 object
+containers。</p>
+<h2 id="实验部分">实验部分</h2>
+<img src="/2021/12/27/Efficient-DETR/Efficient-DETR_Table_5.png" class="" title="Table 5. 在 COCO 2017 val 数据集上，和其他方法的结果比较">
+
+    </div>
+
+    
+    
     
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Object-Detection/" rel="tag"># Object Detection</a>
-          
-            <a href="/tags/Transformer/" rel="tag"># Transformer</a>
-          
-        </div>
-      
-
-      
-      
-        <div class="post-widgets">
-        
-
-        
-
-        
-          
-          <div id="needsharebutton-postbottom">
-            <span class="btn">
-              <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </span>
-          </div>
-        
-        </div>
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2021/11/24/Deformable-DETR/" rel="next" title="Deformable DETR">
-                <i class="fa fa-chevron-left"></i> Deformable DETR
-              </a>
-            
+          <div class="post-tags">
+              <a href="/tags/Object-Detection/" rel="tag"># Object Detection</a>
+              <a href="/tags/Transformer/" rel="tag"># Transformer</a>
           </div>
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2022/05/19/SOTR/" rel="prev" title="SOTR:Segmenting Objects with Transformers [ICCV 2021]">
-                SOTR:Segmenting Objects with Transformers [ICCV 2021] <i class="fa fa-chevron-right"></i>
-              </a>
-            
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/24/Deformable-DETR/" rel="prev" title="Deformable DETR">
+                  <i class="fa fa-angle-left"></i> Deformable DETR
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/19/SOTR/" rel="next" title="SOTR:Segmenting Objects with Transformers [ICCV 2021]">
+                  SOTR:Segmenting Objects with Transformers [ICCV 2021] <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
           </div>
-        </div>
-      
-
-      
-      
     </footer>
-  </div>
-  
-  
-  
   </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODg4MC8xNTQwOA=="></div>
-    </div>
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460"
-                alt="Tianliang Zhang" />
-            
-              <p class="site-author-name" itemprop="name">Tianliang Zhang</p>
-              <p class="site-description motion-element" itemprop="description">Writing is the best form of thinking!</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">22</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
-                  <span class="site-state-item-name">tags</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/xingkongliang" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:tianliangjay@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="http://www.zhihu.com/people/xingkong_liang" target="_blank" title="知乎">
-                      
-                        <i class="fa fa-fw fa-globe"></i>知乎</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="http://weibo.com/1863221531" target="_blank" title="微博">
-                      
-                        <i class="fa fa-fw fa-weibo"></i>微博</a>
-                  </span>
-                
-            </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#探索-detr"><span class="nav-number">2.1.</span> <span class="nav-text">探索 DETR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#回归-detr"><span class="nav-number">2.1.1.</span> <span class="nav-text">回归 DETR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#object-containers-初始化的影响"><span class="nav-number">2.1.2.</span> <span class="nav-text">Object Containers 初始化的影响</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#efficient-detr"><span class="nav-number">3.</span> <span class="nav-text">Efficient DETR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验部分"><span class="nav-number">4.</span> <span class="nav-text">实验部分</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2024</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Tianliang Zhang</span>
-
-  
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Tianliang Zhang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
 
-
-  
-
-
-
-
-
-
-
-
-
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
 
   
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
 
   
 
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
 
 
 
@@ -938,524 +496,6 @@
 
 
 
-
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
-  <script>AV.initialize("Ksw0nRfaEzFJTORKsUHFkboY-gzGzoHsz", "HgFpOq4Y7wfrEiCV9HwxJziH");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-  
-
-  
-  
-  
-  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
-
-  
-  
-  <script src="/lib/needsharebutton/needsharebutton.js"></script>
-
-  <script>
-    
-      pbOptions = {};
-      
-          pbOptions.iconStyle = "box";
-      
-          pbOptions.boxForm = "horizontal";
-      
-          pbOptions.position = "bottomCenter";
-      
-          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
-      
-      new needShareButton('#needsharebutton-postbottom', pbOptions);
-    
-    
-  </script>
-
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  
-
-
-  
-
-  
 
 </body>
 </html>
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>

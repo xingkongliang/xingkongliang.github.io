@@ -1,94 +1,31 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next mist use-motion" lang="">
+<html lang="default">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.starlg.cn","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="Transformer,Instance Segmentation," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Tianliang" type="application/atom+xml" />
-
-
-
-
-
-
-<meta name="description" content="Segmenting Objects with TRansformers (SOTR) 简化了分割的pipeline，它具有2个并行的子任务：（1）通过 transformer 预测每个实例类别，（2）使用多层级上采样模块动态生成 segmentation mask。SOTR 可以分别通过特征金字塔（FPN）和 twin transformer 有效地提取较低级别的特征表示（lower-level">
-<meta name="keywords" content="Transformer,Instance Segmentation">
+    <meta name="description" content="Segmenting Objects with TRansformers (SOTR) 简化了分割的pipeline，它具有2个并行的子任务：（1）通过 transformer 预测每个实例类别，（2）使用多层级上采样模块动态生成 segmentation mask。SOTR 可以分别通过特征金字塔（FPN）和 twin transformer 有效地提取较低级别的特征表示（lower-level">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SOTR:Segmenting Objects with Transformers [ICCV 2021]">
 <meta property="og:url" content="https://www.starlg.cn/2022/05/19/SOTR/index.html">
 <meta property="og:site_name" content="Tianliang">
 <meta property="og:description" content="Segmenting Objects with TRansformers (SOTR) 简化了分割的pipeline，它具有2个并行的子任务：（1）通过 transformer 预测每个实例类别，（2）使用多层级上采样模块动态生成 segmentation mask。SOTR 可以分别通过特征金字塔（FPN）和 twin transformer 有效地提取较低级别的特征表示（lower-level">
-<meta property="og:locale" content="default">
+<meta property="og:locale">
 <meta property="og:image" content="https://www.starlg.cn/2022/05/19/SOTR/ICCV21_SOTR_Figure1.png">
 <meta property="og:image" content="https://www.starlg.cn/2022/05/19/SOTR/ICCV21_SOTR_Figure2.png">
 <meta property="og:image" content="https://www.starlg.cn/2022/05/19/SOTR/ICCV21_SOTR_Figure3.png">
@@ -97,809 +34,396 @@
 <meta property="og:image" content="https://www.starlg.cn/2022/05/19/SOTR/ICCV21_SOTR_Figure5.png">
 <meta property="og:image" content="https://www.starlg.cn/2022/05/19/SOTR/ICCV21_SOTR_Table5.png">
 <meta property="og:image" content="https://www.starlg.cn/2022/05/19/SOTR/ICCV21_SOTR_Table7.png">
-<meta property="og:updated_time" content="2022-05-30T14:16:36.000Z">
+<meta property="article:published_time" content="2022-05-19T00:39:42.000Z">
+<meta property="article:modified_time" content="2022-05-30T14:16:36.000Z">
+<meta property="article:author" content="Tianliang Zhang">
+<meta property="article:tag" content="Transformer">
+<meta property="article:tag" content="Instance Segmentation">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SOTR:Segmenting Objects with Transformers [ICCV 2021]">
-<meta name="twitter:description" content="Segmenting Objects with TRansformers (SOTR) 简化了分割的pipeline，它具有2个并行的子任务：（1）通过 transformer 预测每个实例类别，（2）使用多层级上采样模块动态生成 segmentation mask。SOTR 可以分别通过特征金字塔（FPN）和 twin transformer 有效地提取较低级别的特征表示（lower-level">
 <meta name="twitter:image" content="https://www.starlg.cn/2022/05/19/SOTR/ICCV21_SOTR_Figure1.png">
 
 
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
+<link rel="canonical" href="https://www.starlg.cn/2022/05/19/SOTR/">
 
 
 
-  <link rel="canonical" href="https://www.starlg.cn/2022/05/19/SOTR/"/>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"https://www.starlg.cn/2022/05/19/SOTR/","path":"2022/05/19/SOTR/","title":"SOTR:Segmenting Objects with Transformers [ICCV 2021]"}</script>
 
-
-
-
-
-  <title>SOTR:Segmenting Objects with Transformers [ICCV 2021] | Tianliang</title>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SOTR:Segmenting Objects with Transformers [ICCV 2021] | Tianliang</title>
   
 
 
 
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-123915509-1', 'auto');
-  ga('send', 'pageview');
-</script>
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?7aa98e58b161f03ba9915003b72d71fa";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
 
 
 
 
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Tianliang</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Tianliang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
   </div>
 </div>
 
-<nav class="site-nav">
+
+
+
+
+
+
+</header>
+        
   
+  <aside class="sidebar">
 
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            Home
-          </a>
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
         </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            About
-          </a>
+        <li class="sidebar-nav-overview">
+          Overview
         </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            Archives
-          </a>
-        </li>
-      
+      </ul>
 
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="st-search-show-outputs">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            Search
-          </a>
-        </li>
-      
-    </ul>
-  
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#transformer"><span class="nav-number">2.1.</span> <span class="nav-text">Transformer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mask"><span class="nav-number">2.2.</span> <span class="nav-text">Mask</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">实验</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-  
-    <div class="site-search">
-      
-  <form class="site-search-form">
-  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
-</form>
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Tianliang Zhang</p>
+  <div class="site-description" itemprop="description">Writing is the best form of thinking!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
 
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+        </div>
+      </div>
+    </div>
 
-  _st('install', 't55H9pKd6Gm4xW2uPWRY','2.0.0');
-</script>
-
+    
+  </aside>
 
 
     </div>
-  
-</nav>
 
+    <div class="main-inner post posts-expand">
 
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="default">
     <link itemprop="mainEntityOfPage" href="https://www.starlg.cn/2022/05/19/SOTR/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Tianliang Zhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Tianliang">
+      <meta itemprop="description" content="Writing is the best form of thinking!">
     </span>
 
-    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SOTR:Segmenting Objects with Transformers [ICCV 2021] | Tianliang">
+      <meta itemprop="description" content="Segmenting Objects with TRansformers (SOTR) 简化了分割的pipeline，它具有2个并行的子任务：（1）通过 transformer 预测每个实例类别，（2）使用多层级上采样模块动态生成 segmentation mask。SOTR 可以分别通过特征金字塔（FPN）和 twin transformer 有效地提取较低级别的特征表示（lower-level feature representations）并不惑远程上下文依赖关系（long-range context dependencies）。同时，与原始的 tranformer 相比，多提出的 twin transformer 在时间和资源上都是有效的，因为只涉及行和列注意力（a row and a column attention ）来编码像素。">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SOTR:Segmenting Objects with Transformers [ICCV 2021]
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">SOTR:Segmenting Objects with Transformers [ICCV 2021]</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-05-19T10:39:42+08:00">
-                2022-05-19
-              </time>
-            
+      <time title="Created: 2022-05-19 10:39:42" itemprop="dateCreated datePublished" datetime="2022-05-19T10:39:42+10:00">2022-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-05-31 00:16:36" itemprop="dateModified" datetime="2022-05-31T00:16:36+10:00">2022-05-31</time>
+    </span>
 
-            
+  
+</div>
 
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2022/05/19/SOTR/" class="leancloud_visitors" data-flag-title="SOTR:Segmenting Objects with Transformers [ICCV 2021]">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">Visitors&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Words count in article&#58;</span>
-                
-                <span title="Words count in article">
-                  2,433
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">
-                  9
-                </span>
-              
-            </div>
-          
-
-          
-              <div class="post-description">
-                  Segmenting Objects with TRansformers (SOTR) 简化了分割的pipeline，它具有2个并行的子任务：（1）通过 transformer 预测每个实例类别，（2）使用多层级上采样模块动态生成 segmentation mask。SOTR 可以分别通过特征金字塔（FPN）和 twin transformer 有效地提取较低级别的特征表示（lower-level feature representations）并不惑远程上下文依赖关系（long-range context dependencies）。同时，与原始的 tranformer 相比，多提出的 twin transformer 在时间和资源上都是有效的，因为只涉及行和列注意力（a row and a column attention ）来编码像素。
-              </div>
-          
-
+            <div class="post-description">Segmenting Objects with TRansformers (SOTR) 简化了分割的pipeline，它具有2个并行的子任务：（1）通过 transformer 预测每个实例类别，（2）使用多层级上采样模块动态生成 segmentation mask。SOTR 可以分别通过特征金字塔（FPN）和 twin transformer 有效地提取较低级别的特征表示（lower-level feature representations）并不惑远程上下文依赖关系（long-range context dependencies）。同时，与原始的 tranformer 相比，多提出的 twin transformer 在时间和资源上都是有效的，因为只涉及行和列注意力（a row and a column attention ）来编码像素。</div>
         </div>
       </header>
-    
 
     
     
     
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>Paper: [ICCV 2021] SOTR: Segmenting Objects with Transformers</p>
+    <div class="post-body" itemprop="articleBody"><p>Paper: [ICCV 2021] SOTR: Segmenting Objects with Transformers</p>
 <p>Arxiv: https://arxiv.org/abs/2108.06747</p>
 <p>Github: https://github.com/easton-cau/SOTR</p>
 <h2 id="介绍">介绍</h2>
-<p>最近 tansformer-based 模型在视觉任务上表现出令人印象深刻的性能，甚至超过了卷积神经网络。在这项工作中，作者提出了一种新颖、灵活且有效的 tranformer-based 模型用于高质量的实例分割。所提出的模型，即 Segmenting Objects with TRansformers (SOTR)，简化了分割的pipeline，具有2个并行的子任务：（1）通过 transformer 预测每个实例类别，（2）使用多层级上采样模块动态生成 segmentation mask。SOTR 可以分别通过特征金字塔（FPN）和 twin transformer 有效地提取较低级别的特征表示（lower-level feature representations）并不惑远程上下文依赖关系（long-range context dependencies）。同时，与原始的 tranformer 相比，多提出的 twin transformer 在时间和资源上都是有效的，因为只涉及行和列注意力（a row and a column attention ）来编码像素。此外，SOTR 很容易与各种 CNN backbones 和 transformer 模型变体结合，从而显著提高分割精度和收敛性。</p>
-<img src="/2022/05/19/SOTR/ICCV21_SOTR_Figure1.png" title="Figure 1. SOTR 选择的输出。大目标和具有复杂形状的目标都可以很好的被分割。">
-<p>现代实例分割方法通常建立在 CNN 之上并遵循先检测后分割范式，该范式由一个用于识别和定位所有目标的检测器和一个用于生成分割掩码的掩码分支组成。这这种分割方法的成功归功于以下优点，即平移和位置不变性（tanslation equivariance and location），但面临以下障碍：1）由于感受野受限，CNN 在高级视觉语义信息中相对缺少特征的连贯性（features' coherence）来关联实例，导致对大目标的次优结果；2）分割质量和推理速度都严重依赖目标检测器，在复杂场景中性能较差。</p>
-<p>为了克服这些缺点，提出了一些 Bottom-up 的策略。Bottom-up 的方法的主要缺点是在不同场景的数据集上不稳定的聚类（例如，）和较差的泛化能力。SOTR有效学习了位置敏感特征和动态生成实例分割结果，不需要后处理聚合，不受限于边界框位置和尺寸。我们提出了一种创新的自下而上模型 SOTR，它巧妙地结合了 CNN 和 Transformer 的优势。</p>
-<img src="/2022/05/19/SOTR/ICCV21_SOTR_Figure2.png" title="Figure 2. SOTR 框架。SOTR建立在简单的FPN主干之上，只进行了最少的修改。该模型将FPN特征P2-P6展平，并补充position embedding，再将它们输入到 Transformer 模型。在 Transformer 模型之后添加2个 head，用于预测目标类别并且生成动态卷积核（dynamic convolution kernels）。多级上采样模块将 FPN 的 P2-P5 特征和 transformer 的 P5 特征作为输入，在通过动态卷积操作生成最终的分割结果。">
-<img src="/2022/05/19/SOTR/ICCV21_SOTR_Figure3.png" title="Figure 3. 3种不同的 transformer 层设计。（a）原始是 transformer 编码器。为了更好的建模远程依赖并提高计算效率，我们引入不同的 transformer 层设计：（b）纯 twin transformer layer 和 （c）混合 twin transformer layer。这两种层都基于我们设计的 twin attention，依次由 column-attention 和 row-attention 组成。">
+<p>最近 tansformer-based
+模型在视觉任务上表现出令人印象深刻的性能，甚至超过了卷积神经网络。在这项工作中，作者提出了一种新颖、灵活且有效的
+tranformer-based 模型用于高质量的实例分割。所提出的模型，即 Segmenting
+Objects with TRansformers
+(SOTR)，简化了分割的pipeline，具有2个并行的子任务：（1）通过 transformer
+预测每个实例类别，（2）使用多层级上采样模块动态生成 segmentation
+mask。SOTR 可以分别通过特征金字塔（FPN）和 twin transformer
+有效地提取较低级别的特征表示（lower-level feature
+representations）并不惑远程上下文依赖关系（long-range context
+dependencies）。同时，与原始的 tranformer 相比，多提出的 twin
+transformer 在时间和资源上都是有效的，因为只涉及行和列注意力（a row and
+a column attention ）来编码像素。此外，SOTR 很容易与各种 CNN backbones
+和 transformer 模型变体结合，从而显著提高分割精度和收敛性。</p>
+<img src="/2022/05/19/SOTR/ICCV21_SOTR_Figure1.png" class="" title="Figure 1. SOTR 选择的输出。大目标和具有复杂形状的目标都可以很好的被分割。">
+<p>现代实例分割方法通常建立在 CNN
+之上并遵循先检测后分割范式，该范式由一个用于识别和定位所有目标的检测器和一个用于生成分割掩码的掩码分支组成。这这种分割方法的成功归功于以下优点，即平移和位置不变性（tanslation
+equivariance and location），但面临以下障碍：1）由于感受野受限，CNN
+在高级视觉语义信息中相对缺少特征的连贯性（features'
+coherence）来关联实例，导致对大目标的次优结果；2）分割质量和推理速度都严重依赖目标检测器，在复杂场景中性能较差。</p>
+<p>为了克服这些缺点，提出了一些 Bottom-up 的策略。Bottom-up
+的方法的主要缺点是在不同场景的数据集上不稳定的聚类（例如，）和较差的泛化能力。SOTR有效学习了位置敏感特征和动态生成实例分割结果，不需要后处理聚合，不受限于边界框位置和尺寸。我们提出了一种创新的自下而上模型
+SOTR，它巧妙地结合了 CNN 和 Transformer 的优势。</p>
+<img src="/2022/05/19/SOTR/ICCV21_SOTR_Figure2.png" class="" title="Figure 2. SOTR 框架。SOTR建立在简单的FPN主干之上，只进行了最少的修改。该模型将FPN特征P2-P6展平，并补充position embedding，再将它们输入到 Transformer 模型。在 Transformer 模型之后添加2个 head，用于预测目标类别并且生成动态卷积核（dynamic convolution kernels）。多级上采样模块将 FPN 的 P2-P5 特征和 transformer 的 P5 特征作为输入，在通过动态卷积操作生成最终的分割结果。">
+<img src="/2022/05/19/SOTR/ICCV21_SOTR_Figure3.png" class="" title="Figure 3. 3种不同的 transformer 层设计。（a）原始是 transformer 编码器。为了更好的建模远程依赖并提高计算效率，我们引入不同的 transformer 层设计：（b）纯 twin transformer layer 和 （c）混合 twin transformer layer。这两种层都基于我们设计的 twin attention，依次由 column-attention 和 row-attention 组成。">
 <h2 id="方法">方法</h2>
 <h3 id="transformer">Transformer</h3>
-<p><strong>Twin attention.</strong> self-attention 是 transformer 模型的关键组件，它内在地在输入序列上的每个元素之间捕获了全图的上下文信息并且学习到了长距离的交互。然而，self-attention 具有二次时间和内存复杂性，在高维维度序列（如图像）上产生更高的计算成本，并阻碍了不同设置下的模型可扩展性。</p>
-<p>为了解决这个问题，本文提出了 twin attention 机制使用稀疏表示简化了注意力矩阵。这个策略主要将感受野限制为固定步幅的设计块模式。它首先计算每列内的注意力，同时保持不同列中的元素独立。该策略可以在水平尺度上聚合元素之间的上下文信息（如图3（1）所示）。然后，在每一行内执行类似的注意力，以充分利用垂直尺度的特征交互（如图3（2）所示）。两个尺度中的注意力一次连接到最后一个，它具有全局感受野，覆盖了两个维度上的信息。</p>
-<p>FPN的第i层特征定义为 <span class="math inline">\(F_i \in \mathbb{R}^{H \times W \times C}\)</span>，SOTR 首先将这个特征图切分成 <span class="math inline">\({N \ast N}\)</span> 个 patches <span class="math inline">\({P_i \in \mathbb{R}^{N \times N \times C}}\)</span> ，然后将它们沿垂直和水平方向堆叠成固定的 blocks。Position embeddings 被添加到这些 blocks 中以保留位置信息，这意味着列和行的 position embedding 空间是 <span class="math inline">\(1 \ast N \ast C\)</span> 和 <span class="math inline">\(N \ast 1 \ast C\)</span>。两个注意力层都采用了 multi-head attention 机制。为了便于多层连接和后处理，在 twin attention 中所有子层都会产生 <span class="math inline">\(N \times N \times C\)</span> 的输出。Twin attention 机制可以有效地将内存和计算复杂度从标准的 <span class="math inline">\(O((H \times W)^2)\)</span> 降低到 <span class="math inline">\(O(H \times W^2 + W \times H^2)\)</span>。</p>
-<p><strong>Transformer Layer.</strong> 在本节中，我们介绍3个不同的基于编码器的 transformer 层作为我们的基本构建块，如图3所示。原始的 transformer 层类似于 NLP 中使用的编码器，如图3a所示，它包括2个部分：1）经过 a layer normalization 后的 a multi-head self-attention 机制，以及 2）在 a layer normalization 之后的 a multi-layer perception。除此之外，使用残差连接来连接这两个部分。最后，可以得到一个多维序列特征作为这些 transformer 层的 K 个串联的输出，用于不同功能 heads 的后续预测。</p>
-<p>为了在计算成本和特征提取效果之间做出最佳权衡，我们遵循原来的 Transformer 层设计，仅在纯 Twin Transformer 层中用 twin attention 代替 multi-head attention ，如图3b所示。为了进一步提升 twin tranformer 的性能，我们还设计了图 3c 所示的 hybrid twin transformer。它将两个 <span class="math inline">\(3 \times 3\)</span> 卷积层通过 Leaky ReLU 层连接到每个 twin attention 模块。 假设添加的卷积操作可以作为注意力机制的有效的补充，更好地捕获局部信息并增强特征表示。</p>
-<p><strong>Functional heads.</strong> 来自 transformer 模块的特征图被输入到不同的功能 heads 以进行后续预测。class head 包括 a single linear layer 来输出一个 <span class="math inline">\(N \times N \times M\)</span> 的分类结果，其中 <span class="math inline">\(M\)</span> 是类别的数量。由于每个 patch 只为中心落入这个 patch 的单个目标分配一个类别，如 YOLO，我们利用多级预测并在不同特征级别共享这些 heads，以进一步提高模型在不同尺度对象上的性能和效率。 Kernel head 也由 a linear layer 组成，与 class head 并行输出一个 <span class="math inline">\({N \times N \times D}\)</span> 的张量用于后续的 mask 生成，其中张量表示具有D个参数的 <span class="math inline">\(N \times N\)</span> 个卷积核。在训练期间，Focal Loss 应用于分类，而对这些卷积核的所有监督都来自最终的 mask 损失。</p>
+<p><strong>Twin attention.</strong> self-attention 是 transformer
+模型的关键组件，它内在地在输入序列上的每个元素之间捕获了全图的上下文信息并且学习到了长距离的交互。然而，self-attention
+具有二次时间和内存复杂性，在高维维度序列（如图像）上产生更高的计算成本，并阻碍了不同设置下的模型可扩展性。</p>
+<p>为了解决这个问题，本文提出了 twin attention
+机制使用稀疏表示简化了注意力矩阵。这个策略主要将感受野限制为固定步幅的设计块模式。它首先计算每列内的注意力，同时保持不同列中的元素独立。该策略可以在水平尺度上聚合元素之间的上下文信息（如图3（1）所示）。然后，在每一行内执行类似的注意力，以充分利用垂直尺度的特征交互（如图3（2）所示）。两个尺度中的注意力一次连接到最后一个，它具有全局感受野，覆盖了两个维度上的信息。</p>
+<p>FPN的第i层特征定义为 <span class="math inline">\(F_i \in
+\mathbb{R}^{H \times W \times C}\)</span>，SOTR 首先将这个特征图切分成
+<span class="math inline">\({N \ast N}\)</span> 个 patches <span
+class="math inline">\({P_i \in \mathbb{R}^{N \times N \times
+C}}\)</span> ，然后将它们沿垂直和水平方向堆叠成固定的 blocks。Position
+embeddings 被添加到这些 blocks 中以保留位置信息，这意味着列和行的
+position embedding 空间是 <span class="math inline">\(1 \ast N \ast
+C\)</span> 和 <span class="math inline">\(N \ast 1 \ast
+C\)</span>。两个注意力层都采用了 multi-head attention
+机制。为了便于多层连接和后处理，在 twin attention 中所有子层都会产生
+<span class="math inline">\(N \times N \times C\)</span> 的输出。Twin
+attention 机制可以有效地将内存和计算复杂度从标准的 <span
+class="math inline">\(O((H \times W)^2)\)</span> 降低到 <span
+class="math inline">\(O(H \times W^2 + W \times H^2)\)</span>。</p>
+<p><strong>Transformer Layer.</strong>
+在本节中，我们介绍3个不同的基于编码器的 transformer
+层作为我们的基本构建块，如图3所示。原始的 transformer 层类似于 NLP
+中使用的编码器，如图3a所示，它包括2个部分：1）经过 a layer normalization
+后的 a multi-head self-attention 机制，以及 2）在 a layer normalization
+之后的 a multi-layer
+perception。除此之外，使用残差连接来连接这两个部分。最后，可以得到一个多维序列特征作为这些
+transformer 层的 K 个串联的输出，用于不同功能 heads 的后续预测。</p>
+<p>为了在计算成本和特征提取效果之间做出最佳权衡，我们遵循原来的
+Transformer 层设计，仅在纯 Twin Transformer 层中用 twin attention 代替
+multi-head attention ，如图3b所示。为了进一步提升 twin tranformer
+的性能，我们还设计了图 3c 所示的 hybrid twin transformer。它将两个 <span
+class="math inline">\(3 \times 3\)</span> 卷积层通过 Leaky ReLU
+层连接到每个 twin attention 模块。
+假设添加的卷积操作可以作为注意力机制的有效的补充，更好地捕获局部信息并增强特征表示。</p>
+<p><strong>Functional heads.</strong> 来自 transformer
+模块的特征图被输入到不同的功能 heads 以进行后续预测。class head 包括 a
+single linear layer 来输出一个 <span class="math inline">\(N \times N
+\times M\)</span> 的分类结果，其中 <span
+class="math inline">\(M\)</span> 是类别的数量。由于每个 patch
+只为中心落入这个 patch 的单个目标分配一个类别，如
+YOLO，我们利用多级预测并在不同特征级别共享这些
+heads，以进一步提高模型在不同尺度对象上的性能和效率。 Kernel head 也由 a
+linear layer 组成，与 class head 并行输出一个 <span
+class="math inline">\({N \times N \times D}\)</span> 的张量用于后续的
+mask 生成，其中张量表示具有D个参数的 <span class="math inline">\(N
+\times N\)</span> 个卷积核。在训练期间，Focal Loss
+应用于分类，而对这些卷积核的所有监督都来自最终的 mask 损失。</p>
 <h3 id="mask">Mask</h3>
-<p>为 instance-aware 和 position-sensitive 分割构建 mask 特征表示，一种直接的方式是对不同尺度的特征图进行预测。但是，这会增加时间和资源。收 Panoptic FPN 的启发，我们呢设计了 multi-level upsampling 模块，将每个 FPN 层级和 transformer 的特征合并为统一的 mask 特征。首先，从 transformer 模块中获取具有位置信息的相对低分辨率特征图 P5，并与 FPN 中的 P2-P4 结合执行融合。对于每个尺度的特征图，执行 <span class="math inline">\(3 \times 3\)</span> Conv，Group Norm 和 ReLU 操作。然后 P3-P5 被双线性上采样 2x、4x、8x，分别为（H4，W4）分辨率。最后，将处理后的 P2-P5 相加后，执行逐点卷积和上采样以创建最终统一的 <span class="math inline">\(H \times W\)</span> 特征图。</p>
-<p>对于实例掩膜预测，SOTR 通过对上述统一特征图执行动态卷积操作，为每个 patch 生成 mask。给定来自 kernel head 的预测卷积核 <span class="math inline">\(k \in RN \times N \times D\)</span>，每个 kernel 负责对应的 patch 中实例 mask 的生成。具体操作可以表示如下：</p>
-<p><span class="math display">\[Z^{H \times W \times N^2} = F^{H \times W \times C} \ast K^{N \times N \times D}\]</span></p>
-<p>其中 <span class="math inline">\(\ast\)</span> 表示卷积操作，<span class="math inline">\(Z\)</span> 是最终生成的 mask，维度为 <span class="math inline">\(H \times W \times N^2\)</span>。其中，<span class="math inline">\(D\)</span> 的取值取决于卷积核的形状，也就是说，D等于 <span class="math inline">\(\lambda 2 C\)</span>，其中 <span class="math inline">\(\lambda\)</span> 的 kernel 大小。最终的实例分割 mask 可以由 Matrix NMS[37] 生成，每个 mask 由 Dice Loss 独立监督。</p>
+<p>为 instance-aware 和 position-sensitive 分割构建 mask
+特征表示，一种直接的方式是对不同尺度的特征图进行预测。但是，这会增加时间和资源。收
+Panoptic FPN 的启发，我们呢设计了 multi-level upsampling 模块，将每个
+FPN 层级和 transformer 的特征合并为统一的 mask 特征。首先，从
+transformer 模块中获取具有位置信息的相对低分辨率特征图 P5，并与 FPN 中的
+P2-P4 结合执行融合。对于每个尺度的特征图，执行 <span
+class="math inline">\(3 \times 3\)</span> Conv，Group Norm 和 ReLU
+操作。然后 P3-P5 被双线性上采样
+2x、4x、8x，分别为（H4，W4）分辨率。最后，将处理后的 P2-P5
+相加后，执行逐点卷积和上采样以创建最终统一的 <span
+class="math inline">\(H \times W\)</span> 特征图。</p>
+<p>对于实例掩膜预测，SOTR 通过对上述统一特征图执行动态卷积操作，为每个
+patch 生成 mask。给定来自 kernel head 的预测卷积核 <span
+class="math inline">\(k \in RN \times N \times D\)</span>，每个 kernel
+负责对应的 patch 中实例 mask 的生成。具体操作可以表示如下：</p>
+<p><span class="math display">\[Z^{H \times W \times N^2} = F^{H \times
+W \times C} \ast K^{N \times N \times D}\]</span></p>
+<p>其中 <span class="math inline">\(\ast\)</span> 表示卷积操作，<span
+class="math inline">\(Z\)</span> 是最终生成的 mask，维度为 <span
+class="math inline">\(H \times W \times N^2\)</span>。其中，<span
+class="math inline">\(D\)</span>
+的取值取决于卷积核的形状，也就是说，D等于 <span
+class="math inline">\(\lambda 2 C\)</span>，其中 <span
+class="math inline">\(\lambda\)</span> 的 kernel 大小。最终的实例分割
+mask 可以由 Matrix NMS[37] 生成，每个 mask 由 Dice Loss 独立监督。</p>
 <h2 id="实验">实验</h2>
-<img src="/2022/05/19/SOTR/ICCV21_SOTR_Table2.png" title="Table 2. 对比不同 transformer 的结果。">
-<p>用于特征编码的 Transformer。我们用三种不同的 transformers 来衡量我们模型的性能。这些变体的结果如表 2 所示。我们提出的 pure and hybrid twin transformers 在所有指标上都大大超过了 original transformer，这意味着 twin transformer 架构不仅成功地捕获了垂直和水平维度上的远程依赖关系，而且是更适合与 CNN 主干结合来学习图像的特征和表示。对于 pure and twin transformers，后者效果更好。我们假设原因是 <span class="math inline">\(3 \ast 3\)</span> Conv 可以提取局部信息并改进特征表达以增强 twin transformer 的合理性。</p>
-<img src="/2022/05/19/SOTR/ICCV21_SOTR_Figure4.png" title="Figure 4. SOTR 的表现。">
-<p>我们展示了掩码特征的可视化。对于每一行，左边是原始图片，右边是与其对应的 positional-sensitive mask。</p>
-<img src="/2022/05/19/SOTR/ICCV21_SOTR_Figure5.png" title="Figure 5. 和其他方法实例分割结果细节对比。">
-<p>我们将我们方法的分割结果与 Mask R-CNN 、Blendmask 和 SOLOv2 进行比较。代码和训练好的模型由原作者提供。 所有模型都使用 ResNet-101-FPN 作为主干，并且基于 Pytorch 和 Detectron2。 我们的 Mask 质量更好。</p>
-<img src="/2022/05/19/SOTR/ICCV21_SOTR_Table5.png" title="Table 5. 动态卷积核 vs. 静态卷积核。可学习的卷积核可以显着改善结果。">
-<p>动态卷积。对于 mask 生成，我们有两种选择：以静态卷积方式直接输出实例 mask 或通过动态卷积操作连续分割对象。前者不需要额外的 functional head 来预测卷积核，而后者包括卷积核以在融合特征的帮助下生成最终 mask。 我们在表 5 中比较了这两种模式。如图所示，没有 twin transformer 的 SOTR 实现了 39.7% 的 AP，表明 twin transformer 带来了 0.5% 的增益。 此外，动态卷积策略可以将性能提高近 1.5% AP。 原因是：一方面，由于非线性，动态卷积显着提高了表示能力。另一方面，动态卷积比静态卷积有助于更好更快地收敛。</p>
-<img src="/2022/05/19/SOTR/ICCV21_SOTR_Table7.png" title="Table 7. 实验结果对比。">
+<img src="/2022/05/19/SOTR/ICCV21_SOTR_Table2.png" class="" title="Table 2. 对比不同 transformer 的结果。">
+<p>用于特征编码的 Transformer。我们用三种不同的 transformers
+来衡量我们模型的性能。这些变体的结果如表 2 所示。我们提出的 pure and
+hybrid twin transformers 在所有指标上都大大超过了 original
+transformer，这意味着 twin transformer
+架构不仅成功地捕获了垂直和水平维度上的远程依赖关系，而且是更适合与 CNN
+主干结合来学习图像的特征和表示。对于 pure and twin
+transformers，后者效果更好。我们假设原因是 <span class="math inline">\(3
+\ast 3\)</span> Conv 可以提取局部信息并改进特征表达以增强 twin
+transformer 的合理性。</p>
+<img src="/2022/05/19/SOTR/ICCV21_SOTR_Figure4.png" class="" title="Figure 4. SOTR 的表现。">
+<p>我们展示了掩码特征的可视化。对于每一行，左边是原始图片，右边是与其对应的
+positional-sensitive mask。</p>
+<img src="/2022/05/19/SOTR/ICCV21_SOTR_Figure5.png" class="" title="Figure 5. 和其他方法实例分割结果细节对比。">
+<p>我们将我们方法的分割结果与 Mask R-CNN 、Blendmask 和 SOLOv2
+进行比较。代码和训练好的模型由原作者提供。 所有模型都使用 ResNet-101-FPN
+作为主干，并且基于 Pytorch 和 Detectron2。 我们的 Mask 质量更好。</p>
+<img src="/2022/05/19/SOTR/ICCV21_SOTR_Table5.png" class="" title="Table 5. 动态卷积核 vs. 静态卷积核。可学习的卷积核可以显着改善结果。">
+<p>动态卷积。对于 mask 生成，我们有两种选择：以静态卷积方式直接输出实例
+mask 或通过动态卷积操作连续分割对象。前者不需要额外的 functional head
+来预测卷积核，而后者包括卷积核以在融合特征的帮助下生成最终 mask。
+我们在表 5 中比较了这两种模式。如图所示，没有 twin transformer 的 SOTR
+实现了 39.7% 的 AP，表明 twin transformer 带来了 0.5% 的增益。
+此外，动态卷积策略可以将性能提高近 1.5% AP。
+原因是：一方面，由于非线性，动态卷积显着提高了表示能力。另一方面，动态卷积比静态卷积有助于更好更快地收敛。</p>
+<img src="/2022/05/19/SOTR/ICCV21_SOTR_Table7.png" class="" title="Table 7. 实验结果对比。">
 
-      
     </div>
-    
-    
-    
 
     
-
     
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div></div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>Donate</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.png" alt="Tianliang Zhang WeChat Pay"/>
-        <p>WeChat Pay</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.jpg" alt="Tianliang Zhang Alipay"/>
-        <p>Alipay</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
-    
-
     
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Transformer/" rel="tag"># Transformer</a>
-          
-            <a href="/tags/Instance-Segmentation/" rel="tag"># Instance Segmentation</a>
-          
-        </div>
-      
-
-      
-      
-        <div class="post-widgets">
-        
-
-        
-
-        
-          
-          <div id="needsharebutton-postbottom">
-            <span class="btn">
-              <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </span>
-          </div>
-        
-        </div>
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2021/12/27/Efficient-DETR/" rel="next" title="Efficient DETR">
-                <i class="fa fa-chevron-left"></i> Efficient DETR
-              </a>
-            
+          <div class="post-tags">
+              <a href="/tags/Transformer/" rel="tag"># Transformer</a>
+              <a href="/tags/Instance-Segmentation/" rel="tag"># Instance Segmentation</a>
           </div>
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2022/05/20/K-Net/" rel="prev" title="K-Net:Towards Unified Image Segmentation">
-                K-Net:Towards Unified Image Segmentation <i class="fa fa-chevron-right"></i>
-              </a>
-            
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/27/Efficient-DETR/" rel="prev" title="Efficient DETR">
+                  <i class="fa fa-angle-left"></i> Efficient DETR
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/20/K-Net/" rel="next" title="K-Net:Towards Unified Image Segmentation">
+                  K-Net:Towards Unified Image Segmentation <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
           </div>
-        </div>
-      
-
-      
-      
     </footer>
-  </div>
-  
-  
-  
   </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zODg4MC8xNTQwOA=="></div>
-    </div>
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460"
-                alt="Tianliang Zhang" />
-            
-              <p class="site-author-name" itemprop="name">Tianliang Zhang</p>
-              <p class="site-description motion-element" itemprop="description">Writing is the best form of thinking!</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">22</span>
-                  <span class="site-state-item-name">posts</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
-                  <span class="site-state-item-name">categories</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
-                  <span class="site-state-item-name">tags</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/xingkongliang" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:tianliangjay@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="http://www.zhihu.com/people/xingkong_liang" target="_blank" title="知乎">
-                      
-                        <i class="fa fa-fw fa-globe"></i>知乎</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="http://weibo.com/1863221531" target="_blank" title="微博">
-                      
-                        <i class="fa fa-fw fa-weibo"></i>微博</a>
-                  </span>
-                
-            </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#transformer"><span class="nav-number">2.1.</span> <span class="nav-text">Transformer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mask"><span class="nav-number">2.2.</span> <span class="nav-text">Mask</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">3.</span> <span class="nav-text">实验</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2024</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Tianliang Zhang</span>
-
-  
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
 
-        
+</div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
 
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Tianliang Zhang</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
+    </div>
+  </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
 
-
-  
-
-
-
-
-
-
-
-
-
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
 
   
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
 
   
 
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
 
 
 
@@ -910,524 +434,6 @@
 
 
 
-
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
-
-
-
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
-  <script>AV.initialize("Ksw0nRfaEzFJTORKsUHFkboY-gzGzoHsz", "HgFpOq4Y7wfrEiCV9HwxJziH");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-  
-
-  
-  
-  
-  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
-
-  
-  
-  <script src="/lib/needsharebutton/needsharebutton.js"></script>
-
-  <script>
-    
-      pbOptions = {};
-      
-          pbOptions.iconStyle = "box";
-      
-          pbOptions.boxForm = "horizontal";
-      
-          pbOptions.position = "bottomCenter";
-      
-          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
-      
-      new needShareButton('#needsharebutton-postbottom', pbOptions);
-    
-    
-  </script>
-
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  
-
-
-  
-
-  
 
 </body>
 </html>
-<!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>
