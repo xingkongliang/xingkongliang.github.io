@@ -1314,6 +1314,9 @@ K-Net，首先通过学习的静态内核将图像划分为不同的组，然后
 Cascade Mask R-CNN。我们希望 K-Net
 和分析能够为未来统一图像分割框架的研究铺平道路。</p>
 ]]></content>
+      <categories>
+        <category>Instance Segmentation</category>
+      </categories>
       <tags>
         <tag>Instance Segmentation</tag>
       </tags>
@@ -2693,6 +2696,9 @@ mask 或通过动态卷积操作连续分割对象。前者不需要额外的 fu
 原因是：一方面，由于非线性，动态卷积显着提高了表示能力。另一方面，动态卷积比静态卷积有助于更好更快地收敛。</p>
 <img src="/2022/05/19/SOTR/ICCV21_SOTR_Table7.png" class="" title="Table 7. 实验结果对比。">
 ]]></content>
+      <categories>
+        <category>Instance Segmentation</category>
+      </categories>
       <tags>
         <tag>Transformer</tag>
         <tag>Instance Segmentation</tag>
@@ -3104,5 +3110,12 @@ users get started quickly.</p>
 <p>Below is a comparison of NanoDet-Plus with other models:</p>
 <img src="/2024/10/28/NanoDet-Plus/NanoDet-result.jpg" class="" title="Performance comparison of NanoDet with other models">
 ]]></content>
+      <categories>
+        <category>Object Detection</category>
+      </categories>
+      <tags>
+        <tag>Object Detection</tag>
+        <tag>Lightweight</tag>
+      </tags>
   </entry>
 </search>
