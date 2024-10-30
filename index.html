@@ -124,7 +124,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -166,6 +166,310 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://www.starlg.cn/2024/10/28/NanoDet-Plus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460">
+      <meta itemprop="name" content="Tianliang Zhang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tianliang">
+      <meta itemprop="description" content="Writing is the best form of thinking!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Tianliang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/10/28/NanoDet-Plus/" class="post-title-link" itemprop="url">NanoDet-Plus</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-10-28 12:13:52" itemprop="dateCreated datePublished" datetime="2024-10-28T12:13:52+10:00">2024-10-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-10-30 20:07:17" itemprop="dateModified" datetime="2024-10-30T20:07:17+10:00">2024-10-30</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>Super fast and high accuracy lightweight anchor-free object detection
+model. Real-time on mobile devices.</p>
+</blockquote>
+<p>Github link: <a
+href="https://github.com/RangiLyu/nanodet">https://github.com/RangiLyu/nanodet</a></p>
+<h1 id="introduction">1. Introduction</h1>
+<p>NanoDet, a high-performance and lightweight object detection model
+optimized for mobile devices, was open-sourced at the end of 2021. It
+quickly gained popularity, reaching 5.7k stars on GitHub. In response to
+the rise of competing lightweight models like YOLOX-Nano, FBNetV5, and
+PP-YOLO, NanoDet received upgrades in three key areas: <strong>label
+assignment</strong>, <strong>multi-scale feature fusion</strong>, and
+<strong>training techniques</strong>. These enhancements, now
+incorporated into NanoDet-Plus, achieve higher accuracy on the COCO
+dataset with real-time inference speeds on mobile.</p>
+<p>In this article, I’ll introduce these improvements and their impact
+on NanoDet’s performance.</p>
+<h1 id="label-assignment">2. Label Assignment</h1>
+<p>Label Assignment is a crucial aspect of training object detection
+models. The earliest methods relied on position-based matching, evolving
+to anchor IOU-based matching, and more recently, to dynamic matching
+based on matching cost. Each of these advancements has driven
+substantial improvements in detection performance. In the previous
+version, NanoDet utilized ATSS (Adaptive Training Sample Selection) for
+label matching. Although ATSS dynamically selects samples on each
+feature map layer based on the mean and variance of IOU, it remains a
+static matching strategy grounded in prior information, such as anchor
+position and center.</p>
+<p>Recent research has increasingly focused on global dynamic matching
+strategies. For instance, DETR utilizes the Hungarian matching algorithm
+for bilateral matching, OTA employs Sinkhorn iterations to solve optimal
+transport in matching, and YOLOX adopts SimOTA, an approximation of OTA.
+While these strategies have shown impressive results in large models,
+applying matching-cost-based dynamic matching to lightweight detection
+models introduces challenges not present in larger models.</p>
+<h2 id="dynamic-matching">2.1 Dynamic Matching</h2>
+<p>Dynamic matching based on matching cost involves directly calculating
+the <strong>matching cost</strong> between the detection head’s output
+and each ground truth instance. This cost typically includes
+classification and regression losses. The result is an <strong>NxM cost
+matrix</strong>, where N represents the predicted points on the feature
+map and M represents all ground truths. Using this cost matrix, various
+dynamic matching strategies—such as Bipartite Graph Matching,
+Transmission Optimization, or Top-K selection—determine the optimal
+matches.</p>
+<p>Unlike anchor-based matching, which <strong>relies on static prior
+information</strong> like IOU with anchors, this approach dynamically
+finds the best matches based on the current predictions. As the model’s
+predictions improve, the matching results are likely to be more accurate
+as well.</p>
+<p>A natural question arises: if label assignment depends on predicted
+outputs, but those predictions rely on training through label
+assignment, how does the model learn effectively from a randomly
+initialized state? This can seem like a chicken-and-egg problem.
+However, due to the neural network’s inherent noise resilience, it can
+start training even from random initializations. As long as assigned
+points fall within the ground truth bounding boxes, the model begins to
+learn and fit the most easily detectable features.</p>
+<p>For dense object detection models, unlike sparse predictors like
+DETR, dynamic matching strategies also use positional constraints to
+improve accuracy. For instance, OTA and SimOTA apply a 5x5 center region
+constraint to limit the degrees of freedom in matching, ensuring more
+stable learning.</p>
+<h3 id="the-challenge-of-dynamic-matching-in-small-models">2.1.1 The
+Challenge of Dynamic Matching in Small Models</h3>
+<p>For small models, the detection head is significantly lighter. In
+NanoDet, only two Depthwise Separable Convolutional modules are used to
+predict classification and regression simultaneously. This is in stark
+contrast to large models, which often use four groups of 3x3
+convolutions with 256 channels dedicated separately to classification
+and regression. Calculating Matching Cost from a randomly initialized
+state for such a lightweight detection head presents a considerable
+challenge.</p>
+<h2 id="training-auxiliary-modules-in-nanodet-plus">2.2 Training
+Auxiliary Modules in NanoDet-Plus</h2>
+<p>NanoDet-Plus introduces a simpler and more lightweight training
+auxiliary module, the <strong>Assign Guidance Module (AGM)</strong>,
+paired with a <strong>Dynamic Soft Label Assigner (DSLA)</strong>
+strategy. Together, these components address the optimal label matching
+problem specifically for lightweight models. The architecture of
+NanoDet-Plus is shown below:</p>
+<img src="/2024/10/28/NanoDet-Plus/NanoDet-Plus-Network.png" class="" title="The overall architecture of NanoDet-Plus">
+<p>The Assign Guidance Module (AGM) consists of four 3x3 convolutions
+with a GN (Group Normalization) layer and shares parameters across
+feature maps at different scales, similar to the detection heads in
+large models. With parameter sharing and the absence of Depthwise
+Separable Convolutions (which are less GPU-friendly), AGM requires
+minimal training resources. Additionally, AGM is used only during
+training and is discarded afterward, so it has no impact on inference
+speed.</p>
+<p>The classification scores and bounding boxes predicted by AGM are fed
+into the Dynamic Soft Label Assigner (DSLA) to calculate the
+<strong>Matching Cost</strong>. This cost function comprises three
+components: classification cost, regression cost, and distance cost.</p>
+<p><span class="math display">\[C_{cls} = CE(P, Y_{soft}) \times
+(Y_{soft}-P)^2\]</span></p>
+<p><span class="math display">\[C_{reg} = -log(IOU)\]</span></p>
+<p><span class="math display">\[C_{dis} = \alpha^{|x_{pred} -
+x_{gt}|-\beta}\]</span></p>
+<p>The final cost function is defined as: $ C = C_{cls} + C_{reg} +
+C_{dis} $, where the distance cost $ C_{dis} $ is optional. Including $
+C_{dis} $ can accelerate AGM’s convergence in the early training stages,
+which is particularly useful for fine-tuning scenarios. Integrating AGM
+and DSLA in the previous NanoDet version achieved a 2.1 mAP improvement
+on the COCO dataset.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Method</th>
+<th style="text-align: center;">mAP 0.5:0.95</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">NanoDet</td>
+<td style="text-align: center;">20.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NanoDet + DSLA</td>
+<td style="text-align: center;">21.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NanoDet + DSLA + AGM</td>
+<td style="text-align: center;">22.7</td>
+</tr>
+</tbody>
+</table>
+<h1 id="model-structure-improvement">3. Model Structure Improvement</h1>
+<p>In last version of NanoDet, shufflenet v2 is used as backbone, with
+PAFPN (without convolution) as Neck. Two group of Depthwise Separable
+Convolutions as detection head, which merged clssification and
+regression. For limitting the size of parameters is in 1M, all
+convolutions in neck are removed, which are more radical, and degrade
+the ability of multi-scale feature fusion.</p>
+<p>In the previous version of NanoDet, ShuffleNet v2 was used as the
+backbone, paired with a convolution-free PAFPN as the neck. The
+detection head merged classification and regression branches using only
+two groups of Depthwise Separable Convolutions. Reflecting on this
+design, the decision to remove all convolutions from the neck to limit
+the model’s parameter size to under 1M was perhaps too aggressive, as it
+reduced the effectiveness of multi-scale feature fusion.</p>
+<h2 id="feature-fusion-improvements">3.1 Feature Fusion
+Improvements</h2>
+<p>Some lightweight models, like YOLOX, PicoDet, and YOLOv5, utilize
+<strong>CSP-PAN</strong> as their feature pyramid module. In
+NanoDet-Plus, <strong>Ghost-PAN</strong>, an optimized version of PAN,
+leverages the GhostBlock from GhostNet for efficient feature fusion
+across multiple layers. Its core unit consists of <strong>a 1x1
+convolution and a 3x3 depthwise convolution</strong>, keeping both
+parameter count and computation low.</p>
+<img src="/2024/10/28/NanoDet-Plus/GhostNet_module.png" class="" title="GhostNet module">
+<p>With only 190k parameters, Ghost-PAN adds approximately 1ms to the
+running time on ARM devices, with even less impact on x86 and GPU.
+Despite its compact size, Ghost-PAN achieves a notable performance
+boost, improving mAP by 2%.</p>
+<h2 id="improvement-of-the-detection-head">3.2 Improvement of the
+Detection Head</h2>
+<p>The ThunderNet paper proposed that, in lightweight models, changing
+the depthwise component of depthwise separable convolution from 3x3 to
+5x5 can improve the detector’s receptive field and performance with
+minimal parameter increase. This technique has now become common in
+lightweight models, so NanoDet-Plus has also adopted a 5x5 kernel size
+for the depthwise convolutions in the detection head.</p>
+<p>Additionally, PicoDet introduced an extra downsampling layer to
+enhance the original 3-layer feature structure used in NanoDet. To
+achieve comparable performance, NanoDet-Plus has incorporated this
+improvement, resulting in an approximate 0.7 mAP increase.</p>
+<h1 id="training-trick-improvement">4. Training Trick Improvement</h1>
+<p>Here’s a refined version of the “Training Trick Improvement”
+section:</p>
+<ol start="4" type="1">
+<li>Training Trick Improvement</li>
+</ol>
+<p>As an open-source project, NanoDet aims to be user-friendly and
+accessible, rather than solely focused on maximizing performance
+metrics. The previous generation of NanoDet used the traditional SGD
+with momentum and MultiStepLR for training. While this approach is
+effective for experienced practitioners who can leverage large learning
+rates and gradual decay, it poses challenges for newcomers who may
+struggle with model convergence.</p>
+<p>To improve the user experience, NanoDet-Plus has made comprehensive
+updates to its training strategy:</p>
+<ul>
+<li>Optimizer: Changed from SGD with momentum to AdamW, which is less
+sensitive to hyperparameters and offers faster convergence.</li>
+<li>Learning Rate Schedule: Switched from MultiStepLR to
+CosineAnnealingLR for smoother learning rate decay.</li>
+<li>Gradient Clipping: Added during backpropagation to prevent NaN
+losses caused by unoptimized parameter settings.</li>
+<li>Exponential Moving Average (EMA): Incorporated the popular
+model-smoothing strategy for further stability.</li>
+</ul>
+<p>These adjustments make NanoDet-Plus easier to train effectively, even
+for users without extensive tuning experience.</p>
+<p>Here’s a refined and clear version of the “Deployment Optimization”
+section:</p>
+<h1 id="deployment-optimization">5. Deployment Optimization</h1>
+<p>In the previous generation of NanoDet, the multi-scale detection head
+produced six outputs: classification and regression outputs for each of
+the three feature map scales. This setup was challenging for users
+unfamiliar with the model structure.</p>
+<img src="/2024/10/28/NanoDet-Plus/v1_output.jpg" class="" title="Output of the previous NanoDet">
+<p>To make the model more accessible, NanoDet-Plus has <strong>reduced
+the number of outputs to just one</strong>. All output tensors are
+pre-reshaped and concatenated into a single tensor. While this approach
+introduces a few additional operations, causing a slight slowdown in
+post-processing speed, it is far easier for users who may not fully
+understand the model’s architecture. For advanced users well-versed in
+model structure, using the original output configuration should still be
+manageable if they wish to optimize further.</p>
+<img src="/2024/10/28/NanoDet-Plus/v2_output.jpg" class="" title="Output of NanoDet-Plus">
+<p>Following these output adjustments, consistent updates were made
+across the C++ code for deployment backends, including ncnn, MNN,
+OpenVINO, and the Android Demo. The post-processing code and interfaces
+are now standardized across these platforms, so understanding one
+implementation enables understanding the others.</p>
+<h1 id="conclusion">6. Conclusion</h1>
+<p>NanoDet-Plus addresses the limitations of the previous generation in
+areas such as label assignment, model structure, and training strategy.
+With the introduction of modules like <strong>AGM</strong>,
+<strong>DSLA</strong>, and <strong>Ghost-PAN</strong>, alongside
+comprehensive improvements in training strategy, NanoDet-Plus is now
+even easier to train. Deployment has also been optimized with a
+simplified output structure, making it more accessible. Detailed demos
+and guides are provided for ncnn, MNN, OpenVINO, and Android, helping
+users get started quickly.</p>
+<p>Below is a comparison of NanoDet-Plus with other models:</p>
+<img src="/2024/10/28/NanoDet-Plus/NanoDet-result.jpg" class="" title="Performance comparison of NanoDet with other models">
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -370,7 +674,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-12-27 12:03:47" itemprop="dateCreated datePublished" datetime="2021-12-27T12:03:47+11:00">2021-12-27</time>
+      <time title="Created: 2021-12-27 11:03:47" itemprop="dateCreated datePublished" datetime="2021-12-27T11:03:47+10:00">2021-12-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -462,7 +766,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-11-24 12:33:31" itemprop="dateCreated datePublished" datetime="2021-11-24T12:33:31+11:00">2021-11-24</time>
+      <time title="Created: 2021-11-24 11:33:31" itemprop="dateCreated datePublished" datetime="2021-11-24T11:33:31+10:00">2021-11-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -955,98 +1259,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/05/29/CVPR2019-CSP/">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://www.starlg.cn/2019/05/23/CVPR19-HRNet/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/8827798?v=3&s=460">
-      <meta itemprop="name" content="Tianliang Zhang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tianliang">
-      <meta itemprop="description" content="Writing is the best form of thinking!">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Tianliang">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/05/23/CVPR19-HRNet/" class="post-title-link" itemprop="url">Deep High-Resolution Representation Learning for Human Pose Estimation</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-05-23 14:29:55" itemprop="dateCreated datePublished" datetime="2019-05-23T14:29:55+10:00">2019-05-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-05-31 00:16:36" itemprop="dateModified" datetime="2022-05-31T00:16:36+10:00">2022-05-31</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Deep-Learning/" itemprop="url" rel="index"><span itemprop="name">Deep Learning</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>CVPR-2019 Deep High-Resolution Representation Learning for Human Pose Estimation</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/05/23/CVPR19-HRNet/">
                 Read more &raquo;
               </a>
             </div>
