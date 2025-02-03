@@ -3173,4 +3173,134 @@ increasing or strictly decreasing.</p>
         <tag>LeetCode</tag>
       </tags>
   </entry>
+  <entry>
+    <title>LeetCode 210. Course Schedule II</title>
+    <url>/2025/02/03/course-schedule-ii/</url>
+    <content><![CDATA[<h2 id="course-schedule-ii">210. Course Schedule II</h2>
+<h2 id="解题思路"><strong>解题思路</strong></h2>
+<p><strong>题目解析：</strong>
+我们需要找到一个可以完成所有课程的顺序，若无法完成所有课程，则返回空列表。这本质上是一个
+<strong>有向图的拓扑排序</strong> 问题。</p>
+<h3 id="思路"><strong>思路</strong></h3>
+<ol type="1">
+<li><strong>构建图 (邻接表)</strong>：
+<ul>
+<li>课程是图的节点，每个 <code>prerequisites[i] = [a, b]</code> 表示修
+<code>a</code> 之前必须修 <code>b</code>，因此 <code>b → a</code>
+是一条有向边。</li>
+<li>使用 <strong>邻接表</strong> 记录图，并维护每个课程的
+<strong>入度</strong>（被指向的次数）。</li>
+</ul></li>
+<li><strong>拓扑排序 (Kahn’s Algorithm, BFS)</strong>：
+<ul>
+<li>找到所有 <strong>入度为 0</strong> 的课程，作为起点放入队列。</li>
+<li>每次从队列取出一个课程，将它加入结果列表，并将它指向的课程的入度减
+1。</li>
+<li>如果某个课程的入度减为 0，加入队列。</li>
+<li>若最终无法完成所有课程（结果列表长度小于
+<code>numCourses</code>），说明存在
+<strong>环</strong>，返回空列表。</li>
+</ul></li>
+<li><strong>时间复杂度分析</strong>：
+<ul>
+<li><strong>构建图</strong> 需要遍历
+<code>prerequisites</code>，时间复杂度 <strong>O(E)</strong>
+(<code>E</code> 是先修关系的数量)。</li>
+<li><strong>拓扑排序</strong> 需要遍历所有课程
+<strong>O(V)</strong>，再处理每条边一次
+<strong>O(E)</strong>，所以总时间复杂度为 <strong>O(V +
+E)</strong>，适用于稀疏图。</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="代码实现-python-bfs"><strong>代码实现 (Python,
+BFS)</strong></h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findOrder</span>(<span class="params">self, numCourses: <span class="built_in">int</span>, prerequisites: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        <span class="comment"># 1. 构建图 (邻接表) 和 计算入度</span></span><br><span class="line">        adj_list = &#123;i: [] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numCourses)&#125;</span><br><span class="line">        in_degree = [<span class="number">0</span>] * numCourses</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> course, pre <span class="keyword">in</span> prerequisites:</span><br><span class="line">            adj_list[pre].append(course)</span><br><span class="line">            in_degree[course] += <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 2. 找到所有入度为 0 的课程，加入队列</span></span><br><span class="line">        queue = deque([i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numCourses) <span class="keyword">if</span> in_degree[i] == <span class="number">0</span>])</span><br><span class="line">        order = []</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 3. 拓扑排序 (BFS)</span></span><br><span class="line">        <span class="keyword">while</span> queue:</span><br><span class="line">            course = queue.popleft()</span><br><span class="line">            order.append(course)</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> neighbor <span class="keyword">in</span> adj_list[course]:</span><br><span class="line">                in_degree[neighbor] -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> in_degree[neighbor] == <span class="number">0</span>:</span><br><span class="line">                    queue.append(neighbor)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 4. 如果最终排序包含所有课程，返回结果，否则返回空列表</span></span><br><span class="line">        <span class="keyword">return</span> order <span class="keyword">if</span> <span class="built_in">len</span>(order) == numCourses <span class="keyword">else</span> []</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="代码解析"><strong>代码解析</strong></h2>
+<h3 id="step-1-构建邻接表"><strong>Step 1: 构建邻接表</strong></h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">adj_list = &#123;i: [] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numCourses)&#125;</span><br><span class="line">in_degree = [<span class="number">0</span>] * numCourses</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>adj_list</code> 记录每个课程的后继课程（出边）。</li>
+<li><code>in_degree[i]</code> 记录课程 <code>i</code>
+被指向的次数。</li>
+</ul>
+<hr />
+<h3 id="step-2-遍历-prerequisites构建图"><strong>Step 2: 遍历
+<code>prerequisites</code>，构建图</strong></h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> course, pre <span class="keyword">in</span> prerequisites:</span><br><span class="line">    adj_list[pre].append(course)  <span class="comment"># 先修课 pre 指向 course</span></span><br><span class="line">    in_degree[course] += <span class="number">1</span>  <span class="comment"># 课程 course 的入度增加</span></span><br></pre></td></tr></table></figure>
+<p><strong>示例</strong>: 输入： <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">numCourses = <span class="number">4</span></span><br><span class="line">prerequisites = [[<span class="number">1</span>, <span class="number">0</span>], [<span class="number">2</span>, <span class="number">0</span>], [<span class="number">3</span>, <span class="number">1</span>], [<span class="number">3</span>, <span class="number">2</span>]]</span><br></pre></td></tr></table></figure> 构建的邻接表：
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0 → [1, 2]</span><br><span class="line">1 → [3]</span><br><span class="line">2 → [3]</span><br><span class="line">3 → []</span><br></pre></td></tr></table></figure> 入度表： <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">in_degree = [0, 1, 1, 2]</span><br></pre></td></tr></table></figure></p>
+<hr />
+<h3 id="step-3-初始化队列"><strong>Step 3: 初始化队列</strong></h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">queue = deque([i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numCourses) <span class="keyword">if</span> in_degree[i] == <span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<p>入度为 0 的课程可以直接开始学习，加入队列。</p>
+<p>初始队列： <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">queue = [0]</span><br></pre></td></tr></table></figure></p>
+<hr />
+<h3 id="step-4-拓扑排序-bfs"><strong>Step 4: 拓扑排序
+(BFS)</strong></h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> queue:</span><br><span class="line">    course = queue.popleft()</span><br><span class="line">    order.append(course)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> neighbor <span class="keyword">in</span> adj_list[course]:</span><br><span class="line">        in_degree[neighbor] -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> in_degree[neighbor] == <span class="number">0</span>:</span><br><span class="line">            queue.append(neighbor)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>从 <code>queue</code> 取出一个课程 <code>course</code>，加入结果
+<code>order</code>。</li>
+<li>遍历 <code>course</code> 指向的课程 <code>neighbor</code>，它的
+<code>in_degree</code> 减 1。</li>
+<li>如果 <code>neighbor</code> 入度变为 0，加入
+<code>queue</code>。</li>
+</ul>
+<hr />
+<h3 id="step-5-判断是否有环"><strong>Step 5: 判断是否有环</strong></h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> order <span class="keyword">if</span> <span class="built_in">len</span>(order) == numCourses <span class="keyword">else</span> []</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果 <code>order</code> 的长度等于 <code>numCourses</code>，返回
+<code>order</code>。</li>
+<li>否则，说明有环，返回 <code>[]</code>。</li>
+</ul>
+<hr />
+<h2 id="示例运行"><strong>示例运行</strong></h2>
+<h3 id="示例-1"><strong>示例 1</strong></h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">sol = Solution()</span><br><span class="line"><span class="built_in">print</span>(sol.findOrder(<span class="number">4</span>, [[<span class="number">1</span>,<span class="number">0</span>],[<span class="number">2</span>,<span class="number">0</span>],[<span class="number">3</span>,<span class="number">1</span>],[<span class="number">3</span>,<span class="number">2</span>]]))</span><br></pre></td></tr></table></figure>
+<p><strong>输出</strong> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]  <span class="comment"># 或 [0, 2, 1, 3]</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="示例-2-有环"><strong>示例 2 (有环)</strong></h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(sol.findOrder(<span class="number">2</span>, [[<span class="number">1</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">1</span>]]))</span><br></pre></td></tr></table></figure>
+<p><strong>输出</strong> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[]  <span class="comment"># 由于 0 依赖 1，1 依赖 0，无法完成所有课程</span></span><br></pre></td></tr></table></figure></p>
+<hr />
+<h2 id="时间-空间复杂度"><strong>时间 &amp; 空间复杂度</strong></h2>
+<ul>
+<li><strong>时间复杂度</strong>：<strong>O(V + E)</strong>，遍历
+<code>numCourses</code> (V) + 遍历 <code>prerequisites</code> (E)。</li>
+<li><strong>空间复杂度</strong>：<strong>O(V + E)</strong>，邻接表存储
+<strong>E</strong> 条边，入度表存储 <strong>V</strong> 个课程。</li>
+</ul>
+<hr />
+<h2 id="扩展-dfs-方法"><strong>扩展 (DFS 方法)</strong></h2>
+<p>除了 BFS，还可以用 <strong>DFS</strong> 来解决，核心是： - 采用
+<strong>递归</strong> 进行 <strong>深度优先搜索</strong>，检测
+<strong>环</strong>。 - 维护一个 <strong>访问状态数组</strong>： -
+<code>0</code>: 未访问 - <code>1</code>: 访问中 (检测环) -
+<code>2</code>: 访问完毕 (拓扑排序) - 递归构建拓扑排序的逆序结果。</p>
+<p><strong>DFS 代码：</strong> <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findOrder</span>(<span class="params">self, numCourses: <span class="built_in">int</span>, prerequisites: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]</span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        <span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line"></span><br><span class="line">        graph = defaultdict(<span class="built_in">list</span>)</span><br><span class="line">        <span class="keyword">for</span> course, pre <span class="keyword">in</span> prerequisites:</span><br><span class="line">            graph[pre].append(course)</span><br><span class="line"></span><br><span class="line">        visited = [<span class="number">0</span>] * numCourses</span><br><span class="line">        order = []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">dfs</span>(<span class="params">course</span>):</span><br><span class="line">            <span class="keyword">if</span> visited[course] == <span class="number">1</span>:  <span class="comment"># 发现环</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            <span class="keyword">if</span> visited[course] == <span class="number">2</span>:  <span class="comment"># 已经处理过</span></span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">            visited[course] = <span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> neighbor <span class="keyword">in</span> graph[course]:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> dfs(neighbor):</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            </span><br><span class="line">            visited[course] = <span class="number">2</span></span><br><span class="line">            order.append(course)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numCourses):</span><br><span class="line">            <span class="keyword">if</span> visited[i] == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> dfs(i):</span><br><span class="line">                    <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> order[::-<span class="number">1</span>]  <span class="comment"># 逆序输出</span></span><br></pre></td></tr></table></figure> DFS 方法时间复杂度也是
+<strong>O(V + E)</strong>，但更适合 <strong>递归结构</strong>
+的问题。</p>
+<hr />
+<h2 id="总结"><strong>总结</strong></h2>
+<p>✅ <strong>BFS (拓扑排序)</strong>：</p>
+<ul>
+<li>适用于 <strong>Kahn's Algorithm</strong></li>
+<li>代码简洁、直观</li>
+</ul>
+<p>✅ <strong>DFS (递归检测环 + 逆序遍历)</strong>：</p>
+<ul>
+<li>适用于 <strong>递归场景</strong></li>
+<li>需要额外的 <strong>访问状态数组</strong></li>
+</ul>
+<p>BFS 方法是 <strong>最直观且易于理解的</strong>，建议优先使用！🚀</p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+      </tags>
+  </entry>
 </search>
