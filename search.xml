@@ -3118,4 +3118,59 @@ class="math inline">\(\mathbf{x}\)</span> 的导数。</p>
         <tag>Deep Learning</tag>
       </tags>
   </entry>
+  <entry>
+    <title>LeetCode 3105. Longest Strictly Increasing or Strictly Decreasing Subarray</title>
+    <url>/2025/02/03/longest-strictly-increasing-or-strictly-decreasing-subarray/</url>
+    <content><![CDATA[<h2
+id="longest-strictly-increasing-or-strictly-decreasing-subarray">3105.
+Longest Strictly Increasing or Strictly Decreasing Subarray</h2>
+<p>You are given an array of integers <code>nums</code>. Return the
+length of the longest subarray of nums which is either strictly
+increasing or strictly decreasing.</p>
+<h2 id="解题思路">解题思路</h2>
+<ol type="1">
+<li><strong>遍历数组</strong>：我们需要遍历 <code>nums</code>
+数组，找到最长的严格递增或严格递减子数组的长度。</li>
+<li><strong>使用两个计数器</strong>：
+<ul>
+<li><code>inc_len</code> 记录当前递增子数组的长度。</li>
+<li><code>dec_len</code> 记录当前递减子数组的长度。</li>
+</ul></li>
+<li><strong>更新逻辑</strong>：
+<ul>
+<li>如果 <code>nums[i] &gt; nums[i - 1]</code>，说明递增，递增计数器
+<code>inc_len</code> 增加，并重置递减计数器 <code>dec_len</code>。</li>
+<li>如果 <code>nums[i] &lt; nums[i - 1]</code>，说明递减，递减计数器
+<code>dec_len</code> 增加，并重置递增计数器 <code>inc_len</code>。</li>
+<li>如果相等，则重置两个计数器为 1。</li>
+</ul></li>
+<li><strong>维护最大值</strong>：在每一步更新
+<code>max_len</code>，确保获取最长的子数组长度。</li>
+</ol>
+<h2 id="代码实现-python">代码实现 (Python)</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">longest_strictly_increasing_or_decreasing_subarray</span>(<span class="params">nums</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> nums:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    inc_len = dec_len = <span class="number">1</span>  <span class="comment"># 初始化递增和递减子数组的长度</span></span><br><span class="line">    max_len = <span class="number">1</span>  <span class="comment"># 记录最大子数组长度</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(nums)):</span><br><span class="line">        <span class="keyword">if</span> nums[i] &gt; nums[i - <span class="number">1</span>]:  <span class="comment"># 递增情况</span></span><br><span class="line">            inc_len += <span class="number">1</span></span><br><span class="line">            dec_len = <span class="number">1</span>  <span class="comment"># 重置递减长度</span></span><br><span class="line">        <span class="keyword">elif</span> nums[i] &lt; nums[i - <span class="number">1</span>]:  <span class="comment"># 递减情况</span></span><br><span class="line">            dec_len += <span class="number">1</span></span><br><span class="line">            inc_len = <span class="number">1</span>  <span class="comment"># 重置递增长度</span></span><br><span class="line">        <span class="keyword">else</span>:  <span class="comment"># 相等时，重置两个长度</span></span><br><span class="line">            inc_len = dec_len = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        max_len = <span class="built_in">max</span>(max_len, inc_len, dec_len)  <span class="comment"># 更新最大值</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> max_len</span><br></pre></td></tr></table></figure>
+<h2 id="时间复杂度分析"><strong>时间复杂度分析</strong></h2>
+<ul>
+<li><strong>遍历一次数组</strong>，时间复杂度为
+<strong>O(n)</strong>，其中 <code>n</code> 是 <code>nums</code>
+的长度。</li>
+</ul>
+<h2 id="示例"><strong>示例</strong></h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(longest_strictly_increasing_or_decreasing_subarray([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]))  <span class="comment"># 输出: 7</span></span><br><span class="line"><span class="built_in">print</span>(longest_strictly_increasing_or_decreasing_subarray([<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]))  <span class="comment"># 输出: 5</span></span><br><span class="line"><span class="built_in">print</span>(longest_strictly_increasing_or_decreasing_subarray([<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">10</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]))  <span class="comment"># 输出: 5</span></span><br></pre></td></tr></table></figure>
+<h3 id="总结"><strong>总结</strong></h3>
+<ul>
+<li>维护两个变量 <code>inc_len</code> 和
+<code>dec_len</code>，在遍历过程中更新长度。</li>
+<li>只需 <strong>O(n)</strong> 的时间复杂度即可求解。</li>
+<li>适用于 <strong>任意整数数组</strong>，不会受到数值范围的影响。</li>
+</ul>
+<p>这种方法简单且高效，适用于大规模数据集。🚀</p>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+      </tags>
+  </entry>
 </search>
